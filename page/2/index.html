@@ -1,0 +1,1624 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+  
+    
+
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.5.1"/>
+
+
+
+
+  <meta name="keywords" content="Hexo,next" />
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Dev Note" type="application/atom+xml" />
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.1" />
+
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="Dev Note">
+<meta property="og:url" content="http://note.49px.com/page/2/index.html">
+<meta property="og:site_name" content="Dev Note">
+<meta property="article:author" content="Yang Le">
+<meta name="twitter:card" content="summary">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'post'
+  };
+</script>
+
+  <title> Dev Note </title>
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode" target="_blank" rel="noopener">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+  
+
+
+
+  <div class="container one-column 
+   page-home 
+">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-next-logo"></i>
+      </span>
+      <span class="site-title">Dev Note</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon icon-next-home"></i> <br />
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-next-archives"></i> <br />
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            <i class="menu-item-icon icon-next-tags"></i> <br />
+            标签
+          </a>
+        </li>
+      
+
+      
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content"> 
+  <section id="posts" class="posts-expand">
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              <a class="post-title-link" href="/webpack/" itemprop="url">
+                Webpack v1.x 笔记
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2016-08-04T00:00:00+08:00" content="2016-08-04">
+            2016-08-04
+          </time>
+        </span>
+
+        
+
+        
+          
+            <span class="post-comments-count">
+              &nbsp; | &nbsp;
+              <a href="/webpack/#comments" itemprop="discussionUrl">
+                <span class="post-comments-count ds-thread-count" data-thread-key="webpack/" itemprop="commentsCount"></span>
+              </a>
+            </span>
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody"><h5 id="混淆和压缩"><a href="#混淆和压缩" class="headerlink" title="混淆和压缩"></a>混淆和压缩</h5><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">plugins:</span> <span class="string">[</span></span><br><span class="line">  <span class="string">new</span> <span class="string">webpack.optimize.UglifyJsPlugin(&#123;</span></span><br><span class="line">    <span class="attr">compress:</span> <span class="string">&#123;</span> <span class="attr">warnings:</span> <span class="literal">false</span> <span class="string">&#125;,</span></span><br><span class="line">  <span class="string">&#125;),</span></span><br><span class="line"><span class="string">]</span></span><br></pre></td></tr></table></figure>
+
+<h5 id="支持jQuery"><a href="#支持jQuery" class="headerlink" title="支持jQuery"></a>支持jQuery</h5><p>先<code>npm install jquery</code>，然后</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">plugins:</span> [</span><br><span class="line">  <span class="keyword">new</span> webpack.ProvidePlugin(&#123; <span class="string">jQuery:</span> <span class="string">'jquery'</span> &#125;),</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<h5 id="生成html入口文件"><a href="#生成html入口文件" class="headerlink" title="生成html入口文件"></a>生成html入口文件</h5><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> HtmlWebpackPlugin = <span class="built_in">require</span>(<span class="string">'html-webpack-plugin'</span>);</span><br><span class="line">...</span><br><span class="line">plugins: [</span><br><span class="line">  <span class="keyword">new</span> HtmlWebpackPlugin(&#123;</span><br><span class="line">    template: <span class="string">'index.template.html'</span>,</span><br><span class="line">  &#125;),</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<p>template文件如</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!doctype <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"utf-8"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Hello React<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">'root'</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>插件会在template的<code>&lt;body&gt;</code>内最后插入js脚本，在<code>&lt;head&gt;</code>内最后插入css样式</p>
+<p><em>参见：</em><a href="http://javascriptplayground.com/blog/2016/07/webpack-html-plugin/" target="_blank" rel="noopener">Using the HTML Webpack Plugin for generating HTML files</a></p>
+<p>用<code>dev-server.js</code>还要修改</p>
+<figure class="highlight moonscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">const compiler = webpack(webpackConfig);</span><br><span class="line">...</span><br><span class="line">app.use(<span class="string">'*'</span>, <span class="function"><span class="params">(req, res, <span class="built_in">next</span>)</span> =&gt;</span> &#123;</span><br><span class="line">  const filename = path.join(compiler.outputPath, <span class="string">'index.html'</span>);</span><br><span class="line">  compiler.outputFileSystem.readFile(filename, <span class="function"><span class="params">(err, result)</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (err) <span class="keyword">return</span> <span class="built_in">next</span>(err);</span><br><span class="line">    res.set(<span class="string">'content-type'</span>, <span class="string">'text/html'</span>);</span><br><span class="line">    res.send(result);</span><br><span class="line">    res.end();</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>参见：<a href="https://github.com/ampedandwired/html-webpack-plugin/issues/145" target="_blank" rel="noopener">issue 145</a></p>
+<h5 id="提取vendor模块"><a href="#提取vendor模块" class="headerlink" title="提取vendor模块"></a>提取vendor模块</h5><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> pkg = <span class="built_in">require</span>(<span class="string">'./package.json'</span>);</span><br><span class="line">...</span><br><span class="line">entry: &#123;</span><br><span class="line">  vendor: <span class="built_in">Object</span>.keys(pkg.dependencies),</span><br><span class="line">&#125;,</span><br><span class="line">plugins: [</span><br><span class="line">  <span class="keyword">new</span> webpack.optimize.CommonsChunkPlugin(&#123;</span><br><span class="line">    names: [<span class="string">'vendor'</span>, <span class="string">'manifest'</span>],</span><br><span class="line">  &#125;),</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<p><em>注</em>：<code>CommonsChunkPlugin</code>需要这第二个参数<code>manifest</code>，这样才能在app模块更新时不影响vendor模块的<code>chunkhash</code>值。</p>
+<p>参见：<a href="http://survivejs.com/webpack/building-with-webpack/splitting-bundles/" target="_blank" rel="noopener">Splitting Bundles</a></p>
+<h5 id="资源名hash化"><a href="#资源名hash化" class="headerlink" title="资源名hash化"></a>资源名hash化</h5><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">output</span>: &#123;</span><br><span class="line">  <span class="attribute">filename</span>: <span class="string">'[name].[chunkhash].js'</span>,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>name</code>可以理解为<code>entry</code>配置中指定的模块名。 <code>chunkhash</code>是某个分片的hash值，<code>hash</code>是bundle整体的hash值。HMR热更新会与<code>chunkhash</code>冲突，需要HMR热更新的开发环境只能用<code>[name].[hash].js</code>。</p>
+<h5 id="提取css文件"><a href="#提取css文件" class="headerlink" title="提取css文件"></a>提取css文件</h5><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">const ExtractTextPlugin = require(<span class="string">'extract-text-webpack-plugin'</span>);</span><br><span class="line">...</span><br><span class="line"><span class="string">plugins:</span> [</span><br><span class="line">  <span class="keyword">new</span> ExtractTextPlugin(<span class="string">'[name].[chunkhash].css'</span>),</span><br><span class="line">],</span><br><span class="line"><span class="string">module:</span> &#123;</span><br><span class="line"><span class="symbol">  loaders:</span> [</span><br><span class="line">    &#123; <span class="string">test:</span> <span class="regexp">/\.css$/</span>, <span class="string">loader:</span> ExtractTextPlugin.extract(<span class="string">'style'</span>, <span class="string">'css'</span>) &#125;,</span><br><span class="line">  ],</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>HMR热更新会与<code>ExtractTextPlugin</code>冲突，需要HMR热更新的开发环境不能用<code>ExtractTextPlugin</code>，比如：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">module</span>: &#123;</span><br><span class="line">  <span class="attribute">loaders</span>: [</span><br><span class="line">    &#123; test: /\.css$/, loader: <span class="string">'style!css'</span> &#125;,</span><br><span class="line">  ],</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="启用css-modules"><a href="#启用css-modules" class="headerlink" title="启用css-modules"></a>启用css-modules</h5><p>在loader中加上<code>modules</code>即为启用，<code>localIdentName</code>是设置生成样式的命名规则</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">module</span>: &#123;</span><br><span class="line">  <span class="attribute">loaders</span>: [&#123;</span><br><span class="line">    test: /\.css$/,</span><br><span class="line">    loader: <span class="string">'style!css?modules&amp;localIdentName=[local]__[hash:base64:5]'</span> </span><br><span class="line">  &#125;],</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>使用<code>ExtractTextPlugin</code>时：</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">module</span>: &#123;</span></span><br><span class="line">  <span class="symbol">loaders:</span> [&#123;</span><br><span class="line">    <span class="symbol">test:</span> /\.css$/,</span><br><span class="line">    <span class="symbol">loader:</span> ExtractTextPlugin.extract(<span class="string">'style'</span>, <span class="string">'css?modules&amp;importLoaders=1&amp;localIdentName=[local]__[hash:base64:5]'</span> </span><br><span class="line">  &#125;],</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>使用<code>sass</code>时：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">module</span>: &#123;</span><br><span class="line">  <span class="attribute">loaders</span>: [&#123;</span><br><span class="line">    test: /\.scss$/,</span><br><span class="line">    loader: <span class="string">'style!css?modules&amp;localIdentName=[local]__[hash:base64:5]!sass'</span> </span><br><span class="line">  &#125;],</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>src/styles</code>目录是全局样式，其他目录是使用css-modules的局部样式：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">module</span>: &#123;</span><br><span class="line">  <span class="attribute">loaders</span>: [&#123;</span><br><span class="line">    test: /\.scss$/,</span><br><span class="line">    exclude: path.<span class="built_in">resolve</span>(__dirname, <span class="string">'src/styles'</span>),</span><br><span class="line">    loader: <span class="string">'style!css?modules&amp;localIdentName=[local]__[hash:base64:5]!sass'</span></span><br><span class="line">  &#125;, &#123;</span><br><span class="line">    <span class="attribute">test</span>: /\.scss$/,</span><br><span class="line">    include: path.<span class="built_in">resolve</span>(__dirname, <span class="string">'src/styles'</span>),</span><br><span class="line">    loader: <span class="string">'style!css!sass'</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="去除没用的css"><a href="#去除没用的css" class="headerlink" title="去除没用的css"></a>去除没用的css</h5><p>这个插件较慢，只需在生产环境下使用</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> PurifyCSSPlugin = <span class="built_in">require</span>(<span class="string">'purifycss-webpack-plugin'</span>);</span><br><span class="line">...</span><br><span class="line">plugins: [</span><br><span class="line">  <span class="keyword">new</span> PurifyCSSPlugin(&#123;&#125;),</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><ul>
+<li><a href="http://lifei.github.io/2015/12/20/webpack/" target="_blank" rel="noopener">基于Webpack的前端资源构建方案</a></li>
+<li><a href="https://github.com/camsong/blog/issues/5" target="_blank" rel="noopener">CSS Modules 详解及 React 中实践</a></li>
+</ul>
+</span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              <a class="post-title-link" href="/node-project/" itemprop="url">
+                Node项目笔记
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2016-07-27T00:00:00+08:00" content="2016-07-27">
+            2016-07-27
+          </time>
+        </span>
+
+        
+
+        
+          
+            <span class="post-comments-count">
+              &nbsp; | &nbsp;
+              <a href="/node-project/#comments" itemprop="discussionUrl">
+                <span class="post-comments-count ds-thread-count" data-thread-key="node-project/" itemprop="commentsCount"></span>
+              </a>
+            </span>
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody"><h4 id="共享common代码"><a href="#共享common代码" class="headerlink" title="共享common代码"></a>共享common代码</h4><p>api端和client端要共享某些代码（如utils函数、数据库schema等），可以把这些代码打包成本地npm包：</p>
+<ol>
+<li><p>在代码目录下定义<code>package.json</code> </p>
+<figure class="highlight clojure"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="string">"name"</span>: <span class="string">"foo"</span>,</span><br><span class="line">  <span class="string">"version"</span>: <span class="string">"1.0.0"</span>,</span><br><span class="line">  <span class="string">"dependencies"</span>: &#123; ... &#125;,</span><br><span class="line">  <span class="string">"devDependencies"</span>: &#123; ... &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>用babel将es6编译成es5，拷贝<code>package.json</code>到生成的<code>lib/</code>目录，然后在<code>lib/</code>中打包</p>
+<figure class="highlight crystal"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/bin/sh </span></span><br><span class="line">rm -fr <span class="class"><span class="keyword">lib</span>/ &amp;&amp; <span class="title">babel</span> -<span class="title">d</span> <span class="title">lib</span>/ <span class="title">src</span>/</span></span><br><span class="line">cp package.json <span class="class"><span class="keyword">lib</span>/</span></span><br><span class="line">(cd <span class="class"><span class="keyword">lib</span>/ &amp;&amp; <span class="title">npm</span> <span class="title">pack</span>)</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在<code>lib</code>目录下用<code>npm pack</code>将目录打包成<code>tgz</code>文件，比如你在<code>package.json</code>中设置包名为<code>foo</code>版本为<code>1.0.0</code>，则会生成<code>foo-1.0.0.tgz</code>。还可以通过<code>tar -tf foo-1.0.0.tgz</code>来查看包中内容。</p>
+</li>
+<li><p><code>npm install /path/to/foo-1.0.0.tgz</code></p>
+</li>
+</ol>
+</span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              <a class="post-title-link" href="/sass/" itemprop="url">
+                Sass 笔记
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2016-07-19T00:00:00+08:00" content="2016-07-19">
+            2016-07-19
+          </time>
+        </span>
+
+        
+
+        
+          
+            <span class="post-comments-count">
+              &nbsp; | &nbsp;
+              <a href="/sass/#comments" itemprop="discussionUrl">
+                <span class="post-comments-count ds-thread-count" data-thread-key="sass/" itemprop="commentsCount"></span>
+              </a>
+            </span>
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody"><p>变量以<code>$</code>开头，如$var；字符串中使用变量，要用<code>#{}</code>括起来</p>
+<p>标准的css注释<code>/* comment */</code>编译后保留，单行注释<code>// comment</code>编译后忽略</p>
+<p>用<code>@import</code>引入外部文件</p>
+<p><code>%</code>开头的选择器是<code>placeholder selector</code>，编译后忽略</p>
+<p>mixin类似宏，是可重用的代码块，可以指定参数和默认值；用<code>@mixin</code>定义，用<code>@include</code>引用。用<code>@extend</code>继承css类，编译后会在父选择器声明处添上子选择器名。应该多用组合（@mixin）少用继承（@extend），只有当selector间确实存在继承关系时才用继承。</p>
+<h4 id="嵌套selectors"><a href="#嵌套selectors" class="headerlink" title="嵌套selectors"></a>嵌套selectors</h4><p>默认由空格拼接外内selector名</p>
+<figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">.item</span> &#123;</span><br><span class="line">  &gt; <span class="string">.item-name</span> &#123; <span class="string">...</span> &#125;    =&gt;    <span class="string">.item</span> &gt; <span class="string">.item-name</span> &#123; <span class="string">...</span> &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>使用<code>&amp;</code>则直接引用该selector名</p>
+<figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">.item</span> &#123;</span><br><span class="line">  &amp;-name &#123; <span class="string">...</span> &#125;    =&gt;    <span class="string">.item-name</span> &#123; <span class="string">...</span> &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="编译bootstrap"><a href="#编译bootstrap" class="headerlink" title="编译bootstrap"></a>编译bootstrap</h4><h5 id="定制bootstrap"><a href="#定制bootstrap" class="headerlink" title="定制bootstrap"></a>定制bootstrap</h5><p>v3版用bootstrap-sass（<code>npm install bootstrap-sass</code>），先拷贝<code>assets/stylesheets/bootstrap/_variables.scss</code>成<code>_customVariables.scss</code>，再引用bootstrap，最后再引用其他自定义的样式</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">@import</span> <span class="string">'customVariables'</span>;</span><br><span class="line"><span class="keyword">@import</span> <span class="string">'path-to-bootstrap-sass/assets/stylesheets/bootstrap'</span>;</span><br><span class="line"><span class="keyword">@import</span> <span class="string">'otherCustomStyles'</span>;</span><br></pre></td></tr></table></figure>
+
+<p>可使用<code>path-to-bootstrap-sass/assets/stylesheets/bootstrap/mixins/</code>中的<code>@mixin</code>，如<code>make-row()</code>、<code>make-*-column()</code>、<code>button-variant()</code>等</p>
+<h5 id="webpack打包"><a href="#webpack打包" class="headerlink" title="webpack打包"></a>webpack打包</h5><p><code>webpack</code>中使用<a href="https://github.com/shakacode/bootstrap-loader" target="_blank" rel="noopener">bootstrap-loader</a>打包bootstrap，配置jQuery时先<code>npm install jquery</code>，然后用说明中的<code>imports-loader</code>，或者用<code>new webpack.ProvidePlugin({ jQuery: &#39;jquery&#39; })</code></p>
+<h4 id="工具"><a href="#工具" class="headerlink" title="工具"></a>工具</h4><p>用<a href="https://incident57.com/codekit/" target="_blank" rel="noopener">CodeKit</a>来自动编译scss，并实时刷新页面</p>
+<h4 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h4><ul>
+<li><a href="http://www.ruanyifeng.com/blog/2012/06/sass.html" target="_blank" rel="noopener">SASS用法指南</a></li>
+<li><a href="https://www.psd2html.com/blog/customize-bootstrap-grid-with-sass.html" target="_blank" rel="noopener">How to Customize Bootstrap Grid with Sass</a></li>
+</ul>
+<hr>
+<h3 id="另：less语法"><a href="#另：less语法" class="headerlink" title="另：less语法"></a>另：less语法</h3><p>变量以<code>@</code>开头，如@var，定义和使用都是@var</p>
+<p>mixin定义时形如<code>.mixin-name(@param1: default1, ...)</code>，使用时形如<code>.minxin-name(...)</code></p>
+<p>嵌套selectors，与sass相同</p>
+<h4 id="参考-1"><a href="#参考-1" class="headerlink" title="参考"></a>参考</h4><ul>
+<li><p><a href="http://www.bootcss.com/p/lesscss/" target="_blank" rel="noopener">LESS « 一种动态样式语言</a></p>
+<p>​</p>
+</li>
+</ul>
+</span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              <a class="post-title-link" href="/restful/" itemprop="url">
+                RESTful 笔记
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2016-07-12T00:00:00+08:00" content="2016-07-12">
+            2016-07-12
+          </time>
+        </span>
+
+        
+
+        
+          
+            <span class="post-comments-count">
+              &nbsp; | &nbsp;
+              <a href="/restful/#comments" itemprop="discussionUrl">
+                <span class="post-comments-count ds-thread-count" data-thread-key="restful/" itemprop="commentsCount"></span>
+              </a>
+            </span>
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody"><h4 id="Http-Status"><a href="#Http-Status" class="headerlink" title="Http Status"></a>Http Status</h4><p>POST创建，返回<code>201 Created</code></p>
+<p>PUT更新应当是幂等操作，返回<code>204 No Content</code></p>
+<p>DELETE删除也可是幂等操作，返回<code>204 No Content</code></p>
+<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><ul>
+<li><a href="https://segmentfault.com/a/1190000005924733" target="_blank" rel="noopener">来自于PayPal的RESTful API标准</a></li>
+</ul>
+</span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              <a class="post-title-link" href="/react/" itemprop="url">
+                react 笔记
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2016-06-08T00:00:00+08:00" content="2016-06-08">
+            2016-06-08
+          </time>
+        </span>
+
+        
+
+        
+          
+            <span class="post-comments-count">
+              &nbsp; | &nbsp;
+              <a href="/react/#comments" itemprop="discussionUrl">
+                <span class="post-comments-count ds-thread-count" data-thread-key="react/" itemprop="commentsCount"></span>
+              </a>
+            </span>
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody"><p>页面inline元素后的<em>换行</em>会被转成一个<em>空格</em>（文字节点），导致inline元素后有<strong>少许空隙</strong>。而react标签后的<em>换行不输出</em>，这样inline元素后没有空隙。统一两者的办法是删除页面inline元素后的换行。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">ul</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">li</span>&gt;</span>one<span class="tag">&lt;/<span class="name">li</span></span></span><br><span class="line"><span class="tag">  &gt;</span><span class="tag">&lt;<span class="name">li</span>&gt;</span>two<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- or --&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">ul</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">li</span>&gt;</span>one<span class="tag">&lt;/<span class="name">li</span>&gt;</span><span class="comment">&lt;!--</span></span><br><span class="line"><span class="comment">  --&gt;</span><span class="tag">&lt;<span class="name">li</span>&gt;</span>two<span class="tag">&lt;/<span class="name">li</span>&gt;</span><span class="comment">&lt;!--</span></span><br><span class="line"><span class="comment">  --&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="工具"><a href="#工具" class="headerlink" title="工具"></a>工具</h3><h4 id="axios"><a href="#axios" class="headerlink" title="axios"></a>axios</h4><p>用<a href="https://github.com/mzabriskie/axios" target="_blank" rel="noopener">axios</a>向服务端发起异步请求</p>
+<h4 id="normalizr"><a href="#normalizr" class="headerlink" title="normalizr"></a>normalizr</h4><p>拿到服务端返回的json可能多层嵌套，用<a href="https://github.com/paularmstrong/normalizr" target="_blank" rel="noopener">normalizr</a>处理后保存在redux中；使用时用<a href="https://github.com/gpbl/denormalizr" target="_blank" rel="noopener">denormalizr</a>还原</p>
+</span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              <a class="post-title-link" href="/bookshelf/" itemprop="url">
+                bookshelfjs 笔记
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2016-01-08T00:00:00+08:00" content="2016-01-08">
+            2016-01-08
+          </time>
+        </span>
+
+        
+
+        
+          
+            <span class="post-comments-count">
+              &nbsp; | &nbsp;
+              <a href="/bookshelf/#comments" itemprop="discussionUrl">
+                <span class="post-comments-count ds-thread-count" data-thread-key="bookshelf/" itemprop="commentsCount"></span>
+              </a>
+            </span>
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody"><p>bookshelf，连接sql数据库的orm，使用knex生成查询串</p>
+<p><code>where(filter)</code>的filter参数除了可以<code>{id}</code>这样的obj，还可以用<code>q=&gt;{ q.whereIn(&#39;id&#39;, ids); }</code>这样的func，q是<code>knex</code>中的queryBuilder。</p>
+<p><code>fetch(options)</code>的options参数中<code>{ withRelated: [xxx] }</code>可以预取关联的model数据。</p>
+<h4 id="比如一对多关系"><a href="#比如一对多关系" class="headerlink" title="比如一对多关系"></a>比如<code>一对多</code>关系</h4><p>一Book有多Page，一Page属于一Book</p>
+<p><code>一</code>（Book）上可以定义获取<code>多</code>（Page）的函数：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pages() &#123; <span class="keyword">return</span> <span class="keyword">this</span>.hasMany(Page, <span class="string">'pageId'</span>); &#125;</span><br></pre></td></tr></table></figure>
+
+<p>然后fetch时提供<code>withRelated:</code>来预取：</p>
+<figure class="highlight aspectj"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> book = <span class="function">await Book.<span class="title">fetch</span><span class="params">(&#123; withRelated: [<span class="string">'pages'</span>]&#125;)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<p>之后用<code>book.related(&#39;pages&#39;)</code>访问这个预取的model</p>
+<p><code>多</code>（Page）上可以定义获取<code>一</code>（Book）的函数：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">book() &#123; <span class="keyword">return</span> <span class="keyword">this</span>.belongsTo(Book, <span class="string">'bookId'</span>); &#125;</span><br></pre></td></tr></table></figure>
+
+<p>然后fetch时提供<code>withRelated:</code>来预取：</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">const<span class="built_in"> page </span>= await Page.fetch(&#123; withRelated: [<span class="string">'book'</span>] &#125;);</span><br></pre></td></tr></table></figure>
+
+<p>之后用<code>page.related(&#39;book&#39;)</code>访问这个预取的model</p>
+<h4 id="比如多对多关系"><a href="#比如多对多关系" class="headerlink" title="比如多对多关系"></a>比如<code>多对多</code>关系</h4><p>一Buyer买多Item，一Item被多Buyer买</p>
+<p><code>多</code>（如 Buyer）上可以定义获取<code>多</code>（如 Item）的函数：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">items() &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">this</span>.belongsToMany(Item)</span><br><span class="line">  	.through(BuyerItem, <span class="string">'buyerId'</span>, <span class="string">'itemId'</span>)</span><br><span class="line">  	.withPivot([<span class="string">'buyCount'</span>]);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><em>（注：使用.through()时，中间表BuyerItem要有id域）</em></p>
+<p>然后fetch时提供<code>withRelated:</code>来预取：</p>
+<figure class="highlight aspectj"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> buyer = <span class="function">await Buyer.<span class="title">fetch</span><span class="params">(&#123; withRelated: [<span class="string">'items'</span>] &#125;)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<p>之后用<code>buyer.related(&#39;items&#39;)</code>访问这个预取的model</p>
+<p>buyer的关联items没有预取时，直接取items：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">await</span> <span class="selector-tag">buyer</span><span class="selector-class">.load</span>(<span class="selector-attr">[<span class="string">'items'</span>]</span>);</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h4 id="保存时自动hash密码"><a href="#保存时自动hash密码" class="headerlink" title="保存时自动hash密码"></a>保存时自动hash密码</h4><p>在<code>initialize</code>中注册回调函数：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">initialize() &#123;</span><br><span class="line">  bookshelf.Model.prototype.initialize.call(<span class="keyword">this</span>);</span><br><span class="line">  <span class="keyword">this</span>.on(<span class="string">'saving'</span>, util.hashPasswordWithBcrypt);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h4 id="使用事务"><a href="#使用事务" class="headerlink" title="使用事务"></a>使用事务</h4><figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">bookshelf.transaction(<span class="keyword">await</span> transacting =&gt; &#123;</span><br><span class="line">  ...</span><br><span class="line">  <span class="keyword">await</span> xxx.fetch(xxx, &#123; transacting &#125;);</span><br><span class="line">  <span class="keyword">await</span> xxx.save(xxx, &#123; transacting &#125;);</span><br><span class="line">  <span class="keyword">await</span> xxx.destroy(&#123; transacting &#125;);</span><br><span class="line">  ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><ul>
+<li><a href="http://wesleytsai.io/2015/07/28/bookshelf-bcrpyt-password-hashing/" target="_blank" rel="noopener">Saving Bcrypt Hashed Passwords to Database with Bookshelf.js</a></li>
+<li><a href="http://blog.ragingflame.co.za/2014/7/21/using-nodejs-with-mysql" target="_blank" rel="noopener">Using Node.js with MySQL</a></li>
+</ul>
+</span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              <a class="post-title-link" href="/swift/" itemprop="url">
+                Swift 2.0 笔记
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2015-10-16T00:00:00+08:00" content="2015-10-16">
+            2015-10-16
+          </time>
+        </span>
+
+        
+
+        
+          
+            <span class="post-comments-count">
+              &nbsp; | &nbsp;
+              <a href="/swift/#comments" itemprop="discussionUrl">
+                <span class="post-comments-count ds-thread-count" data-thread-key="swift/" itemprop="commentsCount"></span>
+              </a>
+            </span>
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody"><ul>
+<li><code>let</code>声明常量，<code>var</code>声明变量</li>
+<li>注释：<code>//</code>和<code>/*...*/</code>，多行注释<code>/*...*/</code>可嵌套！</li>
+<li>句尾分号可省略</li>
+<li>类型别名：<code>typealias AudioSample = UInt16</code></li>
+<li>空合运算符, <code>a ?? b</code>等价于<code>a!=nil ? a! : b</code></li>
+</ul>
+<h3 id="String"><a href="#String" class="headerlink" title="String"></a>String</h3><ul>
+<li><code>String</code>是值类型，由编译器保证只在必要时拷贝</li>
+<li>字符串插值：<code>\(...)</code></li>
+<li><code>.characters</code>表示对应的unicode字符组，<code>.characters.count</code>表示所含的unicode字符数</li>
+<li>不能用数字作索引，使用<code>.startIndex</code>、<code>.endIndex</code>、<code>.startIndex.advancedBy(7)</code>等</li>
+<li>相等：==，前缀：.hasPrefix()，后缀：.hasSuffix()</li>
+<li>可赋值给Selector：<code>let mySelector: Selector = “tappedButton:&quot;</code></li>
+</ul>
+<h3 id="Tuple"><a href="#Tuple" class="headerlink" title="Tuple"></a>Tuple</h3><ul>
+<li><code>let http404Error = (404, &quot;Not Found&quot;)</code></li>
+<li>只需要一部分元组值，忽略的部分用<code>_</code>标记：<code>let (justTheStatusCode, _) = http404Error</code></li>
+<li>通过下标访问元组元素：<code>http404Error.0</code></li>
+<li>定义元组时给元素命名：<code>let http200Status = (statusCode: 200, description: &quot;OK&quot;)</code>，然后通过名字访问这些元素：<code>http200Status.description</code></li>
+</ul>
+<h3 id="Collection"><a href="#Collection" class="headerlink" title="Collection"></a>Collection</h3><ul>
+<li>数组类型<code>[Int]</code>、集合类型<code>Set&lt;Int&gt;</code>、字典类型<code>[String:Int]</code></li>
+<li>已推断出类型时，<code>[]</code>空数组，<code>[:]</code>空字典</li>
+<li>合并两数组可用<code>+</code></li>
+<li>数组可区间替换，如<code>array[4...6] = [&quot;Bananas&quot;, &quot;Apples&quot;]</code>，把中间三个元素换为两个</li>
+<li>带下标遍历数组，如：<code>for (index, value) in array.enumerate())</code></li>
+<li>集合的值和字典的键必须hashable；所有基本类型（如String, Int, Double, Bool）都hashable</li>
+</ul>
+<h3 id="Enum"><a href="#Enum" class="headerlink" title="Enum"></a>Enum</h3><ul>
+<li>用法一：存储任何类型的关联值，类似union，给enum中各变量声明不同类型（且不赋实际值）  <figure class="highlight crystal"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">enum</span> <span class="title">Barcode</span> &#123;</span></span><br><span class="line">    <span class="keyword">case</span> UPCA(Int, Int, Int, Int)</span><br><span class="line">    <span class="keyword">case</span> QRCode(String)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li>用法二：给enum中各变量赋予同类型的原始值（rawValue）  <figure class="highlight crystal"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">enum</span> <span class="title">ASCIIControlCharacter</span>: <span class="title">Character</span> &#123;</span></span><br><span class="line">    <span class="keyword">case</span> Tab = <span class="string">"\t"</span></span><br><span class="line">    <span class="keyword">case</span> LineFeed = <span class="string">"\n"</span></span><br><span class="line">    <span class="keyword">case</span> CarriageReturn = <span class="string">"\r"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+  带原始值的枚举类型自带一个failable构造器<code>init?(rawValue:)</code></li>
+<li>关联值是自身这一枚举类型，要在这关联值前用<code>indirect</code>表示该成员可递归  <figure class="highlight crystal"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">enum</span> <span class="title">ArithmeticExpression</span> &#123;</span></span><br><span class="line">    <span class="keyword">case</span> Number(Int)</span><br><span class="line">    indirect <span class="keyword">case</span> Addition(ArithmeticExpression, ArithmeticExpression)</span><br><span class="line">    indirect <span class="keyword">case</span> Multiplication(ArithmeticExpression, ArithmeticExpression)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h3 id="Optional"><a href="#Optional" class="headerlink" title="Optional"></a>Optional</h3><ul>
+<li>实际上是enum：  <figure class="highlight crystal"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">enum</span> <span class="title">Optional</span>&lt;<span class="title">T</span>&gt; &#123;</span></span><br><span class="line">    <span class="keyword">case</span> None</span><br><span class="line">    <span class="keyword">case</span> Some(T)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li>可空类型（形如<code>Type?</code>），可能存在某个值或不存在值，用<code>someOptional!</code>强制展开</li>
+<li>可空绑定，如<code>if let constName = someOptional { }</code></li>
+<li>可空链式调用，如<code>street = paul.residence?.address?.street</code>，返回的都是可空值（即使原函数返回非空值）</li>
+<li>隐式展开可空值（形如<code>Type!</code>），变量在首次初始化后不再为空（一般作实例变量，由类初始化），直接用<code>someOptional</code>访问</li>
+</ul>
+<h3 id="Control-Flow"><a href="#Control-Flow" class="headerlink" title="Control Flow"></a>Control Flow</h3><ul>
+<li>if/for/while等的条件语句不需要括号：<code>for index in 1...n</code></li>
+<li>switch的每个值都至少要有个case分支对应，当现有的分支无法涵盖所有值时要使用default分支</li>
+<li>case分支不会fallthrough，不需要显式地<code>break</code>；但可用<code>fallthrough</code>关键字让控制流直接接上下一个case的执行代码（跳过下一个case的条件检查）</li>
+<li>case可以区间匹配（如数值区间<code>3...5</code>，tuple区间<code>(_, 0)</code>，逗号分隔的多个区间<code>1,3,5...7</code>），各case的区间重叠时按序选择匹配</li>
+<li>case中的模式匹配：  <figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">let color = (<span class="number">1.0</span>, <span class="number">1.0</span>, <span class="number">1.0</span>, <span class="number">1.0</span>)</span><br><span class="line"><span class="keyword">switch</span> color &#123;</span><br><span class="line">    <span class="keyword">case</span> (<span class="number">0.0</span>, <span class="number">0.5</span>..<span class="number">.1</span><span class="number">.0</span>, let blue, _):</span><br><span class="line">        print(<span class="string">"Green and \(blue * 100)% blue"</span>)</span><br><span class="line">    <span class="keyword">case</span> let (r, g, b, <span class="number">1.0</span>) where r == g &amp;&amp; g == b:</span><br><span class="line">        print(<span class="string">"Opaque grey \(r * 100)%"</span>)</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li>循环和switch语句可以加标签，这样多层嵌套时可以break/continue到指定标签</li>
+<li><code>guard</code>语句类似if语句，但<code>guard</code>总是有一个<code>else</code>分句</li>
+</ul>
+<h3 id="Function-amp-Closure"><a href="#Function-amp-Closure" class="headerlink" title="Function &amp; Closure"></a>Function &amp; Closure</h3><ul>
+<li>内外参数同名：<code>func someFunc(paraName: Int) {}</code>；显式指定外部参数名: <code>func someFunc(externalParaName localParaName: Int) {}</code></li>
+<li>参数列表末可以提供默认参数：<code>func someFunc(paraName: Int = 12) {}</code></li>
+<li>可变参数数组，如<code>func mean(numbers: Double...) -&gt; Double {}</code>，最多只能有一个且放在参数列表最最后（默认参数之后）</li>
+<li>参数默认是常量，若要将参数作为可修改副本使用，在参数名前加<code>var</code>：<code>func someFunc(var paraName: String) {}</code></li>
+<li><code>inout</code>参数由外部在调用时传引用<code>&amp;varParam</code>：  <figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">func swapTwoInts(<span class="keyword">inout</span> a: Int, <span class="keyword">inout</span> _ b: Int) &#123;</span><br><span class="line">    let tmp = a; a = b; b = tmp</span><br><span class="line">&#125;</span><br><span class="line">...</span><br><span class="line">swapTwoInts(&amp;someInt, &amp;anotherInt)</span><br></pre></td></tr></table></figure></li>
+<li>函数类型由参数和返回值类型组成，如：<code>(Int, Int) -&gt; Int</code>, <code>(Int) -&gt; Int</code>, <code>() -&gt; ()</code></li>
+<li>函数中可以嵌套定义新函数</li>
+<li>闭包语法：  <figure class="highlight clojure"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123; (<span class="name">parammeters</span>) -&gt; returnType in</span><br><span class="line">    statements</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li>闭包可用<code>$0, $1, $2</code>等速记参数：<code>reversed = sort(names, { $0 &gt; $1 })</code></li>
+</ul>
+<h3 id="Struct-amp-Class"><a href="#Struct-amp-Class" class="headerlink" title="Struct &amp; Class"></a>Struct &amp; Class</h3><ul>
+<li>struct不能继承；struct是值类型（传拷贝），class是引用类型（传引用）</li>
+<li>所有基本类型（包括字符串、数组、字典）都是值类型，用struct实现的，编译器会保证只有确实必要时才执行实际拷贝</li>
+<li>struct可以按成员初始化：<code>let vga = Resolution(width: 640, height: 480)</code></li>
+<li><code>lazy var</code>在首次使用时才初始化；全局常量/变量自动是lazy的（不需lazy标记）</li>
+<li>若某实例方法要修改struct/enum等值类型中的属性（包括修改<code>self</code>），得给方法添加<code>mutating</code>声明</li>
+<li>定义下标索引，如：  <figure class="highlight haxe"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">subscript(index: <span class="type">Int</span>) -&gt; <span class="keyword">Int</span> &#123;</span><br><span class="line">    <span class="keyword">get</span> &#123;&#125;</span><br><span class="line">    <span class="keyword">set</span>(<span class="keyword">new</span><span class="type">Value</span>) &#123;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+  也可以是二维的，如：<br><code>subscript(row: Int, column: Int) -&gt; Double { ... }</code> ，访问时可用<code>matrix[1, 0]</code></li>
+<li>子类重载父类特性时要加<code>override</code>声明</li>
+<li>不想被重载的特性用<code>final</code>声明</li>
+<li>类至少有一个designated构造器，它先初始化本类引入的所有存储型属性，然后调用父类的designated构造器（delegate up），再为继承的属性设置新值</li>
+<li>convenience构造器要前加<code>convenience</code>声明，它调用本类的其他构造器并最终调用到某个designated构造器（delegate across），再为任意属性设置新值</li>
+<li>两阶段初始化：就是个中序遍历，先初始化存储型属性，再访问super.init()，再之后算阶段二用来作些自定义</li>
+<li>若子类没有designated构造器，则自动继承父类的designated构造器</li>
+<li>若子类实现了父类的所有designated构造器（不管是自动继承的还是自己实现的），则自动继承父类的convenience构造器</li>
+<li>可失败构造器：<code>init?(...)</code>，若要返回的对象隐式展开：<code>init!(...)</code></li>
+<li>子类都必须实现的构造器，前加<code>required</code>修饰</li>
+<li>用闭包和函数设置属性的默认值：  <figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="symbol">SomeClass</span> &#123;</span><br><span class="line">    let someProperty: SomeType = &#123;</span><br><span class="line">        …</span><br><span class="line">        <span class="keyword">return</span> someValue</span><br><span class="line">    &#125;()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li>每个类最多只能有一个析构器<code>deinit</code>，子类析构器的最后会自动调用父类析构器</li>
+</ul>
+<h3 id="ARC"><a href="#ARC" class="headerlink" title="ARC"></a>ARC</h3><ul>
+<li>对生命周期中会变为nil的实例使用弱引用（weak, optional）</li>
+<li>对初始化赋值后再也不会变为nil的实例使用无主引用（unowned）</li>
+<li>两个类中的属性互相引用，要打破循环强引用：<ul>
+<li>两个都可为nil：其中一个使用弱引用（weak）</li>
+<li>一个可为nil，一个不可为nil：不可为nil的使用无主引用（unowned）</li>
+<li>两个都不可为nil：一个使用隐式展开可空属性（Type!），一个使用无主引用（unowned）</li>
+</ul>
+</li>
+<li>将闭包赋给属性，要打破循环引用，用无主引用来捕获<code>self</code>，如：  <figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">lazy var someClosure: (Int, <span class="built_in">String</span>) -&gt; <span class="built_in">String</span> = &#123;</span><br><span class="line">    [unowned <span class="keyword">self</span>, weak delegate = <span class="keyword">self</span>.delegate!] (index: Int, stringToProcess: <span class="built_in">String</span>) -&gt; <span class="built_in">String</span> <span class="keyword">in</span></span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+  <figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">lazy</span> <span class="keyword">var</span> someClosure: () -&gt; <span class="type">String</span> = &#123;</span><br><span class="line">    [<span class="keyword">unowned</span> <span class="keyword">self</span>, <span class="keyword">weak</span> delegate = <span class="keyword">self</span>.delegate!] <span class="keyword">in</span></span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h3 id="Error-Handling"><a href="#Error-Handling" class="headerlink" title="Error Handling"></a>Error Handling</h3><ul>
+<li>错误用符合<code>ErrorType</code>协议的值表示：<code>enum VendingMachineError: ErrorType</code></li>
+<li>用<code>throws</code>声明函数将抛出错误：<code>func canThrowErrors() throws -&gt; String</code></li>
+<li>用<code>throw</code>抛出错误：<code>throw VendingMachineError.OutOfStock</code></li>
+<li>调用抛出错误的函数时，前面加上<code>try</code>：<code>try canThrowErrors()</code></li>
+<li>用do-catch捕获错误：  <figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">do</span> &#123;</span><br><span class="line">    <span class="function"><span class="keyword">try</span> <span class="title">canThrowErrors</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function">    ...</span></span><br><span class="line"><span class="function">&#125; <span class="keyword">catch</span> someError</span> &#123;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li>swift的错误和其他语言的异常类似，但是不会展开调用堆栈，因此throw语句的性能可以几乎和return语句一样</li>
+<li>如果确认某个声明了throws的函数不会抛出错误，可以用<code>try!</code>禁止错误传播：<code>try! willOnlyThrowIfTrue(false)</code></li>
+<li>用<code>defer</code>语句将操作压栈，推迟到当前作用域结束时执行</li>
+</ul>
+<h3 id="Type-Casting"><a href="#Type-Casting" class="headerlink" title="Type Casting"></a>Type Casting</h3><ul>
+<li>类型检查用<code>is</code>，强制类型转换用<code>as</code>，如<code>let view = object as UIView</code>，尝试类型转换用<code>as?</code>，如<code>if let view = object as? UIView { ... }</code></li>
+<li>可以转换整个数组：<code>if let viewArray = objectArray as? [UIView] { ... }</code>，有任一元素转换失败时整个返回nil</li>
+<li><code>AnyObject</code>表示任何class类型，<code>Any</code>表示任何类型</li>
+</ul>
+<h3 id="Extension"><a href="#Extension" class="headerlink" title="Extension"></a>Extension</h3><ul>
+<li>可以添加新的方法，但不能重写已有的方法</li>
+<li>可以添加计算型属性，但不能添加存储型属性，也不能给已有属性添加属性观测器（willSet/didSet等）</li>
+<li>可以添加convenience构造器，但不能添加designated构造器或析构器</li>
+</ul>
+<h3 id="Protocol"><a href="#Protocol" class="headerlink" title="Protocol"></a>Protocol</h3><ul>
+<li>如果协议的方法将改变遵循该协议的对象的属性，则在该方法前加<code>mutating</code>关键字（为了使struct/enum等值类型也能遵循该协议）</li>
+<li>协议可以继承一个或多个其他协议：<code>protocol SomeProtocol: InheritedProtocolOne, InheritedProtocolTwo {}</code></li>
+<li>限制只能由class遵循该协议（struct/enum不能遵循该协议），要在继承列表开头使用<code>class</code>关键字：<code>protocol SomeClassOnlyProtocol: class, InheritedProtocol {}</code></li>
+<li>变量遵循了多个协议：<code>person: protocol&lt;Named, Aged&gt;</code></li>
+<li>能用<code>is/as/as?</code>检查变量是否遵循协议</li>
+<li>协议包含可选方法或属性时，要加<code>@objc</code>前缀：  <figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@objc</span> <span class="class"><span class="keyword">protocol</span> <span class="title">CounterDataSource</span> </span>&#123;</span><br><span class="line">    <span class="keyword">optional</span> <span class="function"><span class="keyword">func</span> <span class="title">incrementForCount</span><span class="params">(<span class="built_in">count</span>: Int)</span></span> -&gt; <span class="type">Int</span></span><br><span class="line">    <span class="keyword">optional</span> <span class="keyword">var</span> fixedIncrement: <span class="type">Int</span> &#123; <span class="keyword">get</span> &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li>可通过Extension为协议提供默认实现，扩展协议时还能用<code>where</code>描述限制条件：  <figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">extension</span> CollectionType where Generator.<span class="built_in">Element</span> : TextRepresentable &#123;</span><br><span class="line">    <span class="comment">// 扩展CollectionType协议，但只适用于元素遵循TextRepresentable的情况</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li>可以用<code>typealias</code>声明关联类型，给类型提供占位名，当某类实现这协议时能自动推断出实际的关联类型  <figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">protocol</span> <span class="title">Container</span> </span>&#123;</span><br><span class="line">    <span class="keyword">typealias</span> <span class="type">ItemType</span></span><br><span class="line">    <span class="keyword">mutating</span> <span class="function"><span class="keyword">func</span> <span class="title">append</span><span class="params">(item: ItemType)</span></span></span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h3 id="Generics"><a href="#Generics" class="headerlink" title="Generics"></a>Generics</h3><ul>
+<li>泛型，形如<code>struct Stack&lt;T&gt; { ... }</code></li>
+<li>扩展泛型时，不需要在扩展的定义中再次声明类型参数，原类型参数可以直接使用：  <figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">extension</span> <span class="title">Stack</span> </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> topItem: <span class="type">T?</span> &#123; ... &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li>泛型的类型参数可以添加约束，如：  <figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">func</span> allItemsMatch&lt;<span class="built_in">C1</span>: Container, <span class="built_in">C2</span>: Container</span><br><span class="line">        where <span class="built_in">C1</span>.<span class="keyword">ItemType </span>== <span class="built_in">C2</span>.<span class="keyword">ItemType, </span><span class="built_in">C1</span>.<span class="keyword">ItemType: </span>Equatable&gt;</span><br><span class="line">        (someContainer: <span class="built_in">C1</span>, anotherContainer: <span class="built_in">C2</span>) -&gt; <span class="keyword">Bool </span>&#123;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h3 id="Access-Control"><a href="#Access-Control" class="headerlink" title="Access Control"></a>Access Control</h3><ul>
+<li><code>private</code>源文件内可见；<code>internal</code>模块内可见，是默认值，模块指以独立单元构建和发布的framework或application；<code>public</code>都可见</li>
+<li>函数的访问级别由参数和返回值中最小的一个决定</li>
+</ul>
+<h3 id="Operators"><a href="#Operators" class="headerlink" title="Operators"></a>Operators</h3><ul>
+<li>算数运算符默认不会溢出，溢出运算符有：<code>&amp;+</code>、<code>&amp;-</code>、<code>&amp;*</code>等</li>
+<li>重载运算符，如：  <figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Vector2D</span> </span>&#123; <span class="keyword">var</span> x = <span class="number">0.0</span>,, y = <span class="number">0.0</span> &#125;</span><br><span class="line"><span class="function"><span class="keyword">func</span> +<span class="params">(<span class="keyword">left</span>: Vector2D, <span class="keyword">right</span>: Vector2D)</span></span> -&gt; <span class="type">Vector2D</span> &#123; &#125; <span class="comment">// 中缀</span></span><br><span class="line"><span class="keyword">prefix</span> <span class="function"><span class="keyword">func</span> -<span class="params">(vector: Vector2D)</span></span> -&gt; <span class="type">Vector2D</span> &#123;&#125; <span class="comment">// 前缀</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> += <span class="params">(<span class="keyword">inout</span> <span class="keyword">left</span>: Vector2D, <span class="keyword">right</span>: Vector2D)</span></span> &#123; <span class="keyword">left</span> = <span class="keyword">left</span> + <span class="keyword">right</span> &#125; <span class="comment">// 组合赋值</span></span><br></pre></td></tr></table></figure></li>
+<li>自定义操作符可声明优先级和结合性：  <figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">infix</span> <span class="keyword">operator</span> +- &#123; <span class="keyword">associativity</span> <span class="keyword">left</span> <span class="keyword">precedence</span> <span class="number">140</span> &#125;</span><br><span class="line"><span class="function"><span class="keyword">func</span> +- <span class="params">(<span class="keyword">left</span>: Vector2D, <span class="keyword">right</span>: Vector2D)</span></span> -&gt; <span class="type">Vector2D</span> &#123; &#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<hr>
+<h3 id="Command-Line"><a href="#Command-Line" class="headerlink" title="Command Line"></a>Command Line</h3><ul>
+<li>demangle: <code>xcrun swift-demangle</code> xxx</li>
+</ul>
+<h3 id="Using-with-Cocoa-amp-ObjC"><a href="#Using-with-Cocoa-amp-ObjC" class="headerlink" title="Using with Cocoa &amp; ObjC"></a>Using with Cocoa &amp; ObjC</h3><ul>
+<li>在.m文件中使用swift：<code>#import &quot;ProductModuleName-Swift.h&quot;</code></li>
+<li>在.swift文件中使用objc：把要使用的objc头文件加入<code>ProductModuleName-Bridging-Header.h</code>中，之后所有.swift文件中不需要import就能使用</li>
+<li>从objc类继承的swift类会由编译器自动插入<code>@objc</code>，因而在objc中可用</li>
+<li>不从objc类继承的swift类要在objc中可用，需要自己添加<code>@objc</code>标注</li>
+<li>用<code>@objc(&lt;#name#&gt;)</code>可以给swift类/方法起objc别名（不带名称空间）</li>
+<li>swift闭包和objc闭包互通，swift闭包中的变量类似objc闭包中的<code>__block</code>变量</li>
+<li><code>@NSManaged</code>就像<code>@dynamic</code>，表示<code>NSManagedObject</code>子类属性的存储和实现将在运行时提供</li>
+</ul>
+<h3 id="内存布局"><a href="#内存布局" class="headerlink" title="内存布局"></a>内存布局</h3><ul>
+<li>struct按值顺序排，会字节对齐</li>
+<li>swift类都继承自SwiftObject，SwiftObject实现了<NSObject>协议，但不是NSObject的子类</li>
+<li>SwiftObject前两个8字节分别是isa和refCount (swift中的NSObject类空着这后8字节refCount不用)</li>
+<li>swift中的NSObject布局：isa, superclass, cache, …, 构成vtable的各方法指针</li>
+<li>class的optional，跟指针一样，指向地址或nil；struct的optional多加1字节表示值是否nil</li>
+<li>protocol共占40字节；class的protocol布局为：isa, 空着不用16字节, 指向底层类的metadata的指针，指向实现protocol的vtable的指针；struct的protocol布局为：24字节内inline存储值（超过24字节保存malloc的地址8字节, 空着不用16字节），指向底层类的metadata的指针，指向实现protocol的vtable的指针</li>
+</ul>
+<h3 id="Playground和-swift文件"><a href="#Playground和-swift文件" class="headerlink" title="Playground和.swift文件"></a>Playground和.swift文件</h3><ul>
+<li><code>main.swift</code>和playground一样都是order-dependent的，且允许顶层代码</li>
+<li>iOS里加<code>@UIApplicationMain</code>的那个文件就相当于<code>main.swift</code></li>
+<li>其他swift文件都是order-independent的，且不允许顶层代码</li>
+</ul>
+<hr>
+<h3 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h3><ul>
+<li><a href="http://wiki.jikexueyuan.com/project/swift/" target="_blank" rel="noopener">《The Swift Programming Language》</a></li>
+<li>《Using Swift with Cocoa and Objective-C》</li>
+<li>Intermediate Swift, WWDC2014</li>
+<li>Exploring Swift Memory Layout <a href="https://www.mikeash.com/pyblog/friday-qa-2014-07-18-exploring-swift-memory-layout.html" target="_blank" rel="noopener">part I</a> &amp; <a href="https://www.mikeash.com/pyblog/friday-qa-2014-08-01-exploring-swift-memory-layout-part-ii.html" target="_blank" rel="noopener">part II</a></li>
+</ul>
+</span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              <a class="post-title-link" href="/es6/" itemprop="url">
+                Javascript ES6 笔记
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2015-10-08T00:00:00+08:00" content="2015-10-08">
+            2015-10-08
+          </time>
+        </span>
+
+        
+
+        
+          
+            <span class="post-comments-count">
+              &nbsp; | &nbsp;
+              <a href="/es6/#comments" itemprop="discussionUrl">
+                <span class="post-comments-count ds-thread-count" data-thread-key="es6/" itemprop="commentsCount"></span>
+              </a>
+            </span>
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody"><h3 id="for-of"><a href="#for-of" class="headerlink" title="for-of"></a>for-of</h3><p>for-of通过迭代器遍历各种集合，for-in遍历对象属性</p>
+<h3 id="迭代器"><a href="#迭代器" class="headerlink" title="迭代器"></a>迭代器</h3><p>对象通过<code>[Symbol.iterator]()</code>方法指定它的迭代器，迭代器是实现了.next()方法的对象，.next()方法的返回值形如<code>{done: false, value: xxx}</code></p>
+<p>迭代器贯穿ES6的始终，它是数据和循环的新标准。</p>
+<h3 id="生成器"><a href="#生成器" class="headerlink" title="生成器"></a>生成器</h3><p>生成器函数用<code>function*</code>声明。生成器函数内部的yield类似return，区别是只能return一次却可以yield多次。生成器执行时遇到yield就暂停，后续可恢复执行状态。</p>
+<p>当你调用生成器函数时，它并不立即执行，而是返回一个暂停在函数入口的迭代器。当你调用迭代器的.next()方法时，函数恢复执行，直到下一个yield后再暂停。</p>
+<p>.next()方法接受一个可选参数，该参数在稍后函数恢复执行时会代替yield表达式的返回值</p>
+<p>生成器是迭代器。所有的生成器都有内建<code>[Symbol.iterator]()</code>和.next()方法的实现。你只须编写循环部分的行为。</p>
+<p>使对象可遍历：通过<code>[Symbol.iterator]()</code>方法指定对象的迭代器为生成器函数，编写这个生成器函数来yield这个对象的每一个值。</p>
+<p>当你面对一个复杂的循环时，你可以拆分出生成数据的代码，将其转换为独立的生成器函数，然后使用<code>for (let data of myNewGenerator(args))</code>遍历我们所需的数据。</p>
+<p>yield只能生成一个值；<code>yield*</code>可以后接迭代器，一次次直到遍历该迭代器的所有值</p>
+<p>可用<code>yield*</code>在生成器中调用生成器</p>
+<h3 id="字符串模板"><a href="#字符串模板" class="headerlink" title="字符串模板"></a>字符串模板</h3><p>模板用 `（反撇号）括起来，字符串插值形如<code>${user.name}</code></p>
+<p>标签模板，在模板字符串开始的反撇号前加一个额外的标签</p>
+<figure class="highlight arcade"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> message = SaferHTML<span class="string">`&lt;p&gt;<span class="subst">$&#123;bonk.sender&#125;</span> 向你示好。&lt;/p&gt;`</span>;</span><br></pre></td></tr></table></figure>
+<p>上面代码等效于</p>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">var message = <span class="constructor">SaferHTML(<span class="params">templateData</span>, <span class="params">bonk</span>.<span class="params">sender</span>)</span>;</span><br></pre></td></tr></table></figure>
+<p>templateData是一个不可变数组，存储着模板所有的字符串部分。</p>
+<h3 id="不定参数和默认参数"><a href="#不定参数和默认参数" class="headerlink" title="不定参数和默认参数"></a>不定参数和默认参数</h3><figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">containsAll</span><span class="params">(haystack, <span class="rest_arg">...needles</span>)</span></span></span><br></pre></td></tr></table></figure>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> animal<span class="constructor">Sentence(<span class="params">animals2</span>=<span class="string">"tigers"</span>, <span class="params">animals3</span>=<span class="string">"bears"</span>)</span></span><br></pre></td></tr></table></figure>
+<p>默认值表达式自左向右求值，这意味着，后面的赋值式可以使用前面的刚赋了值的参数</p>
+<p>没有默认值的参数隐式默认为undefined</p>
+<p>传递undefined值等效于不传值</p>
+<h3 id="解构赋值"><a href="#解构赋值" class="headerlink" title="解构赋值"></a>解构赋值</h3><h4 id="数组解构"><a href="#数组解构" class="headerlink" title="数组解构"></a>数组解构</h4><figure class="highlight ceylon"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[ <span class="keyword">variable</span><span class="number">1</span>, <span class="keyword">variable</span><span class="number">2</span>, ..., variableN ] = array;</span><br></pre></td></tr></table></figure>
+<p>如果你想在赋值的同时声明变量，可在赋值语句前加入var、let或const关键字，如：</p>
+<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">const [foo, <span class="string">[[bar], baz]]</span> = [<span class="number">1</span>, <span class="string">[[2], 3]]</span>;</span><br></pre></td></tr></table></figure>
+<p>可以在对应位留空来跳过被解构数组中的某些元素：</p>
+<figure class="highlight maxima"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">var</span> [,,<span class="built_in">third</span>] = [<span class="string">"foo"</span>, <span class="string">"bar"</span>, <span class="string">"baz"</span>];</span><br></pre></td></tr></table></figure>
+<p>可以通过“不定参数”模式捕获数组中的所有尾随元素：</p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">var [head, ...tail] = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>];</span><br></pre></td></tr></table></figure>
+<figure class="highlight gams"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">log</span>(<span class="params">...array</span>)</span>; <span class="comment">// log所有值</span></span><br></pre></td></tr></table></figure>
+<p>当访问空数组或越界访问数组时，对其解构与对其索引的结果都是：undefined</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[<span class="meta"></span>][<span class="number">0</span>] <span class="comment">//undefined</span></span><br><span class="line"><span class="keyword">var</span> [missing] = []; <span class="comment">//undefined</span></span><br></pre></td></tr></table></figure>
+<p>数组解构赋值的模式同样适用于任意迭代器：</p>
+<figure class="highlight arcade"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span>* <span class="title">fibs</span>(<span class="params"></span>) </span>&#123; … &#125;</span><br><span class="line"><span class="keyword">var</span>[first,second,third] = fibs();</span><br></pre></td></tr></table></figure>
+<h4 id="对象解构"><a href="#对象解构" class="headerlink" title="对象解构"></a>对象解构</h4><p>首先指定属性，然后指定变量：</p>
+<figure class="highlight excel"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">var</span>&#123;<span class="built_in">na</span><span class="symbol">me:na</span>meA&#125;=&#123;<span class="built_in">na</span><span class="symbol">me:</span><span class="string">"Bender"</span>&#125;; // nameA</span><br></pre></td></tr></table></figure>
+<p>当属性名与变量名一致时可简写：</p>
+<figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">var</span> &#123; foo, <span class="keyword">bar </span>&#125; = &#123; foo: <span class="string">"lorem"</span>, <span class="keyword">bar: </span><span class="string">"ipsum"</span> &#125;<span class="comment">;</span></span><br></pre></td></tr></table></figure>
+<p>解构对象时若赋值语句前没有let、const或var关键字，要将整个表达式用一对小括号包裹（防止js引擎将任何以<code>{</code>开始的语句解析为块语句）：</p>
+<figure class="highlight clojure"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(&#123; blowUp &#125; = &#123; blowUp: <span class="number">10</span> &#125;)<span class="comment">;</span></span><br></pre></td></tr></table></figure>
+<p>当你要解构的属性未定义时你可以提供一个默认值：</p>
+<figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> [missing = <span class="literal">true</span>] = [];</span><br><span class="line"><span class="keyword">var</span> &#123; message: msg = <span class="string">"Something went wrong"</span> &#125; = &#123;&#125;; <span class="comment">// msg</span></span><br></pre></td></tr></table></figure>
+<h3 id="箭头函数"><a href="#箭头函数" class="headerlink" title="箭头函数"></a>箭头函数</h3><p>只有一个参数时，形如：<code>arg =&gt; expr</code></p>
+<p>多个参数（或无参数、不定参数、默认参数、参数解构）时，要用小括号包裹参数：</p>
+<figure class="highlight arcade"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> total = values.reduce(<span class="function">(<span class="params">a, b</span>) =&gt;</span> a + b, <span class="number">0</span>);</span><br></pre></td></tr></table></figure>
+<p>返回的对象字面量要包裹在小括号里：</p>
+<figure class="highlight arcade"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> chewToys = puppies.map(<span class="function"><span class="params">puppy</span> =&gt;</span> (&#123;&#125;));</span><br></pre></td></tr></table></figure>
+<h3 id="符号"><a href="#符号" class="headerlink" title="符号"></a>符号</h3><figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> isMoving = <span class="constructor">Symbol(“<span class="params">the</span> <span class="params">description</span><span class="string">");</span></span></span><br></pre></td></tr></table></figure>
+<p>symbol不能被自动转换为字符串，要通过<code>String(sym)</code>或<code>sym.toString()</code>显式转换</p>
+<p>获取symbol：</p>
+<ul>
+<li>Symbol() // 新建symbol</li>
+<li>Symbol.for(key) // 共享symbol</li>
+<li>少许几个自带的symbol，如<code>Symbol.iterator</code></li>
+</ul>
+<h3 id="集合"><a href="#集合" class="headerlink" title="集合"></a>集合</h3><p>Map或Set的遍历顺序就是其中元素的插入顺序</p>
+<p>WeakMap或WeakSet都不可遍历</p>
+<h3 id="代理"><a href="#代理" class="headerlink" title="代理"></a>代理</h3><p>有形如<code>obj.[[xxx]]()</code>的14个内部方法</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">var<span class="built_in"> proxy </span>= new Proxy(target, handler)</span><br></pre></td></tr></table></figure>
+<p>handler对象所含的方法将对应重写proxy的内部方法，没被重写的proxy方法调用会转发到target上执行</p>
+<h3 id="let和const"><a href="#let和const" class="headerlink" title="let和const"></a>let和const</h3><p>let就是新的var，块级作用域，for循环的每次迭代绑定新的let变量（不像原来的所有迭代都绑定同一个var变量）</p>
+<p>const声明常量</p>
+<h3 id="模块"><a href="#模块" class="headerlink" title="模块"></a>模块</h3><p>一个文件就是一个模块</p>
+<p>导出：</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="builtin-name">export</span> &#123;detectCats, Kittydar&#125;;</span><br><span class="line"><span class="builtin-name">export</span>  &#123; v1 as streamV1, v2 as streamV2 &#125;;</span><br><span class="line"><span class="builtin-name">export</span><span class="built_in"> default </span>&#123; field1: value1, field2: value2 &#125;;</span><br><span class="line"><span class="builtin-name">export</span> &#123;Tea, Cinnamon&#125; <span class="keyword">from</span> <span class="string">"sri-lanka"</span>;</span><br></pre></td></tr></table></figure>
+<p>或直接在function、class、let/const/var的声明前加<code>export</code>关键字</p>
+<p>导入：</p>
+<figure class="highlight clean"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;detectCats, Kittydar&#125; <span class="keyword">from</span> <span class="string">"kittydar.js"</span>;</span><br><span class="line"><span class="keyword">import</span> &#123;flip <span class="keyword">as</span> flipOmelet&#125; <span class="keyword">from</span> <span class="string">"eggs.js"</span>;</span><br><span class="line"><span class="keyword">import</span> _ <span class="keyword">from</span> <span class="string">"lodash"</span>; <span class="comment">// 导入default</span></span><br><span class="line"><span class="keyword">import</span> * <span class="keyword">as</span> cows <span class="keyword">from</span> “cows”;</span><br></pre></td></tr></table></figure>
+<h3 id="ES7"><a href="#ES7" class="headerlink" title="ES7"></a>ES7</h3><p>Async函数和生成器类似，但特定于异步编程。调用generator返回iterator，调用async函数则返回promise。generator使用yield来暂停并生成值，async函数则使用await来暂停并等着promise。</p>
+<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><ul>
+<li><a href="http://www.infoq.com/cn/es6-in-depth/" target="_blank" rel="noopener">深入浅出ES6 [译]</a>（<a href="https://hacks.mozilla.org/category/es6-in-depth/" target="_blank" rel="noopener">原文</a>）</li>
+</ul>
+</span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              <a class="post-title-link" href="/web/" itemprop="url">
+                构建高性能Web站点
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2015-10-06T00:00:00+08:00" content="2015-10-06">
+            2015-10-06
+          </time>
+        </span>
+
+        
+
+        
+          
+            <span class="post-comments-count">
+              &nbsp; | &nbsp;
+              <a href="/web/#comments" itemprop="discussionUrl">
+                <span class="post-comments-count ds-thread-count" data-thread-key="web/" itemprop="commentsCount"></span>
+              </a>
+            </span>
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody"><h3 id="系统基础"><a href="#系统基础" class="headerlink" title="系统基础"></a>系统基础</h3><p>吞吐率（qps, request per second）量化描述了服务器的并发处理能力</p>
+<p>压力测试的前提条件：</p>
+<ul>
+<li>并发用户数</li>
+<li>总请求数</li>
+<li>请求资源描述（静态/动态）</li>
+</ul>
+<p>数据链路层的流量控制是通过控制接收方来实现的</p>
+<p>支持400MHz前端总线频率的32位处理器，理论上它的总线带宽为：<br>32bit*400MHz = 12.8Gbps = 1.6GB/s</p>
+<p>进程优先级（top命令中的PR）表示进程调度器分配给进程的时间片个数。一个时间片的长度跟CPU的主频和操作系统有关，比如Linux上一般为10ms，那么PR值为15表示这个进程的时间片为150ms。</p>
+<p>Linux对进程的动态调整，体现在进程的nice属性中（top命令中的NI）</p>
+<p>内核级线程一一对应着轻量级进程，所以也有上下文切换开销</p>
+<p>系统负载（top命令中LoadAvg）表示运行队列中就绪态的进程数平均值，<br>top中显示的是最近1分钟、5分钟、15分钟分别计算的系统负载</p>
+<p>进程有独立的内存空间，但只能共享CPU寄存器。进程被挂起的本质是将它在CPU寄存器中的数据拿出来暂存在内核态堆栈中，而恢复工作的本质是将它的数据重新装入CPU寄存器。这段装入装出的数据被称为“硬件上下文”，它是进程上下文的一部分。除此之外，进程上下文还包含进程运行时需要的一切状态信息。</p>
+<p>top的RES值表示其占用的物理内存大小，SWAP值表示其使用的虚拟内存大小，VIRT值等于RES和SWAP的总和，默认单位是KB。</p>
+<p>IOWait指CPU空闲等待IO的时间比例，描述了CPU的性能。CPU可能因为IO在wait，也可能因为频繁切换进程等其他原因在wait，所以IOWait不能代表IO操作的性能。要真正了解当前IO，可以进行磁盘IO测试或查看网络IO流量等。</p>
+<p>同步非阻塞IO：轮询</p>
+<p>多路IO就绪通知</p>
+<ul>
+<li>select/poll：本质上没多大差别，告知所有就绪的文件描述符（level triggered，水平触发），轮询</li>
+<li>sigio：告知刚刚变为就绪状态的文件描述符（edge triggered，边缘触发），轮询</li>
+<li>epoll：支持水平触发和边缘触发，事件通知</li>
+</ul>
+<p>内存映射：将内存中某块地址空间和指定的磁盘文件相关联，从而把对这块内存的访问转换为对磁盘文件的访问<br>在大多数情况下，使用内存映射可以提高磁盘IO的性能，它无须使用read()或write()等系统调用来访问文件，而是通过mmap()系统调用来建立内存和磁盘文件的关联，然后像访问内存一样访问文件。<br>内存映射和直接访问文件没有本质上差别，因为数据从磁盘到用户态内存都要经过两次复制：磁盘&lt;-&gt;内核缓冲区，内核缓冲区&lt;-&gt;用户态内存。</p>
+<p>sendfile()系统调用：处理静态文件请求时，磁盘文件的数据先经过内核缓冲区，到达用户内存空间；因为是不需要任何处理的静态数据，所以它们又被送到网卡对应的内核缓冲区，然后再被送入网卡进行发送。sendfile()系统调用可以将磁盘文件的特定部分直接传送到客户端的socket描述符，加快静态大文件的请求速度</p>
+<hr>
+<h3 id="缓存"><a href="#缓存" class="headerlink" title="缓存"></a>缓存</h3><p>询问服务器本地缓存是否可用（缓存协商）</p>
+<ul>
+<li>Last-Modified 和 If-Modified-Since</li>
+<li>ETag 和 If-None-Match</li>
+</ul>
+<p>使用Last-Modified存在一些缺点，比如，每次文件的修改时间变化后，无论内容是否真的变化，浏览器都会重新获取全部内容；再比如，同一个文件存储在多台Web服务器上，用户的请求在这些服务器之间轮询，实现负载均衡，而这些服务器上同一个文件的最后修改时间很难保证完全相同，这会导致用户的请求每次切换到新的服务器时就需要重新获取全部内容。这时候，使用直接标记内容的某种ETag算法，就可以避免这些问题。</p>
+<p>直接使用本地缓存</p>
+<ul>
+<li>Expires 和 Cache-Control</li>
+</ul>
+<p>Expires使用绝对时间，若客户端和服务端的时间不一致，本地缓存的有效期检查就有问题。Cache-Control使用max-age这一相对时间弥补了Expires的不足。当响应头中同时含有Expires和Cache-Control时，浏览器优先使用Cache-Control。</p>
+<p>要更新静态文件的缓存，在引用文件时让url发生变化即可，比如增加一些个性化的参数：the-static-file-url?v=1.2</p>
+<p>长连接：客户端在发出的http请求头中包含<code>Connection: Keep-Alive</code>，服务端一般默认支持长连接。当客户端和服务端对长连接的超时设置不一致时，以较短的超时时间为准</p>
+<p>gzip压缩：请求头里面可用<code>Accept-Encoding</code>告知浏览器支持的压缩方式，而服务端则用<code>Content-Encoding</code>作为回应</p>
+<p>浏览器三种刷新方式：</p>
+<ul>
+<li>Ctrl+F5或Ctrl+刷新按钮：强制刷新，缓存都无效</li>
+<li>F5或刷新按钮：一般刷新，缓存协商有效（Last-Modified有效），但本地缓存无效（Expires无效）</li>
+<li>点击超链接或地址栏输入后跳转：以最少请求来获取网页，会对所有没过期内容直接使用本地缓存（Expires只对这种方式有效）</li>
+</ul>
+<p>浏览器对同一域名有最大并发数限制。为了增加并发，尤其是对一些静态资源，可以使用多个域名。但由于域名解析本身也耗时，所以实践上2-4个为宜。需要注意是，加载js脚本时会暂停加载其他资源。</p>
+<p>当我们扩展缓存系统的服务器数后，由于分区算法的改变，重建和预热缓存需要时间，但我们不需要考虑缓存数据在分区之间的迁移，因为这是缓存，不影响站点的正常运转。</p>
+<hr>
+<h3 id="数据库"><a href="#数据库" class="headerlink" title="数据库"></a>数据库</h3><p>在select语句前加<code>explain</code>，可以看查询过程是否使用了索引</p>
+<p>一次查询只能使用一个索引，多个索引无法共同使用，所以有时要创建组合索引</p>
+<p>索引对where / order by / group by子句中使用的字段都可起作用，若查询子句只包含组合索引的最左前缀（创建组合索引时的多个key中最左的几个key），则查询会直接使用这个组合索引</p>
+<p>mysql可以开启慢查询日志，和未使用索引查询的日志</p>
+<p>大多数的慢查询都是因为索引使用不当，其他原因包括查询语句过于复杂（比如联合查询）或者数据表记录数过多，通过反范式化设计（引入冗余数据）和数据分区可以有效改善这一状况。</p>
+<p>mysql可以开启查询缓存。缓存过期策略是：当一个数据表有更新操作后（如update或insert），涉及这个表的所有查询缓存都失效。</p>
+<p>mysql可以开启线程池</p>
+<p>两种数据库格式：</p>
+<ul>
+<li>MyISAM：表锁定</li>
+<li>Innodb：行锁定、事务（预写日志）</li>
+</ul>
+<p>简单地说，3NF（第三范式）要求在一个数据表中，非主键字段之间不存在依赖关系</p>
+<hr>
+<h3 id="负载均衡"><a href="#负载均衡" class="headerlink" title="负载均衡"></a>负载均衡</h3><ul>
+<li>http重定向：使用http响应头的Location域</li>
+<li>DNS负载均衡</li>
+<li>反向代理负载均衡</li>
+<li>NAT</li>
+<li>直接路由</li>
+<li>IP隧道</li>
+</ul>
+<p>后端怎么保存session：</p>
+<ul>
+<li>本地化保存，要对ip做hash或用cookie记后端服务器编号</li>
+<li>分布式session服务器</li>
+</ul>
+<p>NAT，内核态转发</p>
+<ul>
+<li>Netfilter/iptables。Netfilter在内核中维护着一些数据包过滤表，iptables这命令行工具可以对Netfilter的过滤表进行插入、修改或删除操作</li>
+<li>IPVS/ipvsadm。ipvsadm比iptables用起来更方便</li>
+</ul>
+<p>当实际服务器的吞吐率小于3000qps时，反向代理和NAT负载均衡的整体吞吐率差距不大。这意味着对于一些开销较大的内容，使用简单的反向代理来搭建负载均衡系统非常值得考虑，至少在初期是个快速有效的方案，而且它非常容易迁移到NAT方式。</p>
+<p>将基于NAT的集群和DNS轮询混合使用，你可以组建多个条件允许的NAT集群，比如5个100Mbps出口带宽的集群，然后通过DNS轮询方式来将用户请求均衡地指向这些集群，同时你还可以利用DNS智能解析实现地域就近访问。</p>
+<p>直接路由（也使用ipvsadm）：<br>工作在数据链路层（第二层），调度器通过修改数据包的目标MAC地址，将它转发到实际服务器。实际服务器要添加和调度器相同的IP别名，设置不寻找其他拥有这个IP别名的服务器，不响应网络中针对这个IP别名的ARP广播，这样才可以让转发到实际服务器的数据包找到归属。</p>
+<p>IP别名：一个网络接口除了拥有一个IP地址，最多还可以为它设置256个IP别名</p>
+<p>直接路由比起NAT转发的优势在于，实际服务器的响应数据包不经过调度器而直接发往用户端（实际服务器要直接接入外部网络）</p>
+<p>RFC1918规定的私有IP地址范围是：</p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">10.0</span><span class="number">.0</span><span class="number">.0</span>      -   <span class="number">10.255</span><span class="number">.255</span><span class="number">.255</span>     (<span class="number">10</span>/<span class="number">8</span> prefix)</span><br><span class="line"><span class="number">172.16</span><span class="number">.0</span><span class="number">.0</span>    -   <span class="number">172.31</span><span class="number">.255</span><span class="number">.255</span>     (<span class="number">172.16</span>/<span class="number">12</span> prefix)</span><br><span class="line"><span class="number">192.168</span><span class="number">.0</span><span class="number">.0</span>   -   <span class="number">192.168</span><span class="number">.255</span><span class="number">.255</span>    (<span class="number">192.168</span>/<span class="number">16</span> prefix)</span><br></pre></td></tr></table></figure>
+<p>IP隧道：<br>与直接路由类似，但实际服务器和调度器可以不在同一个WAN网段，将调度器收到的IP数据包封装在新数据包中转发给实际服务器，然后实际服务器的响应数据包可以直接发往用户端。</p>
+<hr>
+<h3 id="扩展数据库"><a href="#扩展数据库" class="headerlink" title="扩展数据库"></a>扩展数据库</h3><p>主从复制（主服务器开启日志，写操作只能在主服务器）、读写分离（MySQL Proxy，数据库反向代理）</p>
+<p>垂直分区：将不需要联合使用的数据库表分布到不同的服务器</p>
+<p>水平分区：将同一数据表中的记录通过特定算法分离成不同的数据表，从而可以部署到不同的服务器</p>
+<p>事实上，很多大规模的站点基本上都经历了从简单主从复制到垂直分区，再到水平分区的过程</p>
+<p>分区算法：</p>
+<ul>
+<li>按哈希分：按照分区索引字段的哈希做分区，对分区扩展并不友好，一旦我们需要从10个分区扩展到20个分区，这便涉及所有数据的重新分区</li>
+<li>按范围分：按照分区索引字段的范围做分区，较好扩展，但各个分区的工作量会存在较大差异</li>
+<li>维持映射关系：维持每个记录的分区对应关系，可能十分庞大</li>
+</ul>
+<p>分布式的并行计算：Map/Reduce</p>
+<hr>
+<h3 id="工具"><a href="#工具" class="headerlink" title="工具"></a>工具</h3><p>用apache附带的<code>ab</code>做压力测试</p>
+<p>用Nmon可以监视服务器每秒上下文切换次数</p>
+<p>反向代理缓存服务器：Squid太古老笨重，可用Varnish</p>
+<p>用mysqlsla查看mysql慢查询日志</p>
+<p>Spock Proxy，mysql多个水平分区的访问调度</p>
+<hr>
+<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><ul>
+<li>《构建高性能Web站点》，郭欣，2009</li>
+<li><a href="http://www.2liang.me/archives/264" target="_blank" rel="noopener">构建高性能WEB之HTTP首部优化</a></li>
+<li><a href="http://segmentfault.com/a/1190000003821219" target="_blank" rel="noopener">前端性能优化方案索引</a></li>
+</ul>
+</span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              <a class="post-title-link" href="/debug/" itemprop="url">
+                Debug笔记
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2014-12-12T00:00:00+08:00" content="2014-12-12">
+            2014-12-12
+          </time>
+        </span>
+
+        
+
+        
+          
+            <span class="post-comments-count">
+              &nbsp; | &nbsp;
+              <a href="/debug/#comments" itemprop="discussionUrl">
+                <span class="post-comments-count ds-thread-count" data-thread-key="debug/" itemprop="commentsCount"></span>
+              </a>
+            </span>
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody"><h3 id="错误预防"><a href="#错误预防" class="headerlink" title="错误预防"></a>错误预防</h3><p>断言：</p>
+<ul>
+<li>NSParameterAssert/NSAssert用于ObjC函数，NSCParameterAssert/NSCAssert用于C函数</li>
+<li>ObjC函数中<code>NSParameterAssert</code>用在开头检查输入参数，其他情况都用<code>NSAssert</code></li>
+<li>不用<code>assert</code>，因为它只终止程序不输出信息</li>
+</ul>
+<p>参数非nil的编译检查：</p>
+<figure class="highlight erlang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">- <span class="params">(void)</span>doSomethingWithRequiredString:<span class="params">(NSString *)</span>requiredString </span><br><span class="line">                                  bar:<span class="params">(NSString *)</span>optionalString </span><br><span class="line">                                  __attribute<span class="params">((nonnull(<span class="number">1</span>))</span>);</span><br></pre></td></tr></table></figure>
+<h3 id="LLDB"><a href="#LLDB" class="headerlink" title="LLDB"></a>LLDB</h3><p><code>e</code>（即<code>expression</code>）对表达式求值，是lldb最基本的命令</p>
+<p><code>p</code>（即<code>print</code>）是<code>expression --</code>的简写，<code>po</code>是<code>expression -O --</code>的简写</p>
+<p><code>p/&lt;format&gt;</code>可以指定print的<a href="https://sourceware.org/gdb/onlinedocs/gdb/Output-Formats.html" target="_blank" rel="noopener">输出格式</a>，如：</p>
+<figure class="highlight maxima"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">(lldb) p/x <span class="number">16</span>            // <span class="number">0x10</span></span><br><span class="line">(lldb) p/t (char)<span class="number">16</span>      // <span class="number">0b00010000</span>，t stands <span class="keyword">for</span> two</span><br></pre></td></tr></table></figure>
+
+<p>lldb可以声明变量名以<code>$</code>开始的变量：</p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">(lldb) e <span class="built_in">int</span> $a = <span class="number">2</span></span><br><span class="line">(lldb) p $a * <span class="number">19</span>         <span class="comment">// 38</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">(lldb) <span class="keyword">e</span> NSArray *<span class="variable">$array</span> = @[ @<span class="string">"Sunday"</span>, @<span class="string">"Monday"</span> ]</span><br><span class="line">(lldb) p [<span class="variable">$array</span> <span class="keyword">count</span>]  <span class="comment">// 2</span></span><br></pre></td></tr></table></figure>
+
+<p>若lldb不清楚返回值的类型，需要明确指定：</p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(lldb) p (char)[[$<span class="built_in">array</span> objectAtIndex:<span class="number">0</span>] characterAtIndex:<span class="number">0</span>]    <span class="comment">// 'S'</span></span><br></pre></td></tr></table></figure>
+
+<p>或者导入框架，然后就不需指定返回值类型：</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">(lldb) expr @import UIKit</span><br><span class="line">(lldb) <span class="selector-tag">p</span> slef<span class="selector-class">.window</span>.bounds</span><br></pre></td></tr></table></figure>
+
+<p>为方便起见，可在~/.lldbinit中添加：</p>
+<figure class="highlight elm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">command</span> <span class="keyword">alias</span> uikit expr @<span class="keyword">import</span> UIKit</span><br></pre></td></tr></table></figure>
+
+<p><code>c</code>/<code>n</code>/<code>s</code>/<code>fin</code>（即continue / next / step / finish）分别对应Continue、Step Over、Step Into、Step Out</p>
+<p><code>frame info</code>可以查看当前函数调用帧</p>
+<p><code>thread return [value]</code>可以让函数直接return或return某个值</p>
+<h4 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h4><p>查看window的hierarchy（pviews）：</p>
+<figure class="highlight inform7"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">po <span class="comment">[<span class="comment">[UIWindow keyWindow]</span> recursiveDescription]</span></span><br></pre></td></tr></table></figure>
+
+<p>查看viewController的hierarchy（pvc）：</p>
+<figure class="highlight inform7"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">po <span class="comment">[<span class="comment">[<span class="comment">[UIWindow keyWindow]</span> rootViewController]</span> _printHierarchy]</span> // _printHierarchy是iOS8里的私有方法</span><br></pre></td></tr></table></figure>
+
+<p>更改视图属性后刷新界面（caflush）：</p>
+<figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">e (<span class="keyword">void</span>)[CATransaction <span class="built_in">flush</span>]</span><br></pre></td></tr></table></figure>
+
+<p>先找到某button的target：</p>
+<figure class="highlight pf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">(lldb) po [<span class="variable">$myButton</span> <span class="literal">all</span>Targets]</span><br><span class="line">&#123;(</span><br><span class="line">    <span class="variable">&lt;MagicEventListener: 0x7fb58bd2e240&gt;</span></span><br><span class="line">)&#125;</span><br><span class="line">(lldb) po [<span class="variable">$myButton</span> actionsForTarget:(id)<span class="number">0</span>x7fb58bd2e240 <span class="keyword">for</span>ControlEvent:<span class="number">0</span>]</span><br><span class="line"><span class="variable">&lt;__NSArrayM 0x7fb58bd2aa40&gt;</span>(</span><br><span class="line">_handleTap:</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<p>然后在<code>-[MyEventListener _handleTap:]</code>上设置符号断点</p>
+<h3 id="Chisel"><a href="#Chisel" class="headerlink" title="Chisel"></a>Chisel</h3><p>LLDB内置支持python，通过<code>script</code>命令可调用python代码：</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">(lldb)<span class="built_in"> script </span>import os</span><br><span class="line">(lldb)<span class="built_in"> script </span>os.system(<span class="string">"open http://www.objc.io/"</span>)</span><br></pre></td></tr></table></figure>
+
+<p><a href="https://github.com/facebook/chisel" target="_blank" rel="noopener">Chisel</a>就是通过<code>~/.lldbinit</code>加载的便利iOS调试的python脚本集合：</p>
+<ul>
+<li><p>查看window的hierarchy：<code>pviews</code></p>
+</li>
+<li><p>查看viewController的hierarchy：<code>pvc</code></p>
+</li>
+<li><p>查看responder链：<code>presponder</code></p>
+</li>
+<li><p>更改视图属性后刷新界面：<code>caflush</code></p>
+</li>
+<li><p>显示/隐藏视图：<code>show</code>/<code>hide</code></p>
+</li>
+<li><p>监视ivar变化：<code>wiar</code></p>
+  <figure class="highlight arcade"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(lldb) wivar <span class="symbol">$my</span>View _layer</span><br></pre></td></tr></table></figure></li>
+<li><p>在message上设置断点：<code>bmessage</code></p>
+  <figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(<span class="keyword">lldb) </span><span class="keyword">bmessage </span>-[MyViewController viewDidAppear:]</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h3 id="Aspects"><a href="#Aspects" class="headerlink" title="Aspects"></a>Aspects</h3><p>用<a href="https://github.com/steipete/Aspects" target="_blank" rel="noopener">Aspects</a>可以hook进方法打印log：</p>
+<figure class="highlight scheme"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[<span class="name">UIViewController</span> aspect_hookSelector:@selector(<span class="name">viewWillAppear:</span>) withOptions:AspectPositionAfter usingBlock:^(<span class="name">id&lt;AspectInfo&gt;</span> aspectInfo, BOOL animated) &#123;</span><br><span class="line">    NSLog(<span class="name">@</span><span class="string">"View Controller %@ will appear animated: %tu"</span>, aspectInfo.instance, animated)<span class="comment">;</span></span><br><span class="line">&#125; error:NULL]<span class="comment">;</span></span><br></pre></td></tr></table></figure>
+<p>其中block的第一个参数是<code>id&lt;AspectInfo&gt;</code>，其他参数（可选）就是被hook方法的参数列表</p>
+<h3 id="参考："><a href="#参考：" class="headerlink" title="参考："></a>参考：</h3><ul>
+<li><a href="http://www.objc.io/issue-19/debugging-case-study.html" target="_blank" rel="noopener">Debugging: A Case Study</a></li>
+<li><a href="http://www.objc.io/issue-19/lldb-debugging.html" target="_blank" rel="noopener">Dancing in the Debugger — A Waltz with LLDB</a></li>
+<li><a href="http://furbo.org/2015/05/11/an-import-ant-change-in-xcode/" target="_blank" rel="noopener">An @import-ant Change in Xcode</a></li>
+</ul>
+</span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+  </section>
+
+  
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" href="/">&amp;laquo;</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/3/">&amp;raquo;</a>
+  </nav>
+
+ </div>
+
+        
+
+        
+      </div>
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="/images/avatar.png" alt="Yang Le" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">Yang Le</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description"></p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">47</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">0</span>
+              <span class="site-state-item-name">分类</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">13</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="menu-item-icon icon-next-feed"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner"> <div class="copyright" >
+  
+  &copy; &nbsp; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="icon-next-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Yang Le</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io" target="_blank" rel="noopener">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next" target="_blank" rel="noopener">
+    NexT.Mist
+  </a>
+</div>
+
+
+ </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"smilingpoplar"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+    
+     
+
+    
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.5.1"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.5.1"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.5.1" id="motion.global"></script>
+
+
+
+
+  <script type="text/javascript" src="/js/nav-toggle.js?v=0.4.5.1"></script>
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+      if (isMobile()) {
+        FastClick.attach(document.body);
+      }
+    });
+  </script>
+
+  
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/lazyload.js"></script>
+  <script type="text/javascript">
+    $(function () {
+      $("#posts").find('img').lazyload({
+        placeholder: "/images/loading.gif",
+        effect: "fadeIn"
+      });
+    });
+  </script>
+</body>
+</html>
