@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://note.49px.com/tags/index.html</loc>
+    
+    <lastmod>2020-01-07T14:59:48.302Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://note.49px.com/cocos2d/</loc>
     
     <lastmod>2020-01-07T12:52:46.973Z</lastmod>
