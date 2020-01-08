@@ -294,7 +294,7 @@
       
         
           <span itemprop="articleBody"><p>经典的MVC (Model-View-Controller) 里Model负责数据，View负责界面，Controller负责两者之间的交互。但仔细想想，View和Controller虽然是不同的组件，却几乎总是一对一配套使用。在MVVM (Model-View-ViewModel) 中，就把MVC的View和Controller概念合并成一个View/Controller，然后Model-View间多加一层ViewModel。</p>
-<p><img src="/images/mvvm.png" alt=""></p>
+<p><img src="/media/mvvm.png" alt=""></p>
 <p>在ViewModel可以将Model数据转换为View呈现所需数据（如将NSDate格式化成字符串），可以保存View状态，可以做用户输入的验证，可以发收网络请求等。</p>
 <p>ViewModel的属性变化通过KVO (Key-Value Observing) 通知Controller，可用facebook的<code>KVOController</code>库。</p>
 <p>ps: <code>[photosArray addObjectsFromArray:photos]</code>不会发KVO通知，要用<code>[[self mutableArrayValueForKeyPath:@&quot;photosArray&quot;] addObjectsFromArray:photos];</code>。</p>
@@ -593,7 +593,7 @@
 
 <p>AutoLayout先自底向上updateConstraints，再自顶向下layoutSubviews。layoutSubviews时调view的<code>setCenter:</code>和<code>setBounds:</code></p>
 <p>constraint的priority默认1000（required constraint），当priority&lt;1000时表示optional constraint，数值越高优先级越高。</p>
-<p>Intrinsic Content Size &amp; Compression Resistance &amp; Content Hugging：<br><img src="/images/intrinsic-content-size.png" alt=""></p>
+<p>Intrinsic Content Size &amp; Compression Resistance &amp; Content Hugging：<br><img src="/media/intrinsic-content-size.png" alt=""></p>
 <h4 id="debug"><a href="#debug" class="headerlink" title="debug"></a>debug</h4><ul>
 <li>ambigulous: multiple layouts satisfy all constraints equally well</li>
 <li>unsatisfiability: no layout can satisfy all <strong>required</strong> constraints</li>
@@ -787,7 +787,7 @@
 
 <figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> objc_super &#123;</span><br><span class="line">   __<span class="keyword">unsafe_unretained</span> <span class="keyword">id</span> receiver;</span><br><span class="line">   __<span class="keyword">unsafe_unretained</span> Class super_class;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 <p>其中receiver就是self，super_class就是实际超类。同样向self发消息，但从超类的方法列表开始，沿继承链向上找@selector(class)的实现。由于没重载过这个方法，最终调用NSObject中的实现。</p>
-<h4 id="Object-amp-Class-amp-MetaClass"><a href="#Object-amp-Class-amp-MetaClass" class="headerlink" title="Object &amp; Class &amp; MetaClass"></a>Object &amp; Class &amp; MetaClass</h4><p><img src="/images/object-class-metaclass.jpg" alt=""></p>
+<h4 id="Object-amp-Class-amp-MetaClass"><a href="#Object-amp-Class-amp-MetaClass" class="headerlink" title="Object &amp; Class &amp; MetaClass"></a>Object &amp; Class &amp; MetaClass</h4><p><img src="/media/object-class-metaclass.jpg" alt=""></p>
 <p>Class也是个对象，Class的类叫MetaClass。有几个特点：</p>
 <ul>
 <li>MetaClass的superclass继承链，和对应的原本Class的superclass继承链类似；只有根类特殊：NSObject的superclass为nil，MetaClass-of-NSObject的superclass为NSObject</li>
@@ -884,7 +884,7 @@
 <p>不需要CA机构了（CA机构颁发证书较贵），可以自己颁发证书</p>
 <p>适用于非浏览器应用，比如CS架构的app。因为浏览器跟很多未知服务器打交道，无法保存每个服务器的证书</p>
 <p>中间人虽然可以从客户端取出证书伪装成服务器并通过证书验证，但后续的数据通讯客户端会用证书中的公钥加密，中间人没有私钥无法解密</p>
-<h3 id="SSL的握手过程"><a href="#SSL的握手过程" class="headerlink" title="SSL的握手过程"></a>SSL的握手过程</h3><p><a href="https://blog.cloudflare.com/content/images/2014/Sep/ssl_handshake_rsa.jpg" target="blank"><img src="https://blog.cloudflare.com/content/images/2014/Sep/ssl_handshake_rsa.jpg" width="600px" /></a></p>
+<h3 id="SSL的握手过程"><a href="#SSL的握手过程" class="headerlink" title="SSL的握手过程"></a>SSL的握手过程</h3><p><a href="https://blog.cloudflare.com/content/media/2014/Sep/ssl_handshake_rsa.jpg" target="blank"><img src="https://blog.cloudflare.com/content/media/2014/Sep/ssl_handshake_rsa.jpg" width="600px" /></a></p>
 <ul>
 <li><p>客户端和服务端一共同步三个随机数以生成最后的session key。前两个随机数client random和server random明文传输，第三个随机数pre-master key用服务器的公密钥加解密（非对称加密）</p>
 </li>

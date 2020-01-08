@@ -47,14 +47,14 @@
 <meta property="og:url" content="http://note.49px.com/objc-runtime/index.html">
 <meta property="og:site_name" content="Dev Note">
 <meta property="og:description" content="1#import &quot;objc&#x2F;runtime.h&quot; Runtime术语objc_msgSend的方法定义： 1id objc_msgSend(id self, SEL op, ...); SEL1typedef struct objc_selector *SEL; SEL即selector，本质是方法名的常量字符串，所以同名方法就是同一个selector id1typedef struct obj">
-<meta property="og:image" content="http://note.49px.com/images/object-class-metaclass.jpg">
+<meta property="og:image" content="http://note.49px.com/media/object-class-metaclass.jpg">
 <meta property="article:published_time" content="2014-11-12T16:00:00.000Z">
-<meta property="article:modified_time" content="2017-01-14T04:33:01.000Z">
+<meta property="article:modified_time" content="2020-01-08T02:12:08.908Z">
 <meta property="article:author" content="Yang Le">
 <meta property="article:tag" content="ios">
 <meta property="article:tag" content="lang">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://note.49px.com/images/object-class-metaclass.jpg">
+<meta name="twitter:image" content="http://note.49px.com/media/object-class-metaclass.jpg">
 
 
 <script type="text/javascript" id="hexo.configuration">
@@ -284,7 +284,7 @@
 
 <figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> objc_super &#123;</span><br><span class="line">   __<span class="keyword">unsafe_unretained</span> <span class="keyword">id</span> receiver;</span><br><span class="line">   __<span class="keyword">unsafe_unretained</span> Class super_class;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 <p>其中receiver就是self，super_class就是实际超类。同样向self发消息，但从超类的方法列表开始，沿继承链向上找@selector(class)的实现。由于没重载过这个方法，最终调用NSObject中的实现。</p>
-<h4 id="Object-amp-Class-amp-MetaClass"><a href="#Object-amp-Class-amp-MetaClass" class="headerlink" title="Object &amp; Class &amp; MetaClass"></a>Object &amp; Class &amp; MetaClass</h4><p><img src="/images/object-class-metaclass.jpg" alt=""></p>
+<h4 id="Object-amp-Class-amp-MetaClass"><a href="#Object-amp-Class-amp-MetaClass" class="headerlink" title="Object &amp; Class &amp; MetaClass"></a>Object &amp; Class &amp; MetaClass</h4><p><img src="/media/object-class-metaclass.jpg" alt=""></p>
 <p>Class也是个对象，Class的类叫MetaClass。有几个特点：</p>
 <ul>
 <li>MetaClass的superclass继承链，和对应的原本Class的superclass继承链类似；只有根类特殊：NSObject的superclass为nil，MetaClass-of-NSObject的superclass为NSObject</li>

@@ -337,22 +337,22 @@
 
       
         
-          <span itemprop="articleBody"><h4 id="词向量"><a href="#词向量" class="headerlink" title="词向量"></a>词向量</h4><p>词的分布假说：词的特征由其上下文决定。<br><img src="/images/cs224n-word-context.png" alt=""><br>词向量又称词嵌入（word embedding），把词映射到某几个特征构成的低维向量。<em>embedding</em>在数学上表示一个映射，该映射是单射的（每个Y只有唯一的X对应，反之亦然）、结构保存的（比如在X所属空间上X1&lt;X2，那么映射后在Y所属空间上同样Y1&lt;Y2）。</p>
-<p>工具word2vec可训练词向量。skip-gram从中心词预测周围词，CBOW从周围词预测中心词。<br><img src="/images/cs224n-word2vec-main-idea.png" alt=""></p>
-<h5 id="skip-gram"><a href="#skip-gram" class="headerlink" title="skip-gram"></a>skip-gram</h5><p>对每个单词，计算与前后各m个邻近词共同出现的概率积J’(θ)。loss函数用负对数似然估计J(θ)。<br><img src="/images/cs224n-skipgram-detail-1.png" alt=""><br>与邻近词$u_o$共同出现的概率$p(o|c)$用softmax表示，其中$u_o^Tv_c$是邻近词$u_o$与中心词$v_c$的相似度。<br><img src="/images/cs224n-skipgram-detail-2.png" alt=""><br><a href="http://web.stanford.edu/class/cs224n/lectures/" target="_blank" rel="noopener">Lecture2课件</a>有梯度$\frac{\partial{J(θ)}}{\partial{v_c}}$的推导过程。</p>
-<p><a href="https://www.youtube.com/watch?v=2DYxT4OMAmw&index=10&list=PL3FW7Lu3i5Jsnh1rnUwq_TcylNr7EkRe6" target="_blank" rel="noopener">Midterm Review</a>有skip-gram例子讲清楚过程。<br><img src="/images/cs224n-skipgram-process.png" alt=""></p>
-<h5 id="cbow"><a href="#cbow" class="headerlink" title="cbow"></a>cbow</h5><p><img src="/images/cs224n-cbow-process.png" alt=""></p>
-<h5 id="glove"><a href="#glove" class="headerlink" title="glove"></a>glove</h5><p>skip-gram用梯度下降法逐步计算了单词之间共同出现的概率。还可以用个全局矩阵记录单词之间在一定窗口内共同出现的次数，GloVe利用了这一信息。<br><img src="/images/cs224n-glove-process.png" alt=""></p>
+          <span itemprop="articleBody"><h4 id="词向量"><a href="#词向量" class="headerlink" title="词向量"></a>词向量</h4><p>词的分布假说：词的特征由其上下文决定。<br><img src="/media/cs224n-word-context.png" alt=""><br>词向量又称词嵌入（word embedding），把词映射到某几个特征构成的低维向量。<em>embedding</em>在数学上表示一个映射，该映射是单射的（每个Y只有唯一的X对应，反之亦然）、结构保存的（比如在X所属空间上X1&lt;X2，那么映射后在Y所属空间上同样Y1&lt;Y2）。</p>
+<p>工具word2vec可训练词向量。skip-gram从中心词预测周围词，CBOW从周围词预测中心词。<br><img src="/media/cs224n-word2vec-main-idea.png" alt=""></p>
+<h5 id="skip-gram"><a href="#skip-gram" class="headerlink" title="skip-gram"></a>skip-gram</h5><p>对每个单词，计算与前后各m个邻近词共同出现的概率积J’(θ)。loss函数用负对数似然估计J(θ)。<br><img src="/media/cs224n-skipgram-detail-1.png" alt=""><br>与邻近词$u_o$共同出现的概率$p(o|c)$用softmax表示，其中$u_o^Tv_c$是邻近词$u_o$与中心词$v_c$的相似度。<br><img src="/media/cs224n-skipgram-detail-2.png" alt=""><br><a href="http://web.stanford.edu/class/cs224n/lectures/" target="_blank" rel="noopener">Lecture2课件</a>有梯度$\frac{\partial{J(θ)}}{\partial{v_c}}$的推导过程。</p>
+<p><a href="https://www.youtube.com/watch?v=2DYxT4OMAmw&index=10&list=PL3FW7Lu3i5Jsnh1rnUwq_TcylNr7EkRe6" target="_blank" rel="noopener">Midterm Review</a>有skip-gram例子讲清楚过程。<br><img src="/media/cs224n-skipgram-process.png" alt=""></p>
+<h5 id="cbow"><a href="#cbow" class="headerlink" title="cbow"></a>cbow</h5><p><img src="/media/cs224n-cbow-process.png" alt=""></p>
+<h5 id="glove"><a href="#glove" class="headerlink" title="glove"></a>glove</h5><p>skip-gram用梯度下降法逐步计算了单词之间共同出现的概率。还可以用个全局矩阵记录单词之间在一定窗口内共同出现的次数，GloVe利用了这一信息。<br><img src="/media/cs224n-glove-process.png" alt=""></p>
 <h5 id="词窗口分类"><a href="#词窗口分类" class="headerlink" title="词窗口分类"></a>词窗口分类</h5><p>利用前后各m个邻近词，把中心词在几个歧义中的分类。</p>
 <hr>
 <h4 id="RNN是基础构件"><a href="#RNN是基础构件" class="headerlink" title="RNN是基础构件"></a>RNN是基础构件</h4><p>RNN有一个内部状态$h_{t-1}$、待训练参数$W=\begin{bmatrix} W^{(hh)} &amp; W^{(hx)}\end{bmatrix}$，每次读取输入$x_t$，更新$z_t=W^{(hh)}h_{t-1}+W^{(hx)}x_t=\begin{bmatrix} W^{(hh)} &amp; W^{(hx)}\end{bmatrix} \begin{pmatrix}h_{t-1} \cr x_t\end{pmatrix}, h_t=g(z_t)$。</p>
 <p>RNN网络深度较大，因链式求导不断相乘，有梯度消失或爆炸的问题。GRU和LSTM缓解了梯度消失问题，是常用的RNN。</p>
-<h5 id="GRU-Gated-Recurrent-Unit"><a href="#GRU-Gated-Recurrent-Unit" class="headerlink" title="GRU, Gated Recurrent Unit"></a>GRU, Gated Recurrent Unit</h5><p>$h_t=gru(x_t, h_{t-1})$<br>$\tilde{h}_t$是候选更新，update gate $z_t$决定新状态中旧状态和候选更新所占比例，reset gate $r_t$决定候选更新中保留多少旧状态。<br><img src="/images/cs224n-gru-intuition-1.png" alt="">)<img src="/images/cs244n-gru-intuition-2.png" alt=""></p>
-<h5 id="LSTM-Long-Short-Term-Memory"><a href="#LSTM-Long-Short-Term-Memory" class="headerlink" title="LSTM, Long Short Term Memory"></a>LSTM, Long Short Term Memory</h5><p>$h_t=lstm(x_t, h_{t-1})$<br><img src="/images/cs224n-lstm-1.png" alt="">)<img src="/images/cs224n-lstm-2.png" alt=""></p>
+<h5 id="GRU-Gated-Recurrent-Unit"><a href="#GRU-Gated-Recurrent-Unit" class="headerlink" title="GRU, Gated Recurrent Unit"></a>GRU, Gated Recurrent Unit</h5><p>$h_t=gru(x_t, h_{t-1})$<br>$\tilde{h}_t$是候选更新，update gate $z_t$决定新状态中旧状态和候选更新所占比例，reset gate $r_t$决定候选更新中保留多少旧状态。<br><img src="/media/cs224n-gru-intuition-1.png" alt="">)<img src="/media/cs244n-gru-intuition-2.png" alt=""></p>
+<h5 id="LSTM-Long-Short-Term-Memory"><a href="#LSTM-Long-Short-Term-Memory" class="headerlink" title="LSTM, Long Short Term Memory"></a>LSTM, Long Short Term Memory</h5><p>$h_t=lstm(x_t, h_{t-1})$<br><img src="/media/cs224n-lstm-1.png" alt="">)<img src="/media/cs224n-lstm-2.png" alt=""></p>
 <h4 id="神经机器翻译"><a href="#神经机器翻译" class="headerlink" title="神经机器翻译"></a>神经机器翻译</h4><p>语言模型计算整个单词序列的概率$P(w_1,…,w_r)$。</p>
-<p>由两个RNN分别作encoder（蓝色）和decoder（红色）。由于只记住encoder最后状态Y，翻译长句子时效果不好。<br><img src="/images/cs224n-rnn-language-model.png" alt=""><br>Attention的想法是多记住一些源状态。<br><img src="/images/cs224n-attention-mechanism-1.png" alt=""><br>decoder算$h_t$时，先算$h_{t-1}$与各源状态的相似性得分，用softmax将得分转成概率（这概率就叫attention），再加权相加各源状态得到上下文向量$c_t$，用$c_t$计算$h_t$。<br><img src="/images/cs224n-attention-mechanism-2.png" alt=""></p>
-<h4 id="CNN"><a href="#CNN" class="headerlink" title="CNN"></a>CNN</h4><p>词向量拼接成长向量，长为h词的滑动filter作卷积算$c_i$<br><img src="/images/cs224n-cnn-in-nlp.png" alt=""><br><img src="/images/cs224n-cnn-vs-rnn.png" alt=""></p>
-<h4 id="TreeRNN-Tree-Recursive-Neural-Network"><a href="#TreeRNN-Tree-Recursive-Neural-Network" class="headerlink" title="TreeRNN, Tree Recursive Neural Network"></a>TreeRNN, Tree Recursive Neural Network</h4><p><img src="/images/cs224n-recursive-vs-recurrent.png" alt=""><br>结构预测：将相邻两节点用神经网络算合并分数，取得分最高的合并出新节点。<br><img src="/images/cs224n-recursive-nn-structure-prediction.png" alt=""></p>
+<p>由两个RNN分别作encoder（蓝色）和decoder（红色）。由于只记住encoder最后状态Y，翻译长句子时效果不好。<br><img src="/media/cs224n-rnn-language-model.png" alt=""><br>Attention的想法是多记住一些源状态。<br><img src="/media/cs224n-attention-mechanism-1.png" alt=""><br>decoder算$h_t$时，先算$h_{t-1}$与各源状态的相似性得分，用softmax将得分转成概率（这概率就叫attention），再加权相加各源状态得到上下文向量$c_t$，用$c_t$计算$h_t$。<br><img src="/media/cs224n-attention-mechanism-2.png" alt=""></p>
+<h4 id="CNN"><a href="#CNN" class="headerlink" title="CNN"></a>CNN</h4><p>词向量拼接成长向量，长为h词的滑动filter作卷积算$c_i$<br><img src="/media/cs224n-cnn-in-nlp.png" alt=""><br><img src="/media/cs224n-cnn-vs-rnn.png" alt=""></p>
+<h4 id="TreeRNN-Tree-Recursive-Neural-Network"><a href="#TreeRNN-Tree-Recursive-Neural-Network" class="headerlink" title="TreeRNN, Tree Recursive Neural Network"></a>TreeRNN, Tree Recursive Neural Network</h4><p><img src="/media/cs224n-recursive-vs-recurrent.png" alt=""><br>结构预测：将相邻两节点用神经网络算合并分数，取得分最高的合并出新节点。<br><img src="/media/cs224n-recursive-nn-structure-prediction.png" alt=""></p>
 <h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><ul>
 <li><a href="https://www.youtube.com/playlist?list=PL3FW7Lu3i5Jsnh1rnUwq_TcylNr7EkRe6" target="_blank" rel="noopener">CS224n: Natural Language Processing with Deep Learning</a> Winter 2017</li>
 </ul>
@@ -424,40 +424,40 @@
 
       
         
-          <span itemprop="articleBody"><h4 id="神经网络"><a href="#神经网络" class="headerlink" title="神经网络"></a>神经网络</h4><p>后向传播其实就是使用导数的链式法则<br><img src="/images/cs231n-backprop-example1.png" alt="">)<img src="/images/cs231n-backprop-example2.png" alt=""><br>计算图节点可以按不同粒度组合<br><img src="/images/cs231n-backprop-sigmoid-gate.png" alt=""></p>
+          <span itemprop="articleBody"><h4 id="神经网络"><a href="#神经网络" class="headerlink" title="神经网络"></a>神经网络</h4><p>后向传播其实就是使用导数的链式法则<br><img src="/media/cs231n-backprop-example1.png" alt="">)<img src="/media/cs231n-backprop-example2.png" alt=""><br>计算图节点可以按不同粒度组合<br><img src="/media/cs231n-backprop-sigmoid-gate.png" alt=""></p>
 <h4 id="卷积神经网络"><a href="#卷积神经网络" class="headerlink" title="卷积神经网络"></a>卷积神经网络</h4><p>过程：用filter卷积算得新图层，多个filters算得的图层叠成新图（卷积层），新图经ReLU处理；连续Conv+ReLU弄几层，偶有Pool层降分辨率；最后把输出展成一维向量，接入全连接层（神经网络）做多元分类。</p>
-<p>卷积层：<br><img src="/images/cs231n-conv-layer-1.png" alt="">)<img src="/images/cs231n-conv-layer-2.png" alt="">)<img src="/images/cs231n-conv-layer-3.png" alt="">)<img src="/images/cs231n-conv-layer-4.png" alt="">)<img src="/images/cs231n-conv-layer-5.png" alt=""><br>连续Conv+ReLU弄几层：<br><img src="/images/cs231n-conv-net.png" alt=""><br>偶有Pool层降分辨率：<br><img src="/images/cs231n-pool-layer.png" alt=""><br>抽样方法比如：<br><img src="/images/cs231n-pool-layer-max-sampling.png" alt=""><br>最后把输出展成一维向量，接入全连接层：<br><img src="/images/cs231n-full-connected-layer.png" alt=""></p>
+<p>卷积层：<br><img src="/media/cs231n-conv-layer-1.png" alt="">)<img src="/media/cs231n-conv-layer-2.png" alt="">)<img src="/media/cs231n-conv-layer-3.png" alt="">)<img src="/media/cs231n-conv-layer-4.png" alt="">)<img src="/media/cs231n-conv-layer-5.png" alt=""><br>连续Conv+ReLU弄几层：<br><img src="/media/cs231n-conv-net.png" alt=""><br>偶有Pool层降分辨率：<br><img src="/media/cs231n-pool-layer.png" alt=""><br>抽样方法比如：<br><img src="/media/cs231n-pool-layer-max-sampling.png" alt=""><br>最后把输出展成一维向量，接入全连接层：<br><img src="/media/cs231n-full-connected-layer.png" alt=""></p>
 <p>典型的架构像这样：<br><code>[(Conv-ReLU)*N-POOL?]*M-(FC-ReLU)*K-SoftMax</code></p>
-<h4 id="循环神经网络"><a href="#循环神经网络" class="headerlink" title="循环神经网络"></a>循环神经网络</h4><p>各时刻共享权重参数W，由前一刻状态$h_{t-1}$、当前输入$x_t$计算新状态$h_t$、计算预测值$y_t$、计算$loss_t$；序列x全读完了总loss就是$\sum loss_t$，再后向传播计算梯度（backprop through time）、更新W。<br><img src="/images/cs231n-recurrent-neural-network.png" alt="">)<img src="/images/cs231n-rnn-computational-graph.png" alt=""><br><img src="/images/6.s191-backprop-through-time.png" alt=""></p>
+<h4 id="循环神经网络"><a href="#循环神经网络" class="headerlink" title="循环神经网络"></a>循环神经网络</h4><p>各时刻共享权重参数W，由前一刻状态$h_{t-1}$、当前输入$x_t$计算新状态$h_t$、计算预测值$y_t$、计算$loss_t$；序列x全读完了总loss就是$\sum loss_t$，再后向传播计算梯度（backprop through time）、更新W。<br><img src="/media/cs231n-recurrent-neural-network.png" alt="">)<img src="/media/cs231n-rnn-computational-graph.png" alt=""><br><img src="/media/6.s191-backprop-through-time.png" alt=""></p>
 <p>实践中，简单RNN难以描述长期依赖。更常用LSTM（Long Short Term Memory）、GRU（Gated Recurrent Unit），GRU比LSTM计算更少、效果相当。</p>
 <hr>
-<h4 id="多分类的loss函数"><a href="#多分类的loss函数" class="headerlink" title="多分类的loss函数"></a>多分类的loss函数</h4><h5 id="max-margin"><a href="#max-margin" class="headerlink" title="max margin"></a>max margin</h5><p>要让正确分类$s_{y_i}$比错误分类$s_j$的分数大（具体大多少无所谓，这里取大1）。满足这条件时loss为0、不满足时loss为$s_j-s_{y_i}+1$。<br><img src="/images/cs231n-multiclass-svm-loss.png" alt=""></p>
-<h5 id="softmax"><a href="#softmax" class="headerlink" title="softmax"></a>softmax</h5><p><img src="/images/cs231n-softmax-classifier.png" alt=""></p>
-<h4 id="常见激活函数"><a href="#常见激活函数" class="headerlink" title="常见激活函数"></a>常见激活函数</h4><p><img src="/images/cs231n-activation-funcs.png" alt="">)<img src="/images/cs231n-activation-funcs-tldr.png" alt=""><br>sigmoid的导数在[0, 0.25]，tanh的导数在[0, 1]<br><img src="/images/cs231n-activation-func-sigmoid.png" alt="">)<img src="/images/cs231n-activation-func-tanh.png" alt=""><br>ReLu当学习率大时梯度减得多，容易x&lt;0变为dead。可减小学习率，或者使用Leaky ReLu、ELU。<br><img src="/images/cs231n-activation-func-relu.png" alt="">)<img src="/images/cs231n-activation-func-leaky-relu.png" alt="">)<img src="/images/cs231n-activation-func-elu.png" alt="">)<img src="/images/cs231n-activation-func-maxout.png" alt=""></p>
-<h4 id="一些调优问题"><a href="#一些调优问题" class="headerlink" title="一些调优问题"></a>一些调优问题</h4><h5 id="train-validation-test"><a href="#train-validation-test" class="headerlink" title="train/validation/test"></a>train/validation/test</h5><p>train集用于超参数选定后的模型训练，validation集用于验证超参数效果，test集只在最后出结果时用一次。交叉验证只在小数据集时有用。<br><img src="/images/cs231n-setting-hyperparameters.png" alt=""></p>
+<h4 id="多分类的loss函数"><a href="#多分类的loss函数" class="headerlink" title="多分类的loss函数"></a>多分类的loss函数</h4><h5 id="max-margin"><a href="#max-margin" class="headerlink" title="max margin"></a>max margin</h5><p>要让正确分类$s_{y_i}$比错误分类$s_j$的分数大（具体大多少无所谓，这里取大1）。满足这条件时loss为0、不满足时loss为$s_j-s_{y_i}+1$。<br><img src="/media/cs231n-multiclass-svm-loss.png" alt=""></p>
+<h5 id="softmax"><a href="#softmax" class="headerlink" title="softmax"></a>softmax</h5><p><img src="/media/cs231n-softmax-classifier.png" alt=""></p>
+<h4 id="常见激活函数"><a href="#常见激活函数" class="headerlink" title="常见激活函数"></a>常见激活函数</h4><p><img src="/media/cs231n-activation-funcs.png" alt="">)<img src="/media/cs231n-activation-funcs-tldr.png" alt=""><br>sigmoid的导数在[0, 0.25]，tanh的导数在[0, 1]<br><img src="/media/cs231n-activation-func-sigmoid.png" alt="">)<img src="/media/cs231n-activation-func-tanh.png" alt=""><br>ReLu当学习率大时梯度减得多，容易x&lt;0变为dead。可减小学习率，或者使用Leaky ReLu、ELU。<br><img src="/media/cs231n-activation-func-relu.png" alt="">)<img src="/media/cs231n-activation-func-leaky-relu.png" alt="">)<img src="/media/cs231n-activation-func-elu.png" alt="">)<img src="/media/cs231n-activation-func-maxout.png" alt=""></p>
+<h4 id="一些调优问题"><a href="#一些调优问题" class="headerlink" title="一些调优问题"></a>一些调优问题</h4><h5 id="train-validation-test"><a href="#train-validation-test" class="headerlink" title="train/validation/test"></a>train/validation/test</h5><p>train集用于超参数选定后的模型训练，validation集用于验证超参数效果，test集只在最后出结果时用一次。交叉验证只在小数据集时有用。<br><img src="/media/cs231n-setting-hyperparameters.png" alt=""></p>
 <h5 id="初始化权重矩阵W"><a href="#初始化权重矩阵W" class="headerlink" title="初始化权重矩阵W"></a>初始化权重矩阵W</h5><p>初始随机值太小或太大都不好。比如tanh作激活函数，若初始值太小，几次迭代后输出0。若初始值太大，函数饱和梯度=0。</p>
 <p>可用Xavier初始法，<code>W = np.random.randn(fan_in, fan_out) / np.sqrt(fan_in)</code>。</p>
 <p>若ReLU作激活函数，可用<code>W = np.random.randn(fan_in, fan_out) / np.sqrt(fan_in/2)</code>。</p>
-<h5 id="Batch-Norm"><a href="#Batch-Norm" class="headerlink" title="Batch Norm"></a>Batch Norm</h5><p>训练时使用mini-batch的μ和σ修正数据：先让μ归0、σ归1，再加个BN层训练正态分布的缩放γ和平移β；测试时使用全部mini-batch上的移动平均μ和移动平均σ修正数据。<br><img src="/images/cs231n-batch-normalization-1.png" alt="">)<img src="/images/cs231n-batch-normalization-2.png" alt="">)<img src="/images/cs231n-batch-normalization-3.png" alt=""></p>
-<h5 id="随机梯度下降陷入局部极小值或鞍点"><a href="#随机梯度下降陷入局部极小值或鞍点" class="headerlink" title="随机梯度下降陷入局部极小值或鞍点"></a>随机梯度下降陷入局部极小值或鞍点</h5><p>使用”Momentum”——移动平均梯度<br><img src="/images/cs231n-optimization-sgd-momentum.png" alt=""><br>更常用Adam优化 = Momentum + AdaGrad/RMSprop<br><img src="/images/cs231n-optimization-adam.png" alt=""></p>
-<h5 id="dropout正则化"><a href="#dropout正则化" class="headerlink" title="dropout正则化"></a>dropout正则化</h5><p>随机关闭每层一定比例的节点，强制丢掉一些信息防止过拟合。<br><img src="/images/cs231n-regularization-dropout.png" alt=""><br><img src="/images/cs231n-optimization-inverted-dropout.png" alt=""></p>
-<h5 id="迁移学习"><a href="#迁移学习" class="headerlink" title="迁移学习"></a>迁移学习</h5><p>迁移到小数据集时，重训最后一层。迁移到较大数据集时，重训最后几层。<br><img src="/images/cs231n-transfer-learning-1.png" alt="">)<img src="/images/cs231n-transfer-learning-2.png" alt=""></p>
+<h5 id="Batch-Norm"><a href="#Batch-Norm" class="headerlink" title="Batch Norm"></a>Batch Norm</h5><p>训练时使用mini-batch的μ和σ修正数据：先让μ归0、σ归1，再加个BN层训练正态分布的缩放γ和平移β；测试时使用全部mini-batch上的移动平均μ和移动平均σ修正数据。<br><img src="/media/cs231n-batch-normalization-1.png" alt="">)<img src="/media/cs231n-batch-normalization-2.png" alt="">)<img src="/media/cs231n-batch-normalization-3.png" alt=""></p>
+<h5 id="随机梯度下降陷入局部极小值或鞍点"><a href="#随机梯度下降陷入局部极小值或鞍点" class="headerlink" title="随机梯度下降陷入局部极小值或鞍点"></a>随机梯度下降陷入局部极小值或鞍点</h5><p>使用”Momentum”——移动平均梯度<br><img src="/media/cs231n-optimization-sgd-momentum.png" alt=""><br>更常用Adam优化 = Momentum + AdaGrad/RMSprop<br><img src="/media/cs231n-optimization-adam.png" alt=""></p>
+<h5 id="dropout正则化"><a href="#dropout正则化" class="headerlink" title="dropout正则化"></a>dropout正则化</h5><p>随机关闭每层一定比例的节点，强制丢掉一些信息防止过拟合。<br><img src="/media/cs231n-regularization-dropout.png" alt=""><br><img src="/media/cs231n-optimization-inverted-dropout.png" alt=""></p>
+<h5 id="迁移学习"><a href="#迁移学习" class="headerlink" title="迁移学习"></a>迁移学习</h5><p>迁移到小数据集时，重训最后一层。迁移到较大数据集时，重训最后几层。<br><img src="/media/cs231n-transfer-learning-1.png" alt="">)<img src="/media/cs231n-transfer-learning-2.png" alt=""></p>
 <hr>
-<p><img src="/images/cs231n-other-computer-vision-tasks.png" alt=""></p>
-<h4 id="语义分割"><a href="#语义分割" class="headerlink" title="语义分割"></a>语义分割</h4><p>全卷积层，先downsampling再upsampling<br><img src="/images/cs231n-semantic-segmentation.png" alt=""><br><img src="/images/6.s094-semantic-segmentation.png" alt=""></p>
-<h5 id="转置卷积：一种upsampling方法"><a href="#转置卷积：一种upsampling方法" class="headerlink" title="转置卷积：一种upsampling方法"></a>转置卷积：一种upsampling方法</h5><p>待upsampling的像素值、乘上filter、累加到输出的对应位置。<br><img src="/images/cs231n-transpose-convolution.png" alt=""><br>从矩阵乘法角度看<br><img src="/images/cs231n-convolution-as-matrix-multiplication-1.png" alt="">)<img src="/images/cs231n-convolution-as-matrix-multiplication-2.png" alt=""></p>
-<h4 id="单个物体同时分类和定位"><a href="#单个物体同时分类和定位" class="headerlink" title="单个物体同时分类和定位"></a>单个物体同时分类和定位</h4><p>定位就是训练固定个数的定位参数，当作回归问题。如下面猫框有4个参数、姿势的关节位置有14个参数。<br><img src="/images/cs231n-classification-and-localization.png" alt=""><br><img src="/images/cs231n-human-pose-estimation.png" alt=""></p>
-<h4 id="多个物体的分类和定位"><a href="#多个物体的分类和定位" class="headerlink" title="多个物体的分类和定位"></a>多个物体的分类和定位</h4><p>R-CNN（Region-based CNN）：要先用语义分割找出一些候选区域，再看这些区域是否包含关注列表中的物体并定位。<br><img src="/images/6.s094-fast-r-cnn.png" alt=""></p>
-<h4 id="图片变成特定风格"><a href="#图片变成特定风格" class="headerlink" title="图片变成特定风格"></a>图片变成特定风格</h4><p>内容相似：使生成图的各层激活情况尽量匹配原图。<br>风格相似：使生成图的各层gram矩阵尽量匹配原图各层。<br><img src="/images/cs231n-neural-texture-synthesis-1.png" alt=""><br><img src="/images/cs231n-neural-texture-synthesis-2.png" alt=""></p>
+<p><img src="/media/cs231n-other-computer-vision-tasks.png" alt=""></p>
+<h4 id="语义分割"><a href="#语义分割" class="headerlink" title="语义分割"></a>语义分割</h4><p>全卷积层，先downsampling再upsampling<br><img src="/media/cs231n-semantic-segmentation.png" alt=""><br><img src="/media/6.s094-semantic-segmentation.png" alt=""></p>
+<h5 id="转置卷积：一种upsampling方法"><a href="#转置卷积：一种upsampling方法" class="headerlink" title="转置卷积：一种upsampling方法"></a>转置卷积：一种upsampling方法</h5><p>待upsampling的像素值、乘上filter、累加到输出的对应位置。<br><img src="/media/cs231n-transpose-convolution.png" alt=""><br>从矩阵乘法角度看<br><img src="/media/cs231n-convolution-as-matrix-multiplication-1.png" alt="">)<img src="/media/cs231n-convolution-as-matrix-multiplication-2.png" alt=""></p>
+<h4 id="单个物体同时分类和定位"><a href="#单个物体同时分类和定位" class="headerlink" title="单个物体同时分类和定位"></a>单个物体同时分类和定位</h4><p>定位就是训练固定个数的定位参数，当作回归问题。如下面猫框有4个参数、姿势的关节位置有14个参数。<br><img src="/media/cs231n-classification-and-localization.png" alt=""><br><img src="/media/cs231n-human-pose-estimation.png" alt=""></p>
+<h4 id="多个物体的分类和定位"><a href="#多个物体的分类和定位" class="headerlink" title="多个物体的分类和定位"></a>多个物体的分类和定位</h4><p>R-CNN（Region-based CNN）：要先用语义分割找出一些候选区域，再看这些区域是否包含关注列表中的物体并定位。<br><img src="/media/6.s094-fast-r-cnn.png" alt=""></p>
+<h4 id="图片变成特定风格"><a href="#图片变成特定风格" class="headerlink" title="图片变成特定风格"></a>图片变成特定风格</h4><p>内容相似：使生成图的各层激活情况尽量匹配原图。<br>风格相似：使生成图的各层gram矩阵尽量匹配原图各层。<br><img src="/media/cs231n-neural-texture-synthesis-1.png" alt=""><br><img src="/media/cs231n-neural-texture-synthesis-2.png" alt=""></p>
 <hr>
-<h3 id="非监督学习"><a href="#非监督学习" class="headerlink" title="非监督学习"></a>非监督学习</h3><p><img src="/images/cs231n-unsupervised-learning.png" alt=""></p>
-<h4 id="生成模型"><a href="#生成模型" class="headerlink" title="生成模型"></a>生成模型</h4><p>生成符合训练集样本分布的新数据<br><img src="/images/cs231n-generative-models-1.png" alt="">)<img src="/images/cs231n-generative-models-2.png" alt=""></p>
-<h5 id="变分自编码器（Variational-AutoEncoder）"><a href="#变分自编码器（Variational-AutoEncoder）" class="headerlink" title="变分自编码器（Variational AutoEncoder）"></a>变分自编码器（Variational AutoEncoder）</h5><p>参见<a href="http://kvfrans.com/variational-autoencoders-explained/" target="_blank" rel="noopener">Kevin Frans</a>的解释，VAE就是给AutoEncoder里连接encoder和decoder中间的那个潜在变量添加限制，限制它符合单位正态分布。实现上训练出μ和σ，再从它们抽样出正态分布的潜在变量，就是下面的z。损失函数由两部分组成：潜在变量和单位正态分布的拟合度（KL散度），生成图像与输入图像的拟合度（均方误差）。<br><img src="/images/cs231n-variational-autoencoder.png" alt=""></p>
-<h5 id="生成对抗网络（Generative-Adversarial-Network）"><a href="#生成对抗网络（Generative-Adversarial-Network）" class="headerlink" title="生成对抗网络（Generative Adversarial Network）"></a>生成对抗网络（Generative Adversarial Network）</h5><p>对抗博弈，generator生成假图片，discriminator区分真假图片。<br><img src="/images/cs231n-training-gans-1.png" alt="">)<img src="/images/cs231n-training-gans-2.png" alt=""></p>
+<h3 id="非监督学习"><a href="#非监督学习" class="headerlink" title="非监督学习"></a>非监督学习</h3><p><img src="/media/cs231n-unsupervised-learning.png" alt=""></p>
+<h4 id="生成模型"><a href="#生成模型" class="headerlink" title="生成模型"></a>生成模型</h4><p>生成符合训练集样本分布的新数据<br><img src="/media/cs231n-generative-models-1.png" alt="">)<img src="/media/cs231n-generative-models-2.png" alt=""></p>
+<h5 id="变分自编码器（Variational-AutoEncoder）"><a href="#变分自编码器（Variational-AutoEncoder）" class="headerlink" title="变分自编码器（Variational AutoEncoder）"></a>变分自编码器（Variational AutoEncoder）</h5><p>参见<a href="http://kvfrans.com/variational-autoencoders-explained/" target="_blank" rel="noopener">Kevin Frans</a>的解释，VAE就是给AutoEncoder里连接encoder和decoder中间的那个潜在变量添加限制，限制它符合单位正态分布。实现上训练出μ和σ，再从它们抽样出正态分布的潜在变量，就是下面的z。损失函数由两部分组成：潜在变量和单位正态分布的拟合度（KL散度），生成图像与输入图像的拟合度（均方误差）。<br><img src="/media/cs231n-variational-autoencoder.png" alt=""></p>
+<h5 id="生成对抗网络（Generative-Adversarial-Network）"><a href="#生成对抗网络（Generative-Adversarial-Network）" class="headerlink" title="生成对抗网络（Generative Adversarial Network）"></a>生成对抗网络（Generative Adversarial Network）</h5><p>对抗博弈，generator生成假图片，discriminator区分真假图片。<br><img src="/media/cs231n-training-gans-1.png" alt="">)<img src="/media/cs231n-training-gans-2.png" alt=""></p>
 <hr>
-<h4 id="强化学习"><a href="#强化学习" class="headerlink" title="强化学习"></a>强化学习</h4><p>跟环境互动，最大化奖励。数学形式就是Markov决策过程。<br><img src="/images/cs231n-reinforcement-learning.png" alt=""></p>
-<h5 id="Q-learning"><a href="#Q-learning" class="headerlink" title="Q-learning"></a>Q-learning</h5><p><img src="/images/6.s091-q-learnig.png" alt=""><br>使用神经网络拟合Q函数，因为Q-Learning表格维度巨大难以实用。<br><img src="/images/6.s191-deep-q-network.png" alt=""></p>
-<h5 id="Policy-Gradient"><a href="#Policy-Gradient" class="headerlink" title="Policy Gradient"></a>Policy Gradient</h5><p><img src="/images/6.s191-policy-gradient-1.png" alt=""><br><img src="/images/6.s191-policy-gradient-2.png" alt=""></p>
+<h4 id="强化学习"><a href="#强化学习" class="headerlink" title="强化学习"></a>强化学习</h4><p>跟环境互动，最大化奖励。数学形式就是Markov决策过程。<br><img src="/media/cs231n-reinforcement-learning.png" alt=""></p>
+<h5 id="Q-learning"><a href="#Q-learning" class="headerlink" title="Q-learning"></a>Q-learning</h5><p><img src="/media/6.s091-q-learnig.png" alt=""><br>使用神经网络拟合Q函数，因为Q-Learning表格维度巨大难以实用。<br><img src="/media/6.s191-deep-q-network.png" alt=""></p>
+<h5 id="Policy-Gradient"><a href="#Policy-Gradient" class="headerlink" title="Policy Gradient"></a>Policy Gradient</h5><p><img src="/media/6.s191-policy-gradient-1.png" alt=""><br><img src="/media/6.s191-policy-gradient-2.png" alt=""></p>
 <h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><ul>
 <li><a href="https://www.youtube.com/playlist?list=PL3FW7Lu3i5JvHM8ljYj-zLfQRF3EO8sYv" target="_blank" rel="noopener">CS231n: Convolutional Neural Networks for Visual Recognition</a> 2017</li>
 <li>Introduction to Deep Reinforcement Learning <a href="https://www.youtube.com/watch?v=zR11FLZ-O9M&list=PLrAXtmErZgOeiKm4sgNOknGvNjby9efdf" target="_blank" rel="noopener">6.S091</a>, <a href="https://www.youtube.com/watch?v=i6Mi2_QM3rA&list=PLtBw6njQRU-rwp5__7C0oIVt26ZgjG9NI" target="_blank" rel="noopener">6.S191</a>, 2019</li>
@@ -630,7 +630,7 @@
 
       
         
-          <span itemprop="articleBody"><p><img src="/images/spark-stack.png" alt=""><br>Spark软件栈构成个集群计算平台。SparkCore对运行在集群上的由很多计算任务组成的应用进行调度、分发和监控。</p>
+          <span itemprop="articleBody"><p><img src="/media/spark-stack.png" alt=""><br>Spark软件栈构成个集群计算平台。SparkCore对运行在集群上的由很多计算任务组成的应用进行调度、分发和监控。</p>
 <p>Spark对数据的抽象叫RDD（Resilient Distributed Dataset，弹性分布式数据集），是不可变的分布式对象集合，叫“弹性”是因为任何时候都能重算。RDD分成多个分区，分别运行在集群的不同节点上。RDD支持两种操作：transformation和action。转化操作由RDD生成新RDD，如map()和filter()，惰性求值，即第一次在行动操作中用到时才真正计算。行动操作对RDD计算一个结果，如reduce()，默认每次都重新计算RDD，除非RDD显式持久化，默认持久化到JVM堆空间。</p>
 <p>键值对RDD就是Java的Tuple2或Python的元组，可支持操作reduceByKey()、groupByKey()、join()、sortByKey()、countByKey()等</p>
 <p>Spark支持多种输入输出源：</p>
@@ -785,12 +785,12 @@
 <p>画线时，颜色（k黑r红 等，或#rgb值）、标记（o圆x叉 等）、线型（<code>--</code>虚线<code>.</code>点线 等）</p>
 <hr>
 <p>seaborn接口更高级</p>
-<h3 id="scikit-learn"><a href="#scikit-learn" class="headerlink" title="scikit-learn"></a>scikit-learn</h3><h4 id="模型验证"><a href="#模型验证" class="headerlink" title="模型验证"></a>模型验证</h4><p>5-fold cross-validation<br><img src="/images/5-fold-cross-validation.png" alt=""></p>
+<h3 id="scikit-learn"><a href="#scikit-learn" class="headerlink" title="scikit-learn"></a>scikit-learn</h3><h4 id="模型验证"><a href="#模型验证" class="headerlink" title="模型验证"></a>模型验证</h4><p>5-fold cross-validation<br><img src="/media/5-fold-cross-validation.png" alt=""></p>
 <hr>
-<p>模型复杂度<br><img src="/images/validation-curve.png" alt=""></p>
+<p>模型复杂度<br><img src="/media/validation-curve.png" alt=""></p>
 <p>注意：训练效果总是好于预测效果</p>
 <hr>
-<p>high-variance模型的样本大小<br><img src="/images/learning-curve-of-high-variance.png" alt=""></p>
+<p>high-variance模型的样本大小<br><img src="/media/learning-curve-of-high-variance.png" alt=""></p>
 <h4 id="常用模型"><a href="#常用模型" class="headerlink" title="常用模型"></a>常用模型</h4><p>naive bayes 的 <strong>的naive就naive在</strong> 要先假设样本属于某个特定分布，最终的分类效果也只是趋于这个分布，常作为分类任务的初始尝试</p>
 <hr>
 <p>简单线性回归 $y = a_0 + a_1x_1 + a_2x_2 + a_3x_3 + …$，常作为回归任务的初始尝试</p>
@@ -876,15 +876,15 @@
 <p>左边乘矩阵M：跟线性变换等价，把基向量i^, j^, …分别变换成A的各列向量</p>
 <p>行列式：线性变换的空间（二维面积或三维体积）缩放比例，负值表示空间被翻转（正向依右手定律）</p>
 <p>行列式为0：线性变换将空间压缩到更小的维度上</p>
-<p><img src="/images/Ax=v.png" alt=""></p>
+<p><img src="/media/Ax=v.png" alt=""></p>
 <p>解线性方程组，就是要找未知向量x，x经过A变换后将变成v。要解线性方程组，需要看变换A是否将空间压缩到了更小的维度上，也就是看det(A)是否为0。如果det(A)≠0，不压缩空间，A的逆变换存在，$x = A^{-1} * v$。如果det(A)=0，压缩空间，逆变换不存在，x有解仅当v正好落在压缩后的空间内。比如说A将平面压缩为一条直线，x有解仅当v正好落在这直线上。</p>
 <p>特别地，对于线性方程组Ax=0，x讲过A变换后变成零空间。若A不压缩空间，只能x=0。若x有非零解，只能A压缩空间，det(A)=0。</p>
 <p>若变换A压缩空间，肯定有一个过原点的直线（降一维）或平面（降两维）被压缩到原点，这个被压缩的直线或平面就叫矩阵A的”零空间”或”核”，也是方程组Ax=0的解空间</p>
 <p>秩：变换后（可能降维）的空间维数叫做变换的<strong>秩</strong></p>
 <p>满秩矩阵：变换后不降维</p>
 <p>非方阵：mxn矩阵表示从n维空间到m维空间的变换</p>
-<p><img src="/images/dot-product.png" alt=""><br>点积：两个向量的点积就是 一个向量在另一个向量上的投影长度 * 另一个向量的长度，方向不同时取负号</p>
-<p><img src="/images/cross-product.png" alt=""></p>
+<p><img src="/media/dot-product.png" alt=""><br>点积：两个向量的点积就是 一个向量在另一个向量上的投影长度 * 另一个向量的长度，方向不同时取负号</p>
+<p><img src="/media/cross-product.png" alt=""></p>
 <p>叉积：等价于 列向量矩阵的行列式（正向依右手定律）</p>
 <p>基变换：其他基组在本坐标系下构成列向量矩阵P，P表示从其他基到本基的变换</p>
 <p>相似矩阵：表达式 $P^{-1} * A * P$ 代表同一变换的一种视角转换，中间矩阵A代表你所见的变换，外侧两矩阵代表视角的转换。$P^{-1} * A * P$ 叫做相似矩阵，与A代表着同一个变换，只不过是从其他基的角度来看。总结就是，相似矩阵是同一变换的不同描述矩阵。</p>
@@ -963,24 +963,24 @@
       
         
           <span itemprop="articleBody"><h3 id="监督学习"><a href="#监督学习" class="headerlink" title="监督学习"></a>监督学习</h3><p>数据集已有正确答案，预测新数据的答案。预测连续值就是回归问题，预测离散值就是分类问题。</p>
-<h4 id="模型、代价函数"><a href="#模型、代价函数" class="headerlink" title="模型、代价函数"></a>模型、代价函数</h4><p>假设模型可以用h函数表示但参数未知，机器学习使用训练集为h训练参数，算出参数后的h就可以做些预测。<br><img src="/images/ml-h-func.png" alt=""></p>
-<p>要训练得到怎样的参数？要得到使代价函数最小化的参数。<br>代价函数是关于这些未知参数的函数。比如线性回归的h函数是关于n维特征的多项式$h_θ(x)=θ_0+θ_1x_1+θ_2x_2+…+θ_nx_n=θ^Tx$，可选平方误差作代价函数<img src="/images/ml-cost-func-linear-regression.jpg" alt="">)，其中$x^{(i)}$、 $y^{(i)}$指第i个样本的值。</p>
+<h4 id="模型、代价函数"><a href="#模型、代价函数" class="headerlink" title="模型、代价函数"></a>模型、代价函数</h4><p>假设模型可以用h函数表示但参数未知，机器学习使用训练集为h训练参数，算出参数后的h就可以做些预测。<br><img src="/media/ml-h-func.png" alt=""></p>
+<p>要训练得到怎样的参数？要得到使代价函数最小化的参数。<br>代价函数是关于这些未知参数的函数。比如线性回归的h函数是关于n维特征的多项式$h_θ(x)=θ_0+θ_1x_1+θ_2x_2+…+θ_nx_n=θ^Tx$，可选平方误差作代价函数<img src="/media/ml-cost-func-linear-regression.jpg" alt="">)，其中$x^{(i)}$、 $y^{(i)}$指第i个样本的值。</p>
 <h4 id="梯度下降法"><a href="#梯度下降法" class="headerlink" title="梯度下降法"></a>梯度下降法</h4><p>求最小化代价函数的参数，就是求函数取极值时的变量值。可用梯度下降法来迭代逼近局部最小值，当代价函数是凸函数时局部最小值就是全局最小值。所谓梯度，是指包含所有一阶偏导数的向量。</p>
 <p>比如上面的线性回归问题，梯度下降法初始时先随便取组θ值，每次迭代就是各个维度都减去一点自己维上的梯度。相当于先在J(θ)的n+1维曲面上随便取个点，然后取周围使n+1维梯度下降最快的那个点，一步步迭代达到局部极小值。</p>
-<p>比如2维的，<br><img src="/images/ml-gradient-descent-order-2.png" alt=""><br>其中的α叫学习率，α太小下降太慢，α太大可能越过最低点来回振荡无法收敛。</p>
+<p>比如2维的，<br><img src="/media/ml-gradient-descent-order-2.png" alt=""><br>其中的α叫学习率，α太小下降太慢，α太大可能越过最低点来回振荡无法收敛。</p>
 <p>当有多个特征时，各特征的取值范围可能差别很大，在用梯度下降前要先把各特征值归一到较小区间，比如[-1,1]。方法比如将原先的$x_i$换成$\frac{x_i-μ_i}{range(x)}$或$\frac{x_i-μ_i}{std(x)}$。</p>
-<p>梯度下降每次迭代要在所有m个样本上计算，速度太慢。实践中先把样本顺序打乱，然后每次在b个样本的minibatch上梯度下降，这就叫<strong>随机梯度下降</strong>。下图中b=1。<br><img src="/images/ml-stochastic-gradient-descent.png" alt=""></p>
+<p>梯度下降每次迭代要在所有m个样本上计算，速度太慢。实践中先把样本顺序打乱，然后每次在b个样本的minibatch上梯度下降，这就叫<strong>随机梯度下降</strong>。下图中b=1。<br><img src="/media/ml-stochastic-gradient-descent.png" alt=""></p>
 <h4 id="方程求解法"><a href="#方程求解法" class="headerlink" title="方程求解法"></a>方程求解法</h4><p>直接求解训练集m个样本构成的方程组。把m个样本的特征数据排成<code>m*(n+1)</code>的矩阵X（注$x_0=1$），m个样本的结果数据排成<code>m*1</code>的向量y，则$Xθ=y, X^TXθ=X^Ty, θ=(X^TX)^{-1}X^Ty$。之所以先$X^TX$可能为了先转成方阶再求逆。Octave代码<code>pinv(X&#39;*X)*X&#39;*y</code>，pinv是求伪逆。当然，向量化时也可把m个样本的特征数据排成<code>(n+1)*m</code>的矩阵，m个样本的结果数据排成<code>1*m</code>的向量y，然后$θ^TX=y$，这样就跟单样本时$θ^Tx=y$形式相同。</p>
 <p>方程法不需要选择学习率α，不需要将多特征的特征值归一到较小区间；缺点是求逆运算$O(n^3)$，n不能太大。</p>
 <hr>
 <h4 id="二元分类"><a href="#二元分类" class="headerlink" title="二元分类"></a>二元分类</h4><p>就是逻辑回归，用sigmoid函数将线性回归的值域变成(0,1)，值&gt;=0.5取y=1、值&lt;0.5取y=0，这样就成了二元分类。</p>
-<p>也就是说，逻辑回归模型的h函数是$h_θ(x)=g(θ^Tx)$，其中$g(z)=\frac{1}{1+e^{-z}}$叫sigmoid函数或logistic函数，h(x)表示y=1的概率。对二元分类，由sigmoid曲线知，$θ^Tx&gt;=0$取y=1，$θ^Tx&lt;0$取y=0，$θ^Tx$就叫决策边界。<br><img src="/images/ml-sigmoid-func.png" alt=""><br>sigmoid性质：$g’(z)=\frac{d}{dz}g(z)=g(z)(1-g(z))$</p>
-<p>逻辑回归的代价函数定义如下，可以保证为凸函数：<br><img src="/images/ml-cost-func-logistic-regression.jpg" alt=""><br>其中$h_θ(x^{(i)})$为样本预测值，$y^{(i)}$为样本实际值。合成一个：<br><img src="/images/ml-cost-func-logistic-regression-compact.jpg" alt=""><br>同样，需要得到使代价函数最小化的未知参数θ。可先算出一阶偏导数构成的梯度向量，然后用梯度下降法求解。</p>
+<p>也就是说，逻辑回归模型的h函数是$h_θ(x)=g(θ^Tx)$，其中$g(z)=\frac{1}{1+e^{-z}}$叫sigmoid函数或logistic函数，h(x)表示y=1的概率。对二元分类，由sigmoid曲线知，$θ^Tx&gt;=0$取y=1，$θ^Tx&lt;0$取y=0，$θ^Tx$就叫决策边界。<br><img src="/media/ml-sigmoid-func.png" alt=""><br>sigmoid性质：$g’(z)=\frac{d}{dz}g(z)=g(z)(1-g(z))$</p>
+<p>逻辑回归的代价函数定义如下，可以保证为凸函数：<br><img src="/media/ml-cost-func-logistic-regression.jpg" alt=""><br>其中$h_θ(x^{(i)})$为样本预测值，$y^{(i)}$为样本实际值。合成一个：<br><img src="/media/ml-cost-func-logistic-regression-compact.jpg" alt=""><br>同样，需要得到使代价函数最小化的未知参数θ。可先算出一阶偏导数构成的梯度向量，然后用梯度下降法求解。</p>
 <h5 id="扩展到多元分类"><a href="#扩展到多元分类" class="headerlink" title="扩展到多元分类"></a>扩展到多元分类</h5><p>为每个类训练一个“属于该类而不属于其他类”的”一对余“二元分类器，训练集的标签向量y要先转变成值为0或1的向量参与训练。要预测新数据属于哪一类，先计算新数据属于各个类的概率，取概率最大的那个类。</p>
 <hr>
 <h4 id="正则化"><a href="#正则化" class="headerlink" title="正则化"></a>正则化</h4><p>当特征太多时，模型容易太复杂、容易过拟合。为了防止过拟合，可以人工去掉一些不重要的特征，可以保留所有特征但减小特征参数$θ_j$（正则化）。</p>
 <p>正则化范数惩罚$θ<em>j$, j=[1..n]但不罚$θ_0$。在代价函数中加上$\frac{λ}{2m}\sum</em>{j=1}^{n}θ_j^2$，λ越大则最终$θ_j$越小。λ叫正则化参数，这里除以2m是为了以后计算时方便。</p>
-<p>线性回归和逻辑回归的梯度计算相同<br><img src="/images/ml-gradient-regularized.jpg" alt=""><br>梯度下降法也相同<br><img src="/images/ml-gradient-descent-regularized.jpg" alt=""><br>方程求解法正则化后变成<br><img src="/images/ml-normal-equation-regularized.jpg" alt=""></p>
+<p>线性回归和逻辑回归的梯度计算相同<br><img src="/media/ml-gradient-regularized.jpg" alt=""><br>梯度下降法也相同<br><img src="/media/ml-gradient-descent-regularized.jpg" alt=""><br>方程求解法正则化后变成<br><img src="/media/ml-normal-equation-regularized.jpg" alt=""></p>
 <hr>
 <h4 id="神经网络"><a href="#神经网络" class="headerlink" title="神经网络"></a>神经网络</h4><p>处理非线性分类需要非线性的h函数，否则多项式h函数的特征数将指数级爆炸。</p>
 <p>神经网络把逻辑单元（模拟神经元）按层组织。每个逻辑单元是个二元分类（逻辑回归），输入是一个总为1的偏置单元和上一层所有的逻辑单元。这样每层就是个多元分类，整个神经网络就是一层层的多元分类。</p>
@@ -989,36 +989,36 @@
 <h5 id="反向传播计算各层梯度"><a href="#反向传播计算各层梯度" class="headerlink" title="反向传播计算各层梯度"></a>反向传播计算各层梯度</h5><p>前向传播在知道一层到下一层的系数矩阵时计算下一层的值，但各层系数矩阵是未知的，需要我们通过最小化代价函数训练出来。神经网络的代价函数，是最终层逻辑单元的代价函数和（加上前面各层系数矩阵的正则化惩罚）。要最小化代价函数J(Θ)，需求得各层梯度，即各层系数矩阵的偏导数$D_{ij}^{(l)}=\frac{\partial}{\partialΘ_{ij}^{(l)}}J(Θ)$。反向传播反向计算各层误差，最终算出各层梯度。这里引入记号，把J(Θ)关于$z_j^{(l)}$的偏导数$δ_j^{(l)}$叫做“误差”。</p>
 <p>反向传播的过程：对每一个样本，先前向传播计算各层输出$a^{(l)}$，再从最后一层往回倒，反向计算各层误差$δ^{(l)}=(Θ^{(l)})^Tδ^{(l+1)} .* g’(z^{(l)}), g’(z^{(l)})=a^{(l)}.*(1-a^{(l)})$并累加$Δ^{(l)} = Δ^{(l)}+δ^{(l+1)}(a^{(l)})^T$，初始误差$δ^{(L)}=a^{(L)}-y$。处理完所有样本后，偏导数取平均值$D_{ij}^{(l)}=\frac{1}{m}Δ<em>{ij}^{(l)}$ if j=0，$D</em>{ij}^{(l)}=\frac{1}{m}Δ<em>{ij}^{(l)}+\frac{λ}{m}Θ</em>{ij}^{(l)}$ if j≥1。</p>
 <p>注：初始化系数矩阵要用[-ε,ε]的随机小值。若用相同值将导致下层各逻辑单元毫无差别，若用大值将使sigmoid值接近1或0，斜率小梯度下降收敛慢。<br>后向传播计算结果可近似验证$\frac{d}{dθ_i}J(θ) ≈ \frac{J(θ_1,…,θ_i+ε,…,θ_n)-J(θ_1,…,θ_i-ε,…,θ_n)}{2ε}$。</p>
-<p><img src="/images/ml-neural-network-training.jpg" alt=""></p>
-<p><img src="/images/ml-forward-backward-functions.png" alt=""></p>
+<p><img src="/media/ml-neural-network-training.jpg" alt=""></p>
+<p><img src="/media/ml-forward-backward-functions.png" alt=""></p>
 <h5 id="关于激活函数"><a href="#关于激活函数" class="headerlink" title="关于激活函数"></a>关于激活函数</h5><p>这里用sigmoid函数作例子，实际上可以为各层选择不同的激活函数。比如输出层还用sigmoid作二元分类；隐藏层可用tanh函数（相当于sigmoid平移缩放过原点），或更常见的ReLU函数<code>g(z)=max{0,z}</code>（Rectified Linear Unit，Geoffrey Hinton已证明ReLu几乎等同于一叠logistic单元）。<br>sigmoid函数：$g(z)=\frac{1}{1+e^{-z}}, g’(z)=g(z)(1-g(z))$<br>tanh函数：$g(z)=\frac{e^z-e^{-z}}{e^z+e^{-z}}, g’(z)=1-g^2(z)$<br>ReLU函数：$g(z)=max(0,z), g’(z)=\begin{cases} 0&amp; \text{if x&lt;0}\ 1&amp; \text{if x≥0}\end{cases}$<br>leaky ReLU函数：$g(z)=max(0.01z, z), g’(z)=\begin{cases} 0.01&amp; \text{if x&lt;0}\ 1&amp; \text{if x≥0}\end{cases}$</p>
 <hr>
 <h4 id="支持向量机"><a href="#支持向量机" class="headerlink" title="支持向量机"></a>支持向量机</h4><p>非线性的h函数不知啥样不妨碍。只要知道代价函数J(θ)、算出梯度、训练出θ，就能预测 y=1 if $θ^Tx≥0$。</p>
 <p>SVM的代价函数可从逻辑回归的代价函数推广得到：</p>
 <ol>
-<li>将代价函数从曲线变成分段线性的$cost_1(z)$和$cost_0(z)$<br><img src="/images/ml-cost-func-svm-from-1.jpg" alt=""><br><img src="/images/ml-cost-func-svm-from-2.jpg" alt=""></li>
-<li>要最小化J(θ)，m倍数无所谓，A+λB变成CA+B形式（C=1/λ），就得到<br><img src="/images/ml-cost-func-svm.jpg" alt=""></li>
+<li>将代价函数从曲线变成分段线性的$cost_1(z)$和$cost_0(z)$<br><img src="/media/ml-cost-func-svm-from-1.jpg" alt=""><br><img src="/media/ml-cost-func-svm-from-2.jpg" alt=""></li>
+<li>要最小化J(θ)，m倍数无所谓，A+λB变成CA+B形式（C=1/λ），就得到<br><img src="/media/ml-cost-func-svm.jpg" alt=""></li>
 </ol>
-<p>SVM是一种大间距二元分类器，最小化J(θ)造成决策边界在类间保持较大间距。<br><img src="/images/ml-svm-large-margin.png" alt=""><br>异常点存在时，小C值的间距大。<br><img src="/images/ml-svm-large-margin-with-outlier.png" alt=""></p>
+<p>SVM是一种大间距二元分类器，最小化J(θ)造成决策边界在类间保持较大间距。<br><img src="/media/ml-svm-large-margin.png" alt=""><br>异常点存在时，小C值的间距大。<br><img src="/media/ml-svm-large-margin-with-outlier.png" alt=""></p>
 <p>SVM是一种线性分类器，但实践中可以构造新特征并在新特征的维度上线性可分，这样就可应用于非线性问题。</p>
-<h5 id="核函数"><a href="#核函数" class="headerlink" title="核函数"></a>核函数</h5><p>把a维特征通过某种变换变成b维特征，这变换就叫kernel（核函数）。SVM通常用核函数把数据点映射到高维空间，低维空间上不好分，高维空间上容易分。<br><img src="/images/ml-svm-kernel-example.jpg" alt=""><br>如图中，通过3个landmark把2维特征x变成3维特征f，这里similarity函数就是kernel。<br>具体来说，这里用了高斯kernel：$f_i=similarity(x,l^{(i)})=exp(-\frac{||x-l^{(i)}||^2}{2σ^2})$。当x接近$l^{(i)}$，$f_i≈1$；当x远离$l^{(i)}$，$f_i≈0$；带宽σ越大，x远离$l^{(i)}$时$f_i$越慢下降到0。</p>
+<h5 id="核函数"><a href="#核函数" class="headerlink" title="核函数"></a>核函数</h5><p>把a维特征通过某种变换变成b维特征，这变换就叫kernel（核函数）。SVM通常用核函数把数据点映射到高维空间，低维空间上不好分，高维空间上容易分。<br><img src="/media/ml-svm-kernel-example.jpg" alt=""><br>如图中，通过3个landmark把2维特征x变成3维特征f，这里similarity函数就是kernel。<br>具体来说，这里用了高斯kernel：$f_i=similarity(x,l^{(i)})=exp(-\frac{||x-l^{(i)}||^2}{2σ^2})$。当x接近$l^{(i)}$，$f_i≈1$；当x远离$l^{(i)}$，$f_i≈0$；带宽σ越大，x远离$l^{(i)}$时$f_i$越慢下降到0。</p>
 <p>由于涉及多维特征，kernal变换前记得先特征值归一化。kernel变换后，最小化新特征f的代价函数来训练θ，对新数据x先转换成f表示后再预测 y=1 if $θ^Tf&gt;=0$。</p>
 <p>实践中若有m个样本x，就每个样本作一个landmark，得m个landmark。也就是说，把特征x变换成m维新特征f。</p>
 <hr>
 <h3 id="非监督学习"><a href="#非监督学习" class="headerlink" title="非监督学习"></a>非监督学习</h3><p>把无标签数据集分簇。</p>
-<h4 id="k-means"><a href="#k-means" class="headerlink" title="k-means"></a>k-means</h4><p>优化目标是最小化所有点与它们簇中心的距离平方和：<br><img src="/images/ml-cost-func-kmeans.jpg" alt=""><br>算法的两步正是固定μ优化c、固定c优化μ：<br><img src="/images/ml-algo-kmeans.jpg" alt=""></p>
+<h4 id="k-means"><a href="#k-means" class="headerlink" title="k-means"></a>k-means</h4><p>优化目标是最小化所有点与它们簇中心的距离平方和：<br><img src="/media/ml-cost-func-kmeans.jpg" alt=""><br>算法的两步正是固定μ优化c、固定c优化μ：<br><img src="/media/ml-algo-kmeans.jpg" alt=""></p>
 <p>簇数K通常是看数据分布后手动设置，初始化的K个簇中心是随机选的K个数据点。运行时如果某簇中心没有分配到数据点，这簇中心通常直接删掉，偶尔也可重新随机化。为防止k-means陷入局部最优解，要多次运行k-means取最小代价函数值。</p>
 <h4 id="特征降维：主成分分析"><a href="#特征降维：主成分分析" class="headerlink" title="特征降维：主成分分析"></a>特征降维：主成分分析</h4><p>把n维点投射到k维面，最小化所有点与投射面的距离平方和$\frac{1}{m}\sum_{i=1}^{m}||x^{(i)}-x_{approx}^{(i)}||^2$。</p>
-<p><img src="/images/ml-algo-pca.jpg" alt=""><br>在训练集计算协方差矩阵Sigma，将Sigma奇异值分解，取矩阵U的前k列。然后不管训练集验证集测试集，投射X到Z用$Z=XU_k$，从Z倒推回X用$X≈ZU_k^T$。</p>
-<p>怎么选择参数k？<br><img src="/images/ml-pca-choose-k.jpg" alt=""></p>
-<h4 id="异常检测"><a href="#异常检测" class="headerlink" title="异常检测"></a>异常检测</h4><p><img src="/images/ml-algo-anomaly-detection.jpg" alt=""><br>选出有助于异常检测的n个特征，每一维特征用训练集算出$μ_j$和$σ_j^2$，然后对新数据点累乘所有特征的正态分布概率，总概率太小就是异常点。<br>常识：正态分布有68.27%（稍大于2/3）的面积在μ±δ范围内。</p>
+<p><img src="/media/ml-algo-pca.jpg" alt=""><br>在训练集计算协方差矩阵Sigma，将Sigma奇异值分解，取矩阵U的前k列。然后不管训练集验证集测试集，投射X到Z用$Z=XU_k$，从Z倒推回X用$X≈ZU_k^T$。</p>
+<p>怎么选择参数k？<br><img src="/media/ml-pca-choose-k.jpg" alt=""></p>
+<h4 id="异常检测"><a href="#异常检测" class="headerlink" title="异常检测"></a>异常检测</h4><p><img src="/media/ml-algo-anomaly-detection.jpg" alt=""><br>选出有助于异常检测的n个特征，每一维特征用训练集算出$μ_j$和$σ_j^2$，然后对新数据点累乘所有特征的正态分布概率，总概率太小就是异常点。<br>常识：正态分布有68.27%（稍大于2/3）的面积在μ±δ范围内。</p>
 <p>为什么不用分类算法？因为训练数据中异常数据太少、异常类型太多，分类算法无法识别出异常特征。</p>
 <p>怎么选出有助于异常检测的特征？用直方图$hist(x_i)$看特征$x_i$的分布，若不接近正态分布，可尝试变换特征使$f(x_i)$接近正态分布，$f(xi)$变换可以是$log(x_i+c)$、$x_i^{\frac{1}{t}}$等。也可对某异常创建特征，使异常点特征值远离均值（特别大或特别小）。</p>
 <h4 id="推荐系统"><a href="#推荐系统" class="headerlink" title="推荐系统"></a>推荐系统</h4><p>假设我们有一份用户对电影的部分评分表，在左边排列着电影名，在上边排列着用户名。对第j列第i行，$r(i,j)$表示用户j是否对电影i评过分，$y^{(i,j)}$表示用户j对电影i的评分。</p>
 <p>有了这个评分表，我们能知道什么？</p>
 <p>关键要理解两个隐藏变量：电影i的特征$x_i$（假设有n维）、用户j的偏好$θ_j$（维度同$x_i$一样）。如果知道这两个变量，用户j对电影i的评分就为$θ_j^Tx_i$。或者说，所有电影特征按行排列成矩阵X，所有用户偏好按行排列成矩阵Θ。如果知道这两个矩阵，用户对电影的评分矩阵就为$XΘ^T$。<br>如果这两个矩阵只知一个，结合评分表就能线性回归训练出另一个。我们把已知电影特征X求用户偏好Θ的过程，叫做<strong>基于内容的推荐</strong>。<br>如果这两个矩阵都不知道，可先随机赋值、再通过X→Θ→X→Θ→…的迭代求得收敛。实际上，我们能在一步迭代中同时收敛X和Θ，这种同时迭代X和Θ的过程叫做<strong>协同过滤</strong>。</p>
-<h5 id="协同过滤"><a href="#协同过滤" class="headerlink" title="协同过滤"></a>协同过滤</h5><p>代价函数对所有有评分的项(i,j)求和。<br><img src="/images/ml-cost-func-collaborative-filtering.jpg" alt=""><br>梯度，对x或θ的第k维特征求偏导。<br><img src="/images/ml-gradient-collaborative-filtering.jpg" alt=""><br><img src="/images/ml-algo-collaborative-filtering.jpg" alt=""></p>
-<p>若新用户对所有电影都没评分，代价函数最小化会算得该用户偏好为零向量，这没什么用。可先在评分矩阵的每一行减去该行均值，再在新评分矩阵上训练X和Θ，最后算得的预测值再加回均值。<br><img src="/images/ml-collaborative-filtering-mean-normalization.jpg" alt=""></p>
+<h5 id="协同过滤"><a href="#协同过滤" class="headerlink" title="协同过滤"></a>协同过滤</h5><p>代价函数对所有有评分的项(i,j)求和。<br><img src="/media/ml-cost-func-collaborative-filtering.jpg" alt=""><br>梯度，对x或θ的第k维特征求偏导。<br><img src="/media/ml-gradient-collaborative-filtering.jpg" alt=""><br><img src="/media/ml-algo-collaborative-filtering.jpg" alt=""></p>
+<p>若新用户对所有电影都没评分，代价函数最小化会算得该用户偏好为零向量，这没什么用。可先在评分矩阵的每一行减去该行均值，再在新评分矩阵上训练X和Θ，最后算得的预测值再加回均值。<br><img src="/media/ml-collaborative-filtering-mean-normalization.jpg" alt=""></p>
 <p>找相似的电影？$||x_i-x_j||$距离越小越相似。</p>
 <h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><ul>
 <li><a href="https://www.coursera.org/learn/machine-learning/" target="_blank" rel="noopener">Machine Learning Course</a> by Andrew Ng, with <a href="https://github.com/smilingpoplar/machine-learning-course" target="_blank" rel="noopener">exercises</a></li>

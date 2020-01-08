@@ -47,12 +47,12 @@
 <meta property="og:url" content="http://note.49px.com/spark/index.html">
 <meta property="og:site_name" content="Dev Note">
 <meta property="og:description" content="Spark软件栈构成个集群计算平台。SparkCore对运行在集群上的由很多计算任务组成的应用进行调度、分发和监控。 Spark对数据的抽象叫RDD（Resilient Distributed Dataset，弹性分布式数据集），是不可变的分布式对象集合，叫“弹性”是因为任何时候都能重算。RDD分成多个分区，分别运行在集群的不同节点上。RDD支持两种操作：transformation和action">
-<meta property="og:image" content="http://note.49px.com/images/spark-stack.png">
+<meta property="og:image" content="http://note.49px.com/media/spark-stack.png">
 <meta property="article:published_time" content="2017-03-08T16:00:00.000Z">
-<meta property="article:modified_time" content="2017-08-09T18:04:01.000Z">
+<meta property="article:modified_time" content="2020-01-08T02:12:08.908Z">
 <meta property="article:author" content="Yang Le">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://note.49px.com/images/spark-stack.png">
+<meta name="twitter:image" content="http://note.49px.com/media/spark-stack.png">
 
 
 <script type="text/javascript" id="hexo.configuration">
@@ -196,7 +196,7 @@
       
 
       
-        <span itemprop="articleBody"><p><img src="/images/spark-stack.png" alt=""><br>Spark软件栈构成个集群计算平台。SparkCore对运行在集群上的由很多计算任务组成的应用进行调度、分发和监控。</p>
+        <span itemprop="articleBody"><p><img src="/media/spark-stack.png" alt=""><br>Spark软件栈构成个集群计算平台。SparkCore对运行在集群上的由很多计算任务组成的应用进行调度、分发和监控。</p>
 <p>Spark对数据的抽象叫RDD（Resilient Distributed Dataset，弹性分布式数据集），是不可变的分布式对象集合，叫“弹性”是因为任何时候都能重算。RDD分成多个分区，分别运行在集群的不同节点上。RDD支持两种操作：transformation和action。转化操作由RDD生成新RDD，如map()和filter()，惰性求值，即第一次在行动操作中用到时才真正计算。行动操作对RDD计算一个结果，如reduce()，默认每次都重新计算RDD，除非RDD显式持久化，默认持久化到JVM堆空间。</p>
 <p>键值对RDD就是Java的Tuple2或Python的元组，可支持操作reduceByKey()、groupByKey()、join()、sortByKey()、countByKey()等</p>
 <p>Spark支持多种输入输出源：</p>

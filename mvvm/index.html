@@ -47,13 +47,13 @@
 <meta property="og:url" content="http://note.49px.com/mvvm/index.html">
 <meta property="og:site_name" content="Dev Note">
 <meta property="og:description" content="经典的MVC (Model-View-Controller) 里Model负责数据，View负责界面，Controller负责两者之间的交互。但仔细想想，View和Controller虽然是不同的组件，却几乎总是一对一配套使用。在MVVM (Model-View-ViewModel) 中，就把MVC的View和Controller概念合并成一个View&#x2F;Controller，然后Model-Vie">
-<meta property="og:image" content="http://note.49px.com/images/mvvm.png">
+<meta property="og:image" content="http://note.49px.com/media/mvvm.png">
 <meta property="article:published_time" content="2014-11-28T16:00:00.000Z">
-<meta property="article:modified_time" content="2016-12-26T14:20:02.000Z">
+<meta property="article:modified_time" content="2020-01-08T02:12:08.987Z">
 <meta property="article:author" content="Yang Le">
 <meta property="article:tag" content="ios">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://note.49px.com/images/mvvm.png">
+<meta name="twitter:image" content="http://note.49px.com/media/mvvm.png">
 
 
 <script type="text/javascript" id="hexo.configuration">
@@ -198,7 +198,7 @@
 
       
         <span itemprop="articleBody"><p>经典的MVC (Model-View-Controller) 里Model负责数据，View负责界面，Controller负责两者之间的交互。但仔细想想，View和Controller虽然是不同的组件，却几乎总是一对一配套使用。在MVVM (Model-View-ViewModel) 中，就把MVC的View和Controller概念合并成一个View/Controller，然后Model-View间多加一层ViewModel。</p>
-<p><img src="/images/mvvm.png" alt=""></p>
+<p><img src="/media/mvvm.png" alt=""></p>
 <p>在ViewModel可以将Model数据转换为View呈现所需数据（如将NSDate格式化成字符串），可以保存View状态，可以做用户输入的验证，可以发收网络请求等。</p>
 <p>ViewModel的属性变化通过KVO (Key-Value Observing) 通知Controller，可用facebook的<code>KVOController</code>库。</p>
 <p>ps: <code>[photosArray addObjectsFromArray:photos]</code>不会发KVO通知，要用<code>[[self mutableArrayValueForKeyPath:@&quot;photosArray&quot;] addObjectsFromArray:photos];</code>。</p>

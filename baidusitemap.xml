@@ -1,38 +1,50 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>http://note.49px.com/cnn/</loc>
+    <lastmod>2020-01-08</lastmod>
+  </url>  <url>
+    <loc>http://note.49px.com/linear-algebra/</loc>
+    <lastmod>2020-01-08</lastmod>
+  </url>  <url>
+    <loc>http://note.49px.com/machine-learning/</loc>
+    <lastmod>2020-01-08</lastmod>
+  </url>  <url>
+    <loc>http://note.49px.com/mvvm/</loc>
+    <lastmod>2020-01-08</lastmod>
+  </url>  <url>
+    <loc>http://note.49px.com/python-data-analysis/</loc>
+    <lastmod>2020-01-08</lastmod>
+  </url>  <url>
+    <loc>http://note.49px.com/ssl/</loc>
+    <lastmod>2020-01-08</lastmod>
+  </url>  <url>
+    <loc>http://note.49px.com/android/</loc>
+    <lastmod>2020-01-08</lastmod>
+  </url>  <url>
+    <loc>http://note.49px.com/nlp/</loc>
+    <lastmod>2020-01-08</lastmod>
+  </url>  <url>
+    <loc>http://note.49px.com/objc-runtime/</loc>
+    <lastmod>2020-01-08</lastmod>
+  </url>  <url>
+    <loc>http://note.49px.com/spark/</loc>
+    <lastmod>2020-01-08</lastmod>
+  </url>  <url>
+    <loc>http://note.49px.com/autolayout/</loc>
+    <lastmod>2020-01-08</lastmod>
+  </url>  <url>
     <loc>http://note.49px.com/cocos2d/</loc>
     <lastmod>2020-01-07</lastmod>
   </url>  <url>
-    <loc>http://note.49px.com/nlp/</loc>
-    <lastmod>2019-04-30</lastmod>
-  </url>  <url>
-    <loc>http://note.49px.com/machine-learning/</loc>
-    <lastmod>2019-04-30</lastmod>
-  </url>  <url>
     <loc>http://note.49px.com/deep-learning/</loc>
-    <lastmod>2019-04-30</lastmod>
-  </url>  <url>
-    <loc>http://note.49px.com/cnn/</loc>
     <lastmod>2019-04-30</lastmod>
   </url>  <url>
     <loc>http://note.49px.com/nndl/</loc>
     <lastmod>2017-11-14</lastmod>
   </url>  <url>
-    <loc>http://note.49px.com/python-data-analysis/</loc>
-    <lastmod>2017-08-12</lastmod>
-  </url>  <url>
-    <loc>http://note.49px.com/spark/</loc>
-    <lastmod>2017-08-09</lastmod>
-  </url>  <url>
     <loc>http://note.49px.com/core-animation/</loc>
     <lastmod>2017-08-09</lastmod>
-  </url>  <url>
-    <loc>http://note.49px.com/linear-algebra/</loc>
-    <lastmod>2017-08-08</lastmod>
-  </url>  <url>
-    <loc>http://note.49px.com/objc-runtime/</loc>
-    <lastmod>2017-01-14</lastmod>
   </url>  <url>
     <loc>http://note.49px.com/git/</loc>
     <lastmod>2017-01-14</lastmod>
@@ -42,12 +54,6 @@
   </url>  <url>
     <loc>http://note.49px.com/c/</loc>
     <lastmod>2017-01-14</lastmod>
-  </url>  <url>
-    <loc>http://note.49px.com/autolayout/</loc>
-    <lastmod>2016-12-26</lastmod>
-  </url>  <url>
-    <loc>http://note.49px.com/mvvm/</loc>
-    <lastmod>2016-12-26</lastmod>
   </url>  <url>
     <loc>http://note.49px.com/css/</loc>
     <lastmod>2016-09-20</lastmod>
@@ -100,9 +106,6 @@
     <loc>http://note.49px.com/touch/</loc>
     <lastmod>2015-09-12</lastmod>
   </url>  <url>
-    <loc>http://note.49px.com/ssl/</loc>
-    <lastmod>2015-09-12</lastmod>
-  </url>  <url>
     <loc>http://note.49px.com/shell/</loc>
     <lastmod>2015-09-12</lastmod>
   </url>  <url>
@@ -137,9 +140,6 @@
     <lastmod>2015-09-12</lastmod>
   </url>  <url>
     <loc>http://note.49px.com/bit/</loc>
-    <lastmod>2015-09-12</lastmod>
-  </url>  <url>
-    <loc>http://note.49px.com/android/</loc>
     <lastmod>2015-09-12</lastmod>
   </url>
 </urlset>

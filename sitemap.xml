@@ -2,6 +2,83 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://note.49px.com/cnn/</loc>
+    
+    <lastmod>2020-01-08T02:12:08.987Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://note.49px.com/linear-algebra/</loc>
+    
+    <lastmod>2020-01-08T02:12:08.987Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://note.49px.com/machine-learning/</loc>
+    
+    <lastmod>2020-01-08T02:12:08.987Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://note.49px.com/mvvm/</loc>
+    
+    <lastmod>2020-01-08T02:12:08.987Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://note.49px.com/python-data-analysis/</loc>
+    
+    <lastmod>2020-01-08T02:12:08.987Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://note.49px.com/ssl/</loc>
+    
+    <lastmod>2020-01-08T02:12:08.987Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://note.49px.com/android/</loc>
+    
+    <lastmod>2020-01-08T02:12:08.908Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://note.49px.com/nlp/</loc>
+    
+    <lastmod>2020-01-08T02:12:08.908Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://note.49px.com/objc-runtime/</loc>
+    
+    <lastmod>2020-01-08T02:12:08.908Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://note.49px.com/spark/</loc>
+    
+    <lastmod>2020-01-08T02:12:08.908Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://note.49px.com/autolayout/</loc>
+    
+    <lastmod>2020-01-08T02:12:08.907Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://note.49px.com/tags/index.html</loc>
     
     <lastmod>2020-01-07T15:29:58.171Z</lastmod>
@@ -16,30 +93,9 @@
   </url>
   
   <url>
-    <loc>http://note.49px.com/nlp/</loc>
-    
-    <lastmod>2019-04-30T08:05:44.442Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://note.49px.com/machine-learning/</loc>
-    
-    <lastmod>2019-04-30T08:05:44.441Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://note.49px.com/deep-learning/</loc>
     
-    <lastmod>2019-04-30T08:05:44.440Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://note.49px.com/cnn/</loc>
-    
-    <lastmod>2019-04-30T08:05:44.439Z</lastmod>
+    <lastmod>2019-04-30T08:05:44.000Z</lastmod>
     
   </url>
   
@@ -51,37 +107,9 @@
   </url>
   
   <url>
-    <loc>http://note.49px.com/python-data-analysis/</loc>
-    
-    <lastmod>2017-08-12T11:17:10.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://note.49px.com/spark/</loc>
-    
-    <lastmod>2017-08-09T18:04:01.000Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://note.49px.com/core-animation/</loc>
     
     <lastmod>2017-08-09T12:26:07.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://note.49px.com/linear-algebra/</loc>
-    
-    <lastmod>2017-08-08T09:32:18.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://note.49px.com/objc-runtime/</loc>
-    
-    <lastmod>2017-01-14T04:33:01.000Z</lastmod>
     
   </url>
   
@@ -103,20 +131,6 @@
     <loc>http://note.49px.com/c/</loc>
     
     <lastmod>2017-01-14T04:32:32.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://note.49px.com/autolayout/</loc>
-    
-    <lastmod>2016-12-26T15:27:35.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://note.49px.com/mvvm/</loc>
-    
-    <lastmod>2016-12-26T14:20:02.000Z</lastmod>
     
   </url>
   
@@ -240,13 +254,6 @@
   </url>
   
   <url>
-    <loc>http://note.49px.com/ssl/</loc>
-    
-    <lastmod>2015-09-12T12:12:29.000Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://note.49px.com/shell/</loc>
     
     <lastmod>2015-09-12T12:12:20.000Z</lastmod>
@@ -327,13 +334,6 @@
     <loc>http://note.49px.com/bit/</loc>
     
     <lastmod>2015-09-12T12:07:28.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://note.49px.com/android/</loc>
-    
-    <lastmod>2015-09-12T12:06:41.000Z</lastmod>
     
   </url>
   
