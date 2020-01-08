@@ -41,12 +41,12 @@
   <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.1" />
 
 
-<meta name="description" content="监督学习 数据集已有正确答案，预测新数据的答案。预测连续值就是回归问题，预测离散值就是分类问题。 #### 模型、代价函数 假设模型可以用h函数表示但参数未知，机器学习使用训练集为h训练参数，算出参数后的h就可以做些预测。  要训练得到怎样的参数？要得到使代价函数最小化的参数。 代价函数是关于这些未知参数的函数。比如线性回归的h函数是关于n维特征的多项式\(h_θ(x)&#x3D;θ_0+θ_1x_1+θ_">
+<meta name="description" content="监督学习 数据集已有正确答案，预测新数据的答案。预测连续值就是回归问题，预测离散值就是分类问题。 模型、代价函数 假设模型可以用h函数表示但参数未知，机器学习使用训练集为h训练参数，算出参数后的h就可以做些预测。  要训练得到怎样的参数？要得到使代价函数最小化的参数。 代价函数是关于这些未知参数的函数。比如线性回归的h函数是关于n维特征的多项式\(h_θ(x)&#x3D;θ_0+θ_1x_1+θ_2x_2+">
 <meta property="og:type" content="article">
 <meta property="og:title" content="机器学习">
 <meta property="og:url" content="http://note.49px.com/machine-learning/index.html">
 <meta property="og:site_name" content="Dev Note">
-<meta property="og:description" content="监督学习 数据集已有正确答案，预测新数据的答案。预测连续值就是回归问题，预测离散值就是分类问题。 #### 模型、代价函数 假设模型可以用h函数表示但参数未知，机器学习使用训练集为h训练参数，算出参数后的h就可以做些预测。  要训练得到怎样的参数？要得到使代价函数最小化的参数。 代价函数是关于这些未知参数的函数。比如线性回归的h函数是关于n维特征的多项式\(h_θ(x)&#x3D;θ_0+θ_1x_1+θ_">
+<meta property="og:description" content="监督学习 数据集已有正确答案，预测新数据的答案。预测连续值就是回归问题，预测离散值就是分类问题。 模型、代价函数 假设模型可以用h函数表示但参数未知，机器学习使用训练集为h训练参数，算出参数后的h就可以做些预测。  要训练得到怎样的参数？要得到使代价函数最小化的参数。 代价函数是关于这些未知参数的函数。比如线性回归的h函数是关于n维特征的多项式\(h_θ(x)&#x3D;θ_0+θ_1x_1+θ_2x_2+">
 <meta property="og:image" content="http://note.49px.com/media/ml-h-func.png">
 <meta property="og:image" content="http://note.49px.com/media/ml-cost-func-linear-regression.jpg">
 <meta property="og:image" content="http://note.49px.com/media/ml-gradient-descent-order-2.png">
@@ -75,7 +75,7 @@
 <meta property="og:image" content="http://note.49px.com/media/ml-algo-collaborative-filtering.jpg">
 <meta property="og:image" content="http://note.49px.com/media/ml-collaborative-filtering-mean-normalization.jpg">
 <meta property="article:published_time" content="2016-10-17T16:00:00.000Z">
-<meta property="article:modified_time" content="2020-01-08T02:47:20.007Z">
+<meta property="article:modified_time" content="2020-01-08T12:32:55.755Z">
 <meta property="article:author" content="Yang Le">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://note.49px.com/media/ml-h-func.png">
@@ -223,7 +223,9 @@
 
       
         <span itemprop="articleBody"><h3 id="监督学习">监督学习</h3>
-<p>数据集已有正确答案，预测新数据的答案。预测连续值就是回归问题，预测离散值就是分类问题。 #### 模型、代价函数 假设模型可以用h函数表示但参数未知，机器学习使用训练集为h训练参数，算出参数后的h就可以做些预测。 <img src="/media/ml-h-func.png" /></p>
+<p>数据集已有正确答案，预测新数据的答案。预测连续值就是回归问题，预测离散值就是分类问题。</p>
+<h4 id="模型代价函数">模型、代价函数</h4>
+<p>假设模型可以用h函数表示但参数未知，机器学习使用训练集为h训练参数，算出参数后的h就可以做些预测。 <img src="/media/ml-h-func.png" /></p>
 <p>要训练得到怎样的参数？要得到使代价函数最小化的参数。 代价函数是关于这些未知参数的函数。比如线性回归的h函数是关于n维特征的多项式<span class="math inline">\(h_θ(x)=θ_0+θ_1x_1+θ_2x_2+...+θ_nx_n=θ^Tx\)</span>，可选平方误差作代价函数<img src="/media/ml-cost-func-linear-regression.jpg" />，其中<span class="math inline">\(x^{(i)}\)</span>、 <span class="math inline">\(y^{(i)}\)</span>指第i个样本的值。</p>
 <h4 id="梯度下降法">梯度下降法</h4>
 <p>求最小化代价函数的参数，就是求函数取极值时的变量值。可用梯度下降法来迭代逼近局部最小值，当代价函数是凸函数时局部最小值就是全局最小值。所谓梯度，是指包含所有一阶偏导数的向量。</p>
@@ -273,7 +275,9 @@
 <p>实践中若有m个样本x，就每个样本作一个landmark，得m个landmark。也就是说，把特征x变换成m维新特征f。</p>
 <hr />
 <h3 id="非监督学习">非监督学习</h3>
-<p>把无标签数据集分簇。 #### k-means 优化目标是最小化所有点与它们簇中心的距离平方和： <img src="/media/ml-cost-func-kmeans.jpg" /> 算法的两步正是固定μ优化c、固定c优化μ： <img src="/media/ml-algo-kmeans.jpg" /></p>
+<p>把无标签数据集分簇。</p>
+<h4 id="k-means">k-means</h4>
+<p>优化目标是最小化所有点与它们簇中心的距离平方和： <img src="/media/ml-cost-func-kmeans.jpg" /> 算法的两步正是固定μ优化c、固定c优化μ： <img src="/media/ml-algo-kmeans.jpg" /></p>
 <p>簇数K通常是看数据分布后手动设置，初始化的K个簇中心是随机选的K个数据点。运行时如果某簇中心没有分配到数据点，这簇中心通常直接删掉，偶尔也可重新随机化。为防止k-means陷入局部最优解，要多次运行k-means取最小代价函数值。</p>
 <h4 id="特征降维主成分分析">特征降维：主成分分析</h4>
 <p>把n维点投射到k维面，最小化所有点与投射面的距离平方和<span class="math inline">\(\frac{1}{m}\sum_{i=1}^{m}||x^{(i)}-x_{approx}^{(i)}||^2\)</span>。</p>
@@ -427,7 +431,7 @@
           <div class="post-toc">
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#监督学习"><span class="nav-number">1.</span> <span class="nav-text">监督学习</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#梯度下降法"><span class="nav-number">1.1.</span> <span class="nav-text">梯度下降法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#方程求解法"><span class="nav-number">1.2.</span> <span class="nav-text">方程求解法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#二元分类"><span class="nav-number">1.3.</span> <span class="nav-text">二元分类</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#扩展到多元分类"><span class="nav-number">1.3.1.</span> <span class="nav-text">扩展到多元分类</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#正则化"><span class="nav-number">1.4.</span> <span class="nav-text">正则化</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#神经网络"><span class="nav-number">1.5.</span> <span class="nav-text">神经网络</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#前向传播计算各层输出"><span class="nav-number">1.5.1.</span> <span class="nav-text">前向传播计算各层输出</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#反向传播计算各层梯度"><span class="nav-number">1.5.2.</span> <span class="nav-text">反向传播计算各层梯度</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#关于激活函数"><span class="nav-number">1.5.3.</span> <span class="nav-text">关于激活函数</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#支持向量机"><span class="nav-number">1.6.</span> <span class="nav-text">支持向量机</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#核函数"><span class="nav-number">1.6.1.</span> <span class="nav-text">核函数</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#非监督学习"><span class="nav-number">2.</span> <span class="nav-text">非监督学习</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#特征降维主成分分析"><span class="nav-number">2.1.</span> <span class="nav-text">特征降维：主成分分析</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#异常检测"><span class="nav-number">2.2.</span> <span class="nav-text">异常检测</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#推荐系统"><span class="nav-number">2.3.</span> <span class="nav-text">推荐系统</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#协同过滤"><span class="nav-number">2.3.1.</span> <span class="nav-text">协同过滤</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考"><span class="nav-number">3.</span> <span class="nav-text">参考</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#监督学习"><span class="nav-number">1.</span> <span class="nav-text">监督学习</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#模型代价函数"><span class="nav-number">1.1.</span> <span class="nav-text">模型、代价函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#梯度下降法"><span class="nav-number">1.2.</span> <span class="nav-text">梯度下降法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#方程求解法"><span class="nav-number">1.3.</span> <span class="nav-text">方程求解法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#二元分类"><span class="nav-number">1.4.</span> <span class="nav-text">二元分类</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#扩展到多元分类"><span class="nav-number">1.4.1.</span> <span class="nav-text">扩展到多元分类</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#正则化"><span class="nav-number">1.5.</span> <span class="nav-text">正则化</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#神经网络"><span class="nav-number">1.6.</span> <span class="nav-text">神经网络</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#前向传播计算各层输出"><span class="nav-number">1.6.1.</span> <span class="nav-text">前向传播计算各层输出</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#反向传播计算各层梯度"><span class="nav-number">1.6.2.</span> <span class="nav-text">反向传播计算各层梯度</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#关于激活函数"><span class="nav-number">1.6.3.</span> <span class="nav-text">关于激活函数</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#支持向量机"><span class="nav-number">1.7.</span> <span class="nav-text">支持向量机</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#核函数"><span class="nav-number">1.7.1.</span> <span class="nav-text">核函数</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#非监督学习"><span class="nav-number">2.</span> <span class="nav-text">非监督学习</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#k-means"><span class="nav-number">2.1.</span> <span class="nav-text">k-means</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#特征降维主成分分析"><span class="nav-number">2.2.</span> <span class="nav-text">特征降维：主成分分析</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#异常检测"><span class="nav-number">2.3.</span> <span class="nav-text">异常检测</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#推荐系统"><span class="nav-number">2.4.</span> <span class="nav-text">推荐系统</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#协同过滤"><span class="nav-number">2.4.1.</span> <span class="nav-text">协同过滤</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考"><span class="nav-number">3.</span> <span class="nav-text">参考</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>

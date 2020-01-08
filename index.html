@@ -229,7 +229,9 @@
 <p>每次只取m个样本，在这mini-batch上梯度下降。m大时算得快，因为mini-batch整体向量化参与计算。经验上最好m&lt;=32，小mini-batch训练出的模型泛化能力更强。 特例：m=1，叫作stochastic梯度下降；m=总样本数，叫作batch梯度下降。</p>
 <h5 id="梯度下降的加速">梯度下降的加速</h5>
 <p>高维空间容易遇到“鞍点”减慢下降速度，下面算法都能解决鞍点问题。</p>
-<p>常用的Adam算法整合了Momentum和RMSprop ###### Momentum 指数加权移动平均：<span class="math inline">\(v_t = βv_{t-1} + (1-β)*θ_t\)</span>。可修正初始偏差 <span class="math inline">\(v_t / (1-β^t)\)</span></p>
+<p>常用的Adam算法整合了Momentum和RMSprop</p>
+<h6 id="momentum">Momentum</h6>
+<p>指数加权移动平均：<span class="math inline">\(v_t = βv_{t-1} + (1-β)*θ_t\)</span>。可修正初始偏差 <span class="math inline">\(v_t / (1-β^t)\)</span></p>
 <p>用梯度的移动平均更新权重： <span class="math inline">\(V_{dW} = βV_{dW} + (1-β)dW\)</span>，<span class="math inline">\(W=W-αV_{dW}\)</span>。b同理更新。</p>
 <h6 id="rmsproproot-mean-square-prop">RMSprop（root mean square prop）</h6>
 <p><span class="math inline">\(S_{dW}=βS_{dW} + (1-β)dW^2（dW^2按元素乘\)</span>），<span class="math inline">\(W=W-α\frac{dW}{\sqrt{S_{dW}}}\)</span>。 因为<span class="math inline">\(dW\)</span>值较小，<span class="math inline">\(S_{dW}\)</span>较小，<span class="math inline">\(\frac{dW}{\sqrt{S_{dW}}}\)</span>较大，W移动变快，W方向收敛加快。</p>
@@ -265,7 +267,9 @@
 <p>t时刻输入<span class="math inline">\(x_t\)</span>，t-1时刻激活值<span class="math inline">\(a_{&lt;t-1&gt;}\)</span>参与当前激活值计算 <span class="math inline">\(a_{&lt;t&gt;} = g( w_{aa}a^{&lt;t-1&gt;} + w_{ax}x^{&lt;t&gt;} + b_{a} )\)</span>，当前预测值 <span class="math inline">\(y^{&lt;t&gt;} = g( w_{ya}a^{&lt;t&gt;} + b_{y} )\)</span>。计算激活值时的g通常选tanh、偶尔relu，计算预测值时的g根据分类问题二元sigmod、多元softmax。 <span class="math inline">\([A,B]\)</span>表示两矩阵横向拼接、<span class="math inline">\([A;B]\)</span>表示两矩阵竖向拼接，让<span class="math inline">\(w_{a} = [w_{ax}, w{ax}]\)</span>，<span class="math inline">\(a_{&lt;t&gt;} = g( w_{a} [a^{&lt;t-1&gt;}; x^{&lt;t&gt;}] + b_{a} )\)</span></p>
 <h5 id="语言模型">语言模型</h5>
 <p>有个词表，单词用词表长one-hot向量表示。每次输入一个单词，输出此刻各个单词的概率。最小化代价是各时刻猜测概率与实际出现单词的交叉熵。</p>
-<p>RNN按时间一层层展开，就是一层层深度，梯度会消失。梯度消失导致无法长期依赖，可使用门单元组件解决，如GRU、LSTM等。 #### GRU（Gate Recurrent Unit，门控循环单元） 记忆细胞<span class="math inline">\(c^{&lt;t&gt;}=a^{&lt;t&gt;}\)</span>记录t时刻的激活值， 按RNN激活值计算作为候选<span class="math inline">\(z^{&lt;t&gt;} = w_c [ c^{&lt;t-1&gt;}; x^{&lt;t&gt;} ] + b_c\)</span>，<span class="math inline">\(c’^{&lt;t&gt;}=tanh( z^{&lt;t&gt;} )\)</span>， 一个门（简化版）控制取候选<span class="math inline">\(c’^{&lt;t&gt;}\)</span>还是取前一值<span class="math inline">\(c^{&lt;t-1&gt;}\)</span>，<span class="math inline">\(G_u=σ( 形似z^{&lt;t&gt;} )\)</span>，形似<span class="math inline">\(z^{&lt;t&gt;}\)</span>有自己的w、b参数 <span class="math inline">\(c^{&lt;t&gt;} = G_u * c’^{&lt;t&gt;} + (1-G_u) * c^{&lt;t-1&gt;}\)</span>。</p>
+<p>RNN按时间一层层展开，就是一层层深度，梯度会消失。梯度消失导致无法长期依赖，可使用门单元组件解决，如GRU、LSTM等。</p>
+<h4 id="grugate-recurrent-unit门控循环单元">GRU（Gate Recurrent Unit，门控循环单元）</h4>
+<p>记忆细胞<span class="math inline">\(c^{&lt;t&gt;}=a^{&lt;t&gt;}\)</span>记录t时刻的激活值， 按RNN激活值计算作为候选<span class="math inline">\(z^{&lt;t&gt;} = w_c [ c^{&lt;t-1&gt;}; x^{&lt;t&gt;} ] + b_c\)</span>，<span class="math inline">\(c’^{&lt;t&gt;}=tanh( z^{&lt;t&gt;} )\)</span>， 一个门（简化版）控制取候选<span class="math inline">\(c’^{&lt;t&gt;}\)</span>还是取前一值<span class="math inline">\(c^{&lt;t-1&gt;}\)</span>，<span class="math inline">\(G_u=σ( 形似z^{&lt;t&gt;} )\)</span>，形似<span class="math inline">\(z^{&lt;t&gt;}\)</span>有自己的w、b参数 <span class="math inline">\(c^{&lt;t&gt;} = G_u * c’^{&lt;t&gt;} + (1-G_u) * c^{&lt;t-1&gt;}\)</span>。</p>
 <p>因为<span class="math inline">\(G_{u}\)</span>通常接近于0，<span class="math inline">\(c^{&lt;t&gt;}=c^{&lt;t-1&gt;}\)</span>，保持旧状态，没有梯度消失问题</p>
 <h4 id="lstmlong-short-term-memory长短期记忆">LSTM（Long Short Term Memory，长短期记忆）</h4>
 <p>三个门，更新门<span class="math inline">\(G_u\)</span>、忘记门<span class="math inline">\(G_f\)</span>、输出门<span class="math inline">\(G_o\)</span> <span class="math inline">\(z^{&lt;t&gt;} = w_c [ a^{&lt;t-1&gt;}; x^{&lt;t&gt;} ] + b_c\)</span>， <span class="math inline">\(c’^{&lt;t&gt;}=tanh( z^{&lt;t&gt;} )\)</span>， <span class="math inline">\(G_u = σ( 形似z^{&lt;t&gt;} )\)</span>, <span class="math inline">\(G_o = σ( 形似z^{&lt;t&gt;} )\)</span>, <span class="math inline">\(G_o = σ( 形似z^{&lt;t&gt;} )\)</span>，形似<span class="math inline">\(z^{&lt;t&gt;}\)</span>有自己的w、b参数 <span class="math inline">\(c^{&lt;t&gt;} = G_u * c’^{&lt;t&gt;} + G_f * c^{&lt;t-1&gt;}\)</span>，<span class="math inline">\(a^{&lt;t&gt;} = G_o * c^{&lt;t&gt;}\)</span></p>
@@ -1056,7 +1060,9 @@
       
         
           <span itemprop="articleBody"><h3 id="监督学习">监督学习</h3>
-<p>数据集已有正确答案，预测新数据的答案。预测连续值就是回归问题，预测离散值就是分类问题。 #### 模型、代价函数 假设模型可以用h函数表示但参数未知，机器学习使用训练集为h训练参数，算出参数后的h就可以做些预测。 <img src="/media/ml-h-func.png" /></p>
+<p>数据集已有正确答案，预测新数据的答案。预测连续值就是回归问题，预测离散值就是分类问题。</p>
+<h4 id="模型代价函数">模型、代价函数</h4>
+<p>假设模型可以用h函数表示但参数未知，机器学习使用训练集为h训练参数，算出参数后的h就可以做些预测。 <img src="/media/ml-h-func.png" /></p>
 <p>要训练得到怎样的参数？要得到使代价函数最小化的参数。 代价函数是关于这些未知参数的函数。比如线性回归的h函数是关于n维特征的多项式<span class="math inline">\(h_θ(x)=θ_0+θ_1x_1+θ_2x_2+...+θ_nx_n=θ^Tx\)</span>，可选平方误差作代价函数<img src="/media/ml-cost-func-linear-regression.jpg" />，其中<span class="math inline">\(x^{(i)}\)</span>、 <span class="math inline">\(y^{(i)}\)</span>指第i个样本的值。</p>
 <h4 id="梯度下降法">梯度下降法</h4>
 <p>求最小化代价函数的参数，就是求函数取极值时的变量值。可用梯度下降法来迭代逼近局部最小值，当代价函数是凸函数时局部最小值就是全局最小值。所谓梯度，是指包含所有一阶偏导数的向量。</p>
@@ -1106,7 +1112,9 @@
 <p>实践中若有m个样本x，就每个样本作一个landmark，得m个landmark。也就是说，把特征x变换成m维新特征f。</p>
 <hr />
 <h3 id="非监督学习">非监督学习</h3>
-<p>把无标签数据集分簇。 #### k-means 优化目标是最小化所有点与它们簇中心的距离平方和： <img src="/media/ml-cost-func-kmeans.jpg" /> 算法的两步正是固定μ优化c、固定c优化μ： <img src="/media/ml-algo-kmeans.jpg" /></p>
+<p>把无标签数据集分簇。</p>
+<h4 id="k-means">k-means</h4>
+<p>优化目标是最小化所有点与它们簇中心的距离平方和： <img src="/media/ml-cost-func-kmeans.jpg" /> 算法的两步正是固定μ优化c、固定c优化μ： <img src="/media/ml-algo-kmeans.jpg" /></p>
 <p>簇数K通常是看数据分布后手动设置，初始化的K个簇中心是随机选的K个数据点。运行时如果某簇中心没有分配到数据点，这簇中心通常直接删掉，偶尔也可重新随机化。为防止k-means陷入局部最优解，要多次运行k-means取最小代价函数值。</p>
 <h4 id="特征降维主成分分析">特征降维：主成分分析</h4>
 <p>把n维点投射到k维面，最小化所有点与投射面的距离平方和<span class="math inline">\(\frac{1}{m}\sum_{i=1}^{m}||x^{(i)}-x_{approx}^{(i)}||^2\)</span>。</p>
