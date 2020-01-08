@@ -41,12 +41,12 @@
   <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.1" />
 
 
-<meta name="description" content="ios抓包用charles  监听iPhone上的https请求，要先在iPhone上用Safari访问安装证书  Error Messages should be of the form: [Noun] Can&amp;apos;t x because y. [Something is true. Try a thing.]  CocoaPods 安装：sudo gem install cocoapo">
+<meta name="description" content="ios抓包用charles 监听iPhone上的https请求，要先在iPhone上用Safari访问安装证书 Error Messages should be of the form:   [Noun] Can&#39;t x because y. [Something is true. Try a thing.]  CocoaPods  安装：sudo gem install cocoapo">
 <meta property="og:type" content="article">
 <meta property="og:title" content="iOS杂记">
 <meta property="og:url" content="http://note.49px.com/ios/index.html">
 <meta property="og:site_name" content="Dev Note">
-<meta property="og:description" content="ios抓包用charles  监听iPhone上的https请求，要先在iPhone上用Safari访问安装证书  Error Messages should be of the form: [Noun] Can&amp;apos;t x because y. [Something is true. Try a thing.]  CocoaPods 安装：sudo gem install cocoapo">
+<meta property="og:description" content="ios抓包用charles 监听iPhone上的https请求，要先在iPhone上用Safari访问安装证书 Error Messages should be of the form:   [Noun] Can&#39;t x because y. [Something is true. Try a thing.]  CocoaPods  安装：sudo gem install cocoapo">
 <meta property="article:published_time" content="2013-08-13T16:00:00.000Z">
 <meta property="article:modified_time" content="2015-09-12T12:10:26.000Z">
 <meta property="article:author" content="Yang Le">
@@ -196,52 +196,42 @@
 
       
         <span itemprop="articleBody"><ul>
-<li><p>ios抓包用<a href="http://blog.devtang.com/blog/2013/12/11/network-tool-charles-intr/" target="_blank" rel="noopener">charles</a></p>
-</li>
-<li><p>监听iPhone上的https请求，要先在iPhone上用Safari访问<a href="http://www.charlesproxy.com/charles.crt" target="_blank" rel="noopener">安装证书</a></p>
-</li>
+<li><p>ios抓包用<a href="http://blog.devtang.com/blog/2013/12/11/network-tool-charles-intr/" target="_blank" rel="noopener">charles</a></p></li>
+<li><p>监听iPhone上的https请求，要先在iPhone上用Safari访问<a href="http://www.charlesproxy.com/charles.crt" target="_blank" rel="noopener">安装证书</a></p></li>
 <li><p>Error Messages should be of <a href="http://inessential.com/2014/05/05/error_messages" target="_blank" rel="noopener">the form</a>:</p>
-<pre><code>[Noun] Can&apos;t x because y. [Something is true. Try a thing.]</code></pre></li>
+<pre><code>  [Noun] Can&#39;t x because y. [Something is true. Try a thing.]</code></pre></li>
 </ul>
-<h3 id="CocoaPods"><a href="#CocoaPods" class="headerlink" title="CocoaPods"></a>CocoaPods</h3><ul>
-<li><p>安装：<code>sudo gem install cocoapods</code></p>
-</li>
-<li><p>使用：在项目目录下建个<code>Podfile</code>，内容如 </p>
-<pre><code>platform :ios, &apos;7.0&apos;
-inhibit_all_warnings! #禁止pods里的warnings
-pod &apos;Reachability&apos;,  &apos;~&gt; 3.1.1&apos;</code></pre><p>  然后<code>pod install</code>，打开生成的<code>.xcworkspace</code>来使用</p>
-<p>  参考：<a href="http://blog.devtang.com/blog/2014/05/25/use-cocoapod-to-manage-ios-lib-dependency/" target="_blank" rel="noopener">管理包依赖</a>、<a href="http://www.iwangke.me/2013/04/18/advanced-cocoapods/" target="_blank" rel="noopener">管理本地包</a>、<a href="http://docs.cocoapods.org/podfile.html#pod" target="_blank" rel="noopener">Podfile格式</a> </p>
-</li>
+<h3 id="cocoapods">CocoaPods</h3>
+<ul>
+<li><p>安装：<code>sudo gem install cocoapods</code></p></li>
+<li><p>使用：在项目目录下建个<code>Podfile</code>，内容如</p>
+<pre><code>  platform :ios, &#39;7.0&#39;
+  inhibit_all_warnings! #禁止pods里的warnings
+  pod &#39;Reachability&#39;,  &#39;~&gt; 3.1.1&#39;</code></pre>
+<p>然后<code>pod install</code>，打开生成的<code>.xcworkspace</code>来使用</p>
+<p>参考：<a href="http://blog.devtang.com/blog/2014/05/25/use-cocoapod-to-manage-ios-lib-dependency/" target="_blank" rel="noopener">管理包依赖</a>、<a href="http://www.iwangke.me/2013/04/18/advanced-cocoapods/" target="_blank" rel="noopener">管理本地包</a>、<a href="http://docs.cocoapods.org/podfile.html#pod" target="_blank" rel="noopener">Podfile格式</a></p></li>
 </ul>
-<h3 id="静态库"><a href="#静态库" class="headerlink" title="静态库"></a>静态库</h3><ul>
+<h3 id="静态库">静态库</h3>
+<ul>
 <li><p>创建静态库，<a href="http://www.raywenderlich.com/41377/creating-a-status-library-in-ios-tutorial" target="_blank" rel="noopener">参见tutorial</a></p>
 <ul>
 <li>若静态库中用到c++而父项目中没用到，则要在父项目的<code>Other Linker Flags</code>中添加<code>-lc++</code>(静态库使用<code>libc++</code>)或<code>-lstdc++</code>(静态库使用<code>libstdc++</code>)，<a href="http://stackoverflow.com/a/16257773/1263403" target="_blank" rel="noopener">参见StackOverflow</a></li>
 <li>静态库只是<code>.o</code>文件的集合，用到的framework都得在父项目中重新link一遍</li>
-</ul>
-</li>
+</ul></li>
 <li><p>将静态库的<code>SL.xcodeproj</code>拖进父项目作为子项目的步骤：</p>
-<ol>
-<li><p>父项目的<code>Target Depedencies</code>和<code>Link Binary With Libraries</code>中添加<code>libSL.a</code></p>
-</li>
-<li><p>父项目的<code>Other Linker Flags</code>中添加<code>-ObjC</code></p>
-<blockquote>
-<p><code>-ObjC</code> causes the linker to load every object file in the library that defines an Objective-C class or category. While this option will typically result in a larger executable (due to additional object code loaded into the application), it will allow the successful creation of effective Objective-C static libraries that contain categories on existing classes.<br>参见<a href="https://developer.apple.com/library/mac/qa/qa1490/_index.html" target="_blank" rel="noopener">QA1490</a></p>
-</blockquote>
-</li>
-<li><p>父项目的<code>Header Search Paths</code>中添加静态库头文件所在的目录，记得选中<code>recursive</code></p>
-</li>
-<li><p>父项目的<code>Link Binary With Libraries</code>中添加子项目用到的库</p>
-<p>参见：<a href="http://www.cocoanetics.com/2011/12/sub-projects-in-xcode/" target="_blank" rel="noopener">Sub-Projects in Xcode</a></p>
-</li>
+<ol type="1">
+<li>父项目的<code>Target Depedencies</code>和<code>Link Binary With Libraries</code>中添加<code>libSL.a</code></li>
+<li>父项目的<code>Other Linker Flags</code>中添加<code>-ObjC</code> &gt; <code>-ObjC</code> causes the linker to load every object file in the library that defines an Objective-C class or category. While this option will typically result in a larger executable (due to additional object code loaded into the application), it will allow the successful creation of effective Objective-C static libraries that contain categories on existing classes.<br />
+参见<a href="https://developer.apple.com/library/mac/qa/qa1490/_index.html" target="_blank" rel="noopener">QA1490</a></li>
+<li>父项目的<code>Header Search Paths</code>中添加静态库头文件所在的目录，记得选中<code>recursive</code></li>
+<li>父项目的<code>Link Binary With Libraries</code>中添加子项目用到的库</li>
 </ol>
-</li>
+<p>参见：<a href="http://www.cocoanetics.com/2011/12/sub-projects-in-xcode/" target="_blank" rel="noopener">Sub-Projects in Xcode</a></p></li>
 <li><p>ios上的framework只是对静态库及头文件的封装，动态库因security问题在appstore上被禁使用，所以ios上的framework就是static framework</p>
 <ul>
 <li><a href="https://github.com/jverkoey/iOS-Framework" target="_blank" rel="noopener">将静态库手动改成framework</a></li>
 <li><a href="https://github.com/kstenerud/iOS-Universal-Framework" target="_blank" rel="noopener">从Xcode模板创建framework</a></li>
-</ul>
-</li>
+</ul></li>
 </ul>
 </span>
       
@@ -381,7 +371,7 @@ pod &apos;Reachability&apos;,  &apos;~&gt; 3.1.1&apos;</code></pre><p>  然后<c
           <div class="post-toc">
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#CocoaPods"><span class="nav-number">1.</span> <span class="nav-text">CocoaPods</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#静态库"><span class="nav-number">2.</span> <span class="nav-text">静态库</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#cocoapods"><span class="nav-number">1.</span> <span class="nav-text">CocoaPods</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#静态库"><span class="nav-number">2.</span> <span class="nav-text">静态库</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>

@@ -41,12 +41,12 @@
   <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.1" />
 
 
-<meta name="description" content="词向量词的分布假说：词的特征由其上下文决定。词向量又称词嵌入（word embedding），把词映射到某几个特征构成的低维向量。embedding在数学上表示一个映射，该映射是单射的（每个Y只有唯一的X对应，反之亦然）、结构保存的（比如在X所属空间上X1&lt;X2，那么映射后在Y所属空间上同样Y1&lt;Y2）。 工具word2vec可训练词向量。skip-gram从中心词预测周围词，CBOW">
+<meta name="description" content="词向量 词的分布假说：词的特征由其上下文决定。  词向量又称词嵌入（word embedding），把词映射到某几个特征构成的低维向量。embedding在数学上表示一个映射，该映射是单射的（每个Y只有唯一的X对应，反之亦然）、结构保存的（比如在X所属空间上X1&lt;X2，那么映射后在Y所属空间上同样Y1&lt;Y2）。 工具word2vec可训练词向量。skip-gram从中心词预测周围词，C">
 <meta property="og:type" content="article">
 <meta property="og:title" content="CS224n：自然语言处理与深度学习">
 <meta property="og:url" content="http://note.49px.com/nlp/index.html">
 <meta property="og:site_name" content="Dev Note">
-<meta property="og:description" content="词向量词的分布假说：词的特征由其上下文决定。词向量又称词嵌入（word embedding），把词映射到某几个特征构成的低维向量。embedding在数学上表示一个映射，该映射是单射的（每个Y只有唯一的X对应，反之亦然）、结构保存的（比如在X所属空间上X1&lt;X2，那么映射后在Y所属空间上同样Y1&lt;Y2）。 工具word2vec可训练词向量。skip-gram从中心词预测周围词，CBOW">
+<meta property="og:description" content="词向量 词的分布假说：词的特征由其上下文决定。  词向量又称词嵌入（word embedding），把词映射到某几个特征构成的低维向量。embedding在数学上表示一个映射，该映射是单射的（每个Y只有唯一的X对应，反之亦然）、结构保存的（比如在X所属空间上X1&lt;X2，那么映射后在Y所属空间上同样Y1&lt;Y2）。 工具word2vec可训练词向量。skip-gram从中心词预测周围词，C">
 <meta property="og:image" content="http://note.49px.com/media/cs224n-word-context.png">
 <meta property="og:image" content="http://note.49px.com/media/cs224n-word2vec-main-idea.png">
 <meta property="og:image" content="http://note.49px.com/media/cs224n-skipgram-detail-1.png">
@@ -213,23 +213,23 @@
       
 
       
-        <span itemprop="articleBody"><h4 id="词向量"><a href="#词向量" class="headerlink" title="词向量"></a>词向量</h4><p>词的分布假说：词的特征由其上下文决定。<br><img src="/media/cs224n-word-context.png" alt=""><br>词向量又称词嵌入（word embedding），把词映射到某几个特征构成的低维向量。<em>embedding</em>在数学上表示一个映射，该映射是单射的（每个Y只有唯一的X对应，反之亦然）、结构保存的（比如在X所属空间上X1&lt;X2，那么映射后在Y所属空间上同样Y1&lt;Y2）。</p>
-<p>工具word2vec可训练词向量。skip-gram从中心词预测周围词，CBOW从周围词预测中心词。<br><img src="/media/cs224n-word2vec-main-idea.png" alt=""></p>
-<h5 id="skip-gram"><a href="#skip-gram" class="headerlink" title="skip-gram"></a>skip-gram</h5><p>对每个单词，计算与前后各m个邻近词共同出现的概率积J’(θ)。loss函数用负对数似然估计J(θ)。<br><img src="/media/cs224n-skipgram-detail-1.png" alt=""><br>与邻近词$u_o$共同出现的概率$p(o|c)$用softmax表示，其中$u_o^Tv_c$是邻近词$u_o$与中心词$v_c$的相似度。<br><img src="/media/cs224n-skipgram-detail-2.png" alt=""><br><a href="http://web.stanford.edu/class/cs224n/lectures/" target="_blank" rel="noopener">Lecture2课件</a>有梯度$\frac{\partial{J(θ)}}{\partial{v_c}}$的推导过程。</p>
-<p><a href="https://www.youtube.com/watch?v=2DYxT4OMAmw&index=10&list=PL3FW7Lu3i5Jsnh1rnUwq_TcylNr7EkRe6" target="_blank" rel="noopener">Midterm Review</a>有skip-gram例子讲清楚过程。<br><img src="/media/cs224n-skipgram-process.png" alt=""></p>
-<h5 id="cbow"><a href="#cbow" class="headerlink" title="cbow"></a>cbow</h5><p><img src="/media/cs224n-cbow-process.png" alt=""></p>
-<h5 id="glove"><a href="#glove" class="headerlink" title="glove"></a>glove</h5><p>skip-gram用梯度下降法逐步计算了单词之间共同出现的概率。还可以用个全局矩阵记录单词之间在一定窗口内共同出现的次数，GloVe利用了这一信息。<br><img src="/media/cs224n-glove-process.png" alt=""></p>
-<h5 id="词窗口分类"><a href="#词窗口分类" class="headerlink" title="词窗口分类"></a>词窗口分类</h5><p>利用前后各m个邻近词，把中心词在几个歧义中的分类。</p>
-<hr>
-<h4 id="RNN是基础构件"><a href="#RNN是基础构件" class="headerlink" title="RNN是基础构件"></a>RNN是基础构件</h4><p>RNN有一个内部状态$h_{t-1}$、待训练参数$W=\begin{bmatrix} W^{(hh)} &amp; W^{(hx)}\end{bmatrix}$，每次读取输入$x_t$，更新$z_t=W^{(hh)}h_{t-1}+W^{(hx)}x_t=\begin{bmatrix} W^{(hh)} &amp; W^{(hx)}\end{bmatrix} \begin{pmatrix}h_{t-1} \cr x_t\end{pmatrix}, h_t=g(z_t)$。</p>
-<p>RNN网络深度较大，因链式求导不断相乘，有梯度消失或爆炸的问题。GRU和LSTM缓解了梯度消失问题，是常用的RNN。</p>
-<h5 id="GRU-Gated-Recurrent-Unit"><a href="#GRU-Gated-Recurrent-Unit" class="headerlink" title="GRU, Gated Recurrent Unit"></a>GRU, Gated Recurrent Unit</h5><p>$h_t=gru(x_t, h_{t-1})$<br>$\tilde{h}_t$是候选更新，update gate $z_t$决定新状态中旧状态和候选更新所占比例，reset gate $r_t$决定候选更新中保留多少旧状态。<br><img src="/media/cs224n-gru-intuition-1.png" alt="">)<img src="/media/cs244n-gru-intuition-2.png" alt=""></p>
-<h5 id="LSTM-Long-Short-Term-Memory"><a href="#LSTM-Long-Short-Term-Memory" class="headerlink" title="LSTM, Long Short Term Memory"></a>LSTM, Long Short Term Memory</h5><p>$h_t=lstm(x_t, h_{t-1})$<br><img src="/media/cs224n-lstm-1.png" alt="">)<img src="/media/cs224n-lstm-2.png" alt=""></p>
-<h4 id="神经机器翻译"><a href="#神经机器翻译" class="headerlink" title="神经机器翻译"></a>神经机器翻译</h4><p>语言模型计算整个单词序列的概率$P(w_1,…,w_r)$。</p>
-<p>由两个RNN分别作encoder（蓝色）和decoder（红色）。由于只记住encoder最后状态Y，翻译长句子时效果不好。<br><img src="/media/cs224n-rnn-language-model.png" alt=""><br>Attention的想法是多记住一些源状态。<br><img src="/media/cs224n-attention-mechanism-1.png" alt=""><br>decoder算$h_t$时，先算$h_{t-1}$与各源状态的相似性得分，用softmax将得分转成概率（这概率就叫attention），再加权相加各源状态得到上下文向量$c_t$，用$c_t$计算$h_t$。<br><img src="/media/cs224n-attention-mechanism-2.png" alt=""></p>
-<h4 id="CNN"><a href="#CNN" class="headerlink" title="CNN"></a>CNN</h4><p>词向量拼接成长向量，长为h词的滑动filter作卷积算$c_i$<br><img src="/media/cs224n-cnn-in-nlp.png" alt=""><br><img src="/media/cs224n-cnn-vs-rnn.png" alt=""></p>
-<h4 id="TreeRNN-Tree-Recursive-Neural-Network"><a href="#TreeRNN-Tree-Recursive-Neural-Network" class="headerlink" title="TreeRNN, Tree Recursive Neural Network"></a>TreeRNN, Tree Recursive Neural Network</h4><p><img src="/media/cs224n-recursive-vs-recurrent.png" alt=""><br>结构预测：将相邻两节点用神经网络算合并分数，取得分最高的合并出新节点。<br><img src="/media/cs224n-recursive-nn-structure-prediction.png" alt=""></p>
-<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><ul>
+        <span itemprop="articleBody"><h4 id="词向量">词向量</h4>
+<p>词的分布假说：词的特征由其上下文决定。 <img src="/media/cs224n-word-context.png" /> 词向量又称词嵌入（word embedding），把词映射到某几个特征构成的低维向量。<em>embedding</em>在数学上表示一个映射，该映射是单射的（每个Y只有唯一的X对应，反之亦然）、结构保存的（比如在X所属空间上X1&lt;X2，那么映射后在Y所属空间上同样Y1&lt;Y2）。</p>
+<p>工具word2vec可训练词向量。skip-gram从中心词预测周围词，CBOW从周围词预测中心词。 <img src="/media/cs224n-word2vec-main-idea.png" /></p>
+<h5 id="skip-gram">skip-gram</h5>
+<p>对每个单词，计算与前后各m个邻近词共同出现的概率积J’(θ)。loss函数用负对数似然估计J(θ)。 <img src="/media/cs224n-skipgram-detail-1.png" /> 与邻近词<span class="math inline">\(u_o\)</span>共同出现的概率<span class="math inline">\(p(o|c)\)</span>用softmax表示，其中<span class="math inline">\(u_o^Tv_c\)</span>是邻近词<span class="math inline">\(u_o\)</span>与中心词<span class="math inline">\(v_c\)</span>的相似度。 <img src="/media/cs224n-skipgram-detail-2.png" /> <a href="http://web.stanford.edu/class/cs224n/lectures/" target="_blank" rel="noopener">Lecture2课件</a>有梯度<span class="math inline">\(\frac{\partial{J(θ)}}{\partial{v_c}}\)</span>的推导过程。</p>
+<p><a href="https://www.youtube.com/watch?v=2DYxT4OMAmw&amp;index=10&amp;list=PL3FW7Lu3i5Jsnh1rnUwq_TcylNr7EkRe6" target="_blank" rel="noopener">Midterm Review</a>有skip-gram例子讲清楚过程。 <img src="/media/cs224n-skipgram-process.png" /> ##### cbow <img src="/media/cs224n-cbow-process.png" /> ##### glove skip-gram用梯度下降法逐步计算了单词之间共同出现的概率。还可以用个全局矩阵记录单词之间在一定窗口内共同出现的次数，GloVe利用了这一信息。 <img src="/media/cs224n-glove-process.png" /> ##### 词窗口分类 利用前后各m个邻近词，把中心词在几个歧义中的分类。</p>
+<hr />
+<h4 id="rnn是基础构件">RNN是基础构件</h4>
+<p>RNN有一个内部状态<span class="math inline">\(h_{t-1}\)</span>、待训练参数<span class="math inline">\(W=\begin{bmatrix} W^{(hh)} &amp; W^{(hx)}\end{bmatrix}\)</span>，每次读取输入<span class="math inline">\(x_t\)</span>，更新<span class="math inline">\(z_t=W^{(hh)}h_{t-1}+W^{(hx)}x_t=\begin{bmatrix} W^{(hh)} &amp; W^{(hx)}\end{bmatrix} \begin{pmatrix}h_{t-1} \cr x_t\end{pmatrix}, h_t=g(z_t)\)</span>。</p>
+<p>RNN网络深度较大，因链式求导不断相乘，有梯度消失或爆炸的问题。GRU和LSTM缓解了梯度消失问题，是常用的RNN。 ##### GRU, Gated Recurrent Unit <span class="math inline">\(h_t=gru(x_t, h_{t-1})\)</span> <span class="math inline">\(\tilde{h}_t\)</span>是候选更新，update gate <span class="math inline">\(z_t\)</span>决定新状态中旧状态和候选更新所占比例，reset gate <span class="math inline">\(r_t\)</span>决定候选更新中保留多少旧状态。 <img src="/media/cs224n-gru-intuition-1.png" /><img src="/media/cs244n-gru-intuition-2.png" /> ##### LSTM, Long Short Term Memory <span class="math inline">\(h_t=lstm(x_t, h_{t-1})\)</span> <img src="/media/cs224n-lstm-1.png" /><img src="/media/cs224n-lstm-2.png" /> #### 神经机器翻译 语言模型计算整个单词序列的概率<span class="math inline">\(P(w_1,…,w_r)\)</span>。</p>
+<p>由两个RNN分别作encoder（蓝色）和decoder（红色）。由于只记住encoder最后状态Y，翻译长句子时效果不好。 <img src="/media/cs224n-rnn-language-model.png" /> Attention的想法是多记住一些源状态。 <img src="/media/cs224n-attention-mechanism-1.png" /> decoder算<span class="math inline">\(h_t\)</span>时，先算<span class="math inline">\(h_{t-1}\)</span>与各源状态的相似性得分，用softmax将得分转成概率（这概率就叫attention），再加权相加各源状态得到上下文向量<span class="math inline">\(c_t\)</span>，用<span class="math inline">\(c_t\)</span>计算<span class="math inline">\(h_t\)</span>。 <img src="/media/cs224n-attention-mechanism-2.png" /></p>
+<h4 id="cnn">CNN</h4>
+<p>词向量拼接成长向量，长为h词的滑动filter作卷积算<span class="math inline">\(c_i\)</span> <img src="/media/cs224n-cnn-in-nlp.png" /> <img src="/media/cs224n-cnn-vs-rnn.png" /></p>
+<h4 id="treernn-tree-recursive-neural-network">TreeRNN, Tree Recursive Neural Network</h4>
+<p><img src="/media/cs224n-recursive-vs-recurrent.png" /> 结构预测：将相邻两节点用神经网络算合并分数，取得分最高的合并出新节点。 <img src="/media/cs224n-recursive-nn-structure-prediction.png" /></p>
+<h3 id="参考">参考</h3>
+<ul>
 <li><a href="https://www.youtube.com/playlist?list=PL3FW7Lu3i5Jsnh1rnUwq_TcylNr7EkRe6" target="_blank" rel="noopener">CS224n: Natural Language Processing with Deep Learning</a> Winter 2017</li>
 </ul>
 </span>
@@ -364,7 +364,7 @@
           <div class="post-toc">
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#词向量"><span class="nav-number">1.</span> <span class="nav-text">词向量</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#skip-gram"><span class="nav-number">1.1.</span> <span class="nav-text">skip-gram</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#cbow"><span class="nav-number">1.2.</span> <span class="nav-text">cbow</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#glove"><span class="nav-number">1.3.</span> <span class="nav-text">glove</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#词窗口分类"><span class="nav-number">1.4.</span> <span class="nav-text">词窗口分类</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#RNN是基础构件"><span class="nav-number">2.</span> <span class="nav-text">RNN是基础构件</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#GRU-Gated-Recurrent-Unit"><span class="nav-number">2.1.</span> <span class="nav-text">GRU, Gated Recurrent Unit</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#LSTM-Long-Short-Term-Memory"><span class="nav-number">2.2.</span> <span class="nav-text">LSTM, Long Short Term Memory</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#神经机器翻译"><span class="nav-number">3.</span> <span class="nav-text">神经机器翻译</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#CNN"><span class="nav-number">4.</span> <span class="nav-text">CNN</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#TreeRNN-Tree-Recursive-Neural-Network"><span class="nav-number">5.</span> <span class="nav-text">TreeRNN, Tree Recursive Neural Network</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考"><span class="nav-number"></span> <span class="nav-text">参考</span></a></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#词向量"><span class="nav-number">1.</span> <span class="nav-text">词向量</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#skip-gram"><span class="nav-number">1.1.</span> <span class="nav-text">skip-gram</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#rnn是基础构件"><span class="nav-number">2.</span> <span class="nav-text">RNN是基础构件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#cnn"><span class="nav-number">3.</span> <span class="nav-text">CNN</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#treernn-tree-recursive-neural-network"><span class="nav-number">4.</span> <span class="nav-text">TreeRNN, Tree Recursive Neural Network</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考"><span class="nav-number"></span> <span class="nav-text">参考</span></a></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>

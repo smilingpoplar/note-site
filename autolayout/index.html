@@ -41,12 +41,12 @@
   <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.1" />
 
 
-<meta name="description" content="AutoLayoutAutoLayout基于描述性的constraints： 1item1.attribute1 &#x3D; multipler x item2.attribute2 + constant  1234567+ (id)constraintWithItem:(id)item1               attribute:(NSLayoutAttribute)attribute1">
+<meta name="description" content="AutoLayout AutoLayout基于描述性的constraints： 1item1.attribute1 &#x3D; multipler x item2.attribute2 + constant 1234567+ (id)constraintWithItem:(id)item1               attribute:(NSLayoutAttribute)attribute1">
 <meta property="og:type" content="article">
 <meta property="og:title" content="AutoLayout笔记">
 <meta property="og:url" content="http://note.49px.com/autolayout/index.html">
 <meta property="og:site_name" content="Dev Note">
-<meta property="og:description" content="AutoLayoutAutoLayout基于描述性的constraints： 1item1.attribute1 &#x3D; multipler x item2.attribute2 + constant  1234567+ (id)constraintWithItem:(id)item1               attribute:(NSLayoutAttribute)attribute1">
+<meta property="og:description" content="AutoLayout AutoLayout基于描述性的constraints： 1item1.attribute1 &#x3D; multipler x item2.attribute2 + constant 1234567+ (id)constraintWithItem:(id)item1               attribute:(NSLayoutAttribute)attribute1">
 <meta property="og:image" content="http://note.49px.com/media/intrinsic-content-size.png">
 <meta property="article:published_time" content="2014-11-15T16:00:00.000Z">
 <meta property="article:modified_time" content="2020-01-08T02:12:08.907Z">
@@ -197,18 +197,17 @@
       
 
       
-        <span itemprop="articleBody"><h3 id="AutoLayout"><a href="#AutoLayout" class="headerlink" title="AutoLayout"></a>AutoLayout</h3><p>AutoLayout基于描述性的constraints：</p>
+        <span itemprop="articleBody"><h3 id="autolayout">AutoLayout</h3>
+<p>AutoLayout基于描述性的constraints：</p>
 <figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">item1.attribute1 </span>= <span class="keyword">multipler </span>x <span class="keyword">item2.attribute2 </span>+ constant</span><br></pre></td></tr></table></figure>
-
 <figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">+ (<span class="keyword">id</span>)constraintWithItem:(<span class="keyword">id</span>)item1</span><br><span class="line">               attribute:(<span class="built_in">NSLayoutAttribute</span>)attribute1</span><br><span class="line">               relatedBy:(<span class="built_in">NSLayoutAttribute</span>)relation</span><br><span class="line">                  toItem:(<span class="keyword">id</span>)item2</span><br><span class="line">               attribute:(<span class="built_in">NSLayoutAttribute</span>)attribute2</span><br><span class="line">              multiplier:(<span class="built_in">CGFloat</span>)multiplier</span><br><span class="line">                constant:(<span class="built_in">CGFloat</span>)constant;</span><br></pre></td></tr></table></figure>
-
 <p>要将constraint加到item1和item2的最近公共祖先 (Least Common Ancestor) 中：</p>
 <figure class="highlight erlang"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">- <span class="params">(void)</span>addConstraint:<span class="params">(NSLayoutConstraint *)</span>constraint;</span><br></pre></td></tr></table></figure>
-
 <p>AutoLayout先自底向上updateConstraints，再自顶向下layoutSubviews。layoutSubviews时调view的<code>setCenter:</code>和<code>setBounds:</code></p>
 <p>constraint的priority默认1000（required constraint），当priority&lt;1000时表示optional constraint，数值越高优先级越高。</p>
-<p>Intrinsic Content Size &amp; Compression Resistance &amp; Content Hugging：<br><img src="/media/intrinsic-content-size.png" alt=""></p>
-<h4 id="debug"><a href="#debug" class="headerlink" title="debug"></a>debug</h4><ul>
+<p>Intrinsic Content Size &amp; Compression Resistance &amp; Content Hugging： <img src="/media/intrinsic-content-size.png" /></p>
+<h4 id="debug">debug</h4>
+<ul>
 <li>ambigulous: multiple layouts satisfy all constraints equally well</li>
 <li>unsatisfiability: no layout can satisfy all <strong>required</strong> constraints</li>
 </ul>
@@ -224,21 +223,25 @@
 <p>什么constraints导致view的当前大小：</p>
 <figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[view constraintsAffectingLayoutForAxis:NSLayoutConstraintOrientationHorizontal/Vertical]</span><br></pre></td></tr></table></figure>
 <p>转换自autoresizing mask的constraints：<code>h=-&amp;- v=&amp;--</code>：<code>h=</code>/<code>v=</code>分别表示horizontal/vertical方向，<code>-</code>表示fixed size，<code>&amp;</code>表示flexible size，3个符号依次表示margin, dimension, margin</p>
-<hr>
-<h3 id="Size-Classes"><a href="#Size-Classes" class="headerlink" title="Size Classes"></a>Size Classes</h3><p>iOS 8起，为替代<code>UIInterfaceOrientation</code>和<code>UIUserInterfaceIdiom</code>引入了<code>Size Classes</code></p>
+<hr />
+<h3 id="size-classes">Size Classes</h3>
+<p>iOS 8起，为替代<code>UIInterfaceOrientation</code>和<code>UIUserInterfaceIdiom</code>引入了<code>Size Classes</code></p>
 <p>参见：<a href="https://developer.apple.com/library/ios/releasenotes/General/WhatsNewIniOS/Articles/iOS8.html#//apple_ref/doc/uid/TP40014205-SW30" target="_blank" rel="noopener">Traits Describe the Size Class and Scale of an Interface</a></p>
 <p>There are two types of size classes in iOS 8: regular and compact. A regular size class denotes either a large amount of screen space, such as on an iPad, or a commonly adopted paradigm that provides the illusion of a large amount of screen space, such as scrolling on an iPhone.</p>
 <p>With the amount of screen space available, the iPad has a regular size class in the vertical and horizontal directions in both portrait and landscape orientations.</p>
 <p>The size classes for iPhones differ based on the kind of device and its orientation. In portrait, the screen has a compact size class horizontally and a regular size class vertically. This corresponds to the common usage paradigm of scrolling vertically for more information. When iPhones are in landscape, their size classes vary. Most iPhones have a compact size class both horizontally and vertically</p>
-<h4 id="default-size-classes"><a href="#default-size-classes" class="headerlink" title="default size classes"></a>default size classes</h4><ul>
+<h4 id="default-size-classes">default size classes</h4>
+<ul>
 <li>iPad landscape&amp;portait: V Regular | H Regular</li>
 <li>iPhone portait: V Regular | H Compact</li>
 <li>iPhone landscape: V Compact | H Compact</li>
 </ul>
-<h3 id="Traits"><a href="#Traits" class="headerlink" title="Traits"></a>Traits</h3><p>布局相关的属性，如 horizontalSizeClass / verticalSizeClass / userInterfaceIdiom / displayScale，都集中在对象的traitCollection中。</p>
+<h3 id="traits">Traits</h3>
+<p>布局相关的属性，如 horizontalSizeClass / verticalSizeClass / userInterfaceIdiom / displayScale，都集中在对象的traitCollection中。</p>
 <p>支持布局的对象，如 UIScreen / UIWindow / UIViewController / UIView / UIPresentationController，都实现了UITraitEnvironment协议，可以返回当前的traitCollection。UIViewController / UIView 也可以重载<code>traitCollectionDidChange:</code>来监听traitCollection的改变。</p>
 <p>traitCollection中未指定的trait就是Unspecified的。若traiCollection A中所有已指定的trait都与traitCollection B中的相等，则说A包含于B。两个traitCollection还能合并，X和Unspecified合并成X，值有冲突的（如Compact和Regular）保留合并进来的那个值。</p>
-<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><ul>
+<h3 id="参考">参考</h3>
+<ul>
 <li>Introduction to AutoLayout for iOS and OS X, WWDC2012#202</li>
 <li>Best Practices for Mastering Auto Layout, WWDC2012#228</li>
 <li>Auto Layout by Example, WWDC2012#232</li>
@@ -385,7 +388,7 @@
           <div class="post-toc">
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#AutoLayout"><span class="nav-number">1.</span> <span class="nav-text">AutoLayout</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#debug"><span class="nav-number">1.1.</span> <span class="nav-text">debug</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Size-Classes"><span class="nav-number">2.</span> <span class="nav-text">Size Classes</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#default-size-classes"><span class="nav-number">2.1.</span> <span class="nav-text">default size classes</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Traits"><span class="nav-number">3.</span> <span class="nav-text">Traits</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考"><span class="nav-number">4.</span> <span class="nav-text">参考</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#autolayout"><span class="nav-number">1.</span> <span class="nav-text">AutoLayout</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#debug"><span class="nav-number">1.1.</span> <span class="nav-text">debug</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#size-classes"><span class="nav-number">2.</span> <span class="nav-text">Size Classes</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#default-size-classes"><span class="nav-number">2.1.</span> <span class="nav-text">default size classes</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#traits"><span class="nav-number">3.</span> <span class="nav-text">Traits</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考"><span class="nav-number">4.</span> <span class="nav-text">参考</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>

@@ -202,60 +202,66 @@
 <li>设置memberVar，会在load过称中调用target的<code>onAssignCCBMemberVariable</code>，即target要实现<code>cocos2d::extension::CCBSelectorResolver</code></li>
 <li>设置menuItem的callback，会在load过称中调用target的<code>onResolveCCBCCMenuItemSelector</code>，即target要实现<code>cocos2d::extension::CCBSelectorResolver</code></li>
 </ul>
-<h4 id="Case-1：ccb中的CCLayer关联代码中的GameLayer"><a href="#Case-1：ccb中的CCLayer关联代码中的GameLayer" class="headerlink" title="Case 1：ccb中的CCLayer关联代码中的GameLayer"></a>Case 1：ccb中的CCLayer关联代码中的GameLayer</h4><ol>
-<li><p>ccb中CCLayer设置<em>Custom class<em>为</em>GameLayer</em></p>
-</li>
-<li><p>代码中为GameLayer添加loader类<code>class GameLayerLoader : public cocos2d::extension::CCLayerLoader</code>，为该loader实现<code>createCCNode()</code>方法。<br> 若在ccb中给该CCLayer设置了<em>custom property</em>，还得在loader类中实现相应的<code>onHandlePropTypeXXX()</code>方法。</p>
-</li>
+<h4 id="case-1ccb中的cclayer关联代码中的gamelayer">Case 1：ccb中的CCLayer关联代码中的GameLayer</h4>
+<ol type="1">
+<li><p>ccb中CCLayer设置<em>Custom class</em>为<em>GameLayer</em></p></li>
+<li><p>代码中为GameLayer添加loader类<code>class GameLayerLoader : public cocos2d::extension::CCLayerLoader</code>，为该loader实现<code>createCCNode()</code>方法。 若在ccb中给该CCLayer设置了<em>custom property</em>，还得在loader类中实现相应的<code>onHandlePropTypeXXX()</code>方法。</p></li>
 <li><p>在提供给CCBReader的CCNodeLoaderLibrary中注册loader对象</p>
-<pre><code>auto loaderLibrary = cocos2d::extension::CCNodeLoaderLibrary::newDefaultCCNodeLoaderLibrary();
-loaderLibrary-&gt;registerCCNodeLoader(“GameLayer”, nodeLoader);            </code></pre></li>
-<li><p>代码中可选实现<code>class GameLayer: public cocos2d::extension::CCNodeLoaderListener</code></p>
-</li>
+<pre><code> auto loaderLibrary = cocos2d::extension::CCNodeLoaderLibrary::newDefaultCCNodeLoaderLibrary();
+ loaderLibrary-&gt;registerCCNodeLoader(“GameLayer”, nodeLoader);            </code></pre></li>
+<li><p>代码中可选实现<code>class GameLayer: public cocos2d::extension::CCNodeLoaderListener</code></p></li>
 </ol>
-<p></p>
-* 该过称繁杂，可写[util函数](http://gist.github.com/4362371)，然后：
-
-<pre><code>    auto layer = ccb::layer&lt;GameLayer&gt;(/*init params*/);
-
-如GameLayer含*Custom Class*子类`CustomMenuItemImage`，可用：
-
-    auto loaderLibrary = ccb::defaultCCNodeLoaderLibrary&lt;GameLayer, CCLayerLoader&gt;();
-    ccb::registerCCNodeLoader&lt;CustomMenuItemImage, CCMenuItemImageLoader&gt;(loaderLibrary);
-    auto layer = ccb::layer&lt;GameLayer&gt;(loaderLibrary/*, other init params*/);</code></pre><h4 id="Case-2-ccb中的CCMenu关联代码GameLayer的buttonMenu"><a href="#Case-2-ccb中的CCMenu关联代码GameLayer的buttonMenu" class="headerlink" title="Case 2. ccb中的CCMenu关联代码GameLayer的buttonMenu"></a>Case 2. ccb中的CCMenu关联代码GameLayer的buttonMenu</h4><ol>
-<li><p>ccb中CMenu设置<em>Code connections<em>：选</em>Doc root var<em>填</em>memberVar</em>        </p>
-</li>
+<p>
+</p>
+<ul>
+<li><p>该过称繁杂，可写<a href="http://gist.github.com/4362371" target="_blank" rel="noopener">util函数</a>，然后：</p>
+<pre><code>  auto layer = ccb::layer&lt;GameLayer&gt;(/*init params*/);</code></pre>
+<p>如GameLayer含<em>Custom Class</em>子类<code>CustomMenuItemImage</code>，可用：</p>
+<pre><code>  auto loaderLibrary = ccb::defaultCCNodeLoaderLibrary&lt;GameLayer, CCLayerLoader&gt;();
+  ccb::registerCCNodeLoader&lt;CustomMenuItemImage, CCMenuItemImageLoader&gt;(loaderLibrary);
+  auto layer = ccb::layer&lt;GameLayer&gt;(loaderLibrary/*, other init params*/);</code></pre></li>
+</ul>
+<h4 id="case-2.-ccb中的ccmenu关联代码gamelayer的buttonmenu">Case 2. ccb中的CCMenu关联代码GameLayer的buttonMenu</h4>
+<ol type="1">
+<li><p>ccb中CMenu设置<em>Code connections</em>：选<em>Doc root var</em>填<em>memberVar</em><br />
+</p></li>
 <li><p>代码中<code>class GameLayer : public cocos2d::extension::CCBMemberVariableAssigner</code>，并实现：</p>
-<pre><code>bool onAssignCCBMemberVariable(cocos2d::CCObject * pTarget, cocos2d::CCString * pMemberVariableName, cocos2d::CCNode * pNode) {
-    CCB_MEMBERVARIABLEASSIGNER_GLUE(this, &quot;_buttonMenu&quot;, CCMenu *, _buttonMenu);
-    return false;
-}</code></pre><p></p>
-</li>
+<pre><code> bool onAssignCCBMemberVariable(cocos2d::CCObject * pTarget, cocos2d::CCString * pMemberVariableName, cocos2d::CCNode * pNode) {
+     CCB_MEMBERVARIABLEASSIGNER_GLUE(this, &quot;_buttonMenu&quot;, CCMenu *, _buttonMenu);
+     return false;
+ }</code></pre>
+<p>
+</p></li>
 </ol>
 <ul>
 <li><p>可定义简化宏：</p>
-<pre><code>#define CCB_MEMBER_VAR(__TYPE__, __VAR__) CCB_MEMBERVARIABLEASSIGNER_GLUE(this, #__VAR__, __TYPE__, __VAR__) </code></pre><p>  然后<code>onAssignCCBMemberVariable()</code>中可写</p>
-<pre><code>CCB_MEMBER_VAR(CCMenu *, _buttonMenu);</code></pre></li>
+<pre><code>  #define CCB_MEMBER_VAR(__TYPE__, __VAR__) CCB_MEMBERVARIABLEASSIGNER_GLUE(this, #__VAR__, __TYPE__, __VAR__) </code></pre>
+<p>然后<code>onAssignCCBMemberVariable()</code>中可写</p>
+<pre><code>  CCB_MEMBER_VAR(CCMenu *, _buttonMenu);</code></pre></li>
 </ul>
-<h4 id="Case-3：ccb中CCMenuItem调用代码GameLayer的buttonCallback"><a href="#Case-3：ccb中CCMenuItem调用代码GameLayer的buttonCallback" class="headerlink" title="Case 3：ccb中CCMenuItem调用代码GameLayer的buttonCallback"></a>Case 3：ccb中CCMenuItem调用代码GameLayer的buttonCallback</h4><ol>
-<li><p>ccb中的CCMenuItem设置：<em>selector<em>为</em>buttonCallback<em>，</em>Target<em>为</em>Document root</em></p>
-</li>
+<h4 id="case-3ccb中ccmenuitem调用代码gamelayer的buttoncallback">Case 3：ccb中CCMenuItem调用代码GameLayer的buttonCallback</h4>
+<ol type="1">
+<li><p>ccb中的CCMenuItem设置：<em>selector</em>为<em>buttonCallback</em>，<em>Target</em>为<em>Document root</em></p></li>
 <li><p>代码中<code>class GameLayer : public cocos2d::extension::CCBSelectorResolver</code>，并实现：</p>
-<pre><code>cocos2d::SEL_MenuHandler onResolveCCBCCMenuItemSelector(cocos2d::CCObject * pTarget, cocos2d::CCString * pSelectorName) {
-    CCB_SELECTORRESOLVER_CCMENUITEM_GLUE(this, &quot;buttonCallback&quot;, GameLayer::backButtonCallback);
-    return NULL;
-}
-cocos2d::extension::SEL_CCControlHandler onResolveCCBCCControlSelector(cocos2d::CCObject * pTarget, cocos2d::CCString * pSelectorName) {
-    return NULL;
-};</code></pre><p></p></li>
+<pre><code> cocos2d::SEL_MenuHandler onResolveCCBCCMenuItemSelector(cocos2d::CCObject * pTarget, cocos2d::CCString * pSelectorName) {
+     CCB_SELECTORRESOLVER_CCMENUITEM_GLUE(this, &quot;buttonCallback&quot;, GameLayer::backButtonCallback);
+     return NULL;
+ }
+ cocos2d::extension::SEL_CCControlHandler onResolveCCBCCControlSelector(cocos2d::CCObject * pTarget, cocos2d::CCString * pSelectorName) {
+     return NULL;
+ };</code></pre>
+<p>
+</p></li>
 </ol>
 <ul>
 <li><p>可定义简化宏：</p>
-<pre><code>#define CCB_CCMENUITEM_SELECTOR(__CLASS__, __FUNC__) CCB_SELECTORRESOLVER_CCMENUITEM_GLUE(this, #__FUNC__, __CLASS__::__FUNC__)
-#define CCB_CCCONTROL_SELECTOR(__CLASS__, __FUNC__) CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, #__FUNC__, __CLASS__::__FUNC__)  </code></pre><p>  然后<code>onResolveCCBCCMenuItemSelector()</code>中可写</p>
-<pre><code>CCB_CCMENUITEM_SELECTOR(GameLayer, backButtonCallback);</code></pre></li>
+<pre><code>  #define CCB_CCMENUITEM_SELECTOR(__CLASS__, __FUNC__) CCB_SELECTORRESOLVER_CCMENUITEM_GLUE(this, #__FUNC__, __CLASS__::__FUNC__)
+  #define CCB_CCCONTROL_SELECTOR(__CLASS__, __FUNC__) CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, #__FUNC__, __CLASS__::__FUNC__)  </code></pre>
+<p>然后<code>onResolveCCBCCMenuItemSelector()</code>中可写</p>
+<pre><code>  CCB_CCMENUITEM_SELECTOR(GameLayer, backButtonCallback);</code></pre></li>
 </ul>
-<h4 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h4><ul>
+<h4 id="参考">参考</h4>
+<ul>
 <li><a href="http://code.zynga.com/2012/10/creating-a-game-with-cocosbuilder/" target="_blank" rel="noopener">Creating a Game with CocosBuilder</a></li>
 <li><a href="http://www.plungeinteractive.com/blog/using-cocosbuilder-on-cocos2d-x-games/" target="_blank" rel="noopener">Using CocosBuilder on Cocos2D-X games</a></li>
 </ul>
@@ -397,7 +403,7 @@ cocos2d::extension::SEL_CCControlHandler onResolveCCBCCControlSelector(cocos2d::
           <div class="post-toc">
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#Case-1：ccb中的CCLayer关联代码中的GameLayer"><span class="nav-number">1.</span> <span class="nav-text">Case 1：ccb中的CCLayer关联代码中的GameLayer</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Case-2-ccb中的CCMenu关联代码GameLayer的buttonMenu"><span class="nav-number">2.</span> <span class="nav-text">Case 2. ccb中的CCMenu关联代码GameLayer的buttonMenu</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Case-3：ccb中CCMenuItem调用代码GameLayer的buttonCallback"><span class="nav-number">3.</span> <span class="nav-text">Case 3：ccb中CCMenuItem调用代码GameLayer的buttonCallback</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#参考"><span class="nav-number">4.</span> <span class="nav-text">参考</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#case-1ccb中的cclayer关联代码中的gamelayer"><span class="nav-number">1.</span> <span class="nav-text">Case 1：ccb中的CCLayer关联代码中的GameLayer</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#case-2.-ccb中的ccmenu关联代码gamelayer的buttonmenu"><span class="nav-number">2.</span> <span class="nav-text">Case 2. ccb中的CCMenu关联代码GameLayer的buttonMenu</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#case-3ccb中ccmenuitem调用代码gamelayer的buttoncallback"><span class="nav-number">3.</span> <span class="nav-text">Case 3：ccb中CCMenuItem调用代码GameLayer的buttonCallback</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#参考"><span class="nav-number">4.</span> <span class="nav-text">参考</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>

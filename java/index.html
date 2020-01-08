@@ -41,12 +41,12 @@
   <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.1" />
 
 
-<meta name="description" content="用jarjar修改jar中的包名或类名： java -jar jarjar.jar process &lt;rulesFile&gt; &lt;inJar&gt; &lt;outJar&gt;每条rule一行，包名或类名匹配多条rule时只取最上一条，rule格式： rule &lt;pattern&gt; &lt;resule&gt;替换包名用：rule old.package.** new.">
+<meta name="description" content="用[jarjar][]修改jar中的包名或类名： java -jar jarjar.jar process &lt;rulesFile&gt; &lt;inJar&gt; &lt;outJar&gt; 每条rule一行，包名或类名匹配多条rule时只取最上一条，rule格式： rule &lt;pattern&gt; &lt;resule&gt; 替换包名用：rule old.package.*">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Java笔记">
 <meta property="og:url" content="http://note.49px.com/java/index.html">
 <meta property="og:site_name" content="Dev Note">
-<meta property="og:description" content="用jarjar修改jar中的包名或类名： java -jar jarjar.jar process &lt;rulesFile&gt; &lt;inJar&gt; &lt;outJar&gt;每条rule一行，包名或类名匹配多条rule时只取最上一条，rule格式： rule &lt;pattern&gt; &lt;resule&gt;替换包名用：rule old.package.** new.">
+<meta property="og:description" content="用[jarjar][]修改jar中的包名或类名： java -jar jarjar.jar process &lt;rulesFile&gt; &lt;inJar&gt; &lt;outJar&gt; 每条rule一行，包名或类名匹配多条rule时只取最上一条，rule格式： rule &lt;pattern&gt; &lt;resule&gt; 替换包名用：rule old.package.*">
 <meta property="article:published_time" content="2012-09-23T16:00:00.000Z">
 <meta property="article:modified_time" content="2015-09-12T12:10:37.000Z">
 <meta property="article:author" content="Yang Le">
@@ -196,14 +196,18 @@
 
       
         <span itemprop="articleBody"><ul>
-<li><p>用<a href="[http://code.google.com/p/jarjar/wiki/CommandLineDocs]">jarjar</a>修改jar中的包名或类名：</p>
-<pre><code>java -jar jarjar.jar process &lt;rulesFile&gt; &lt;inJar&gt; &lt;outJar&gt;</code></pre><p><rulesFile>每条rule一行，包名或类名匹配多条rule时只取最上一条，rule格式：</p>
-<pre><code>rule &lt;pattern&gt; &lt;resule&gt;</code></pre><p>替换包名用：<code>rule old.package.** new.package.@1</code><br>替换类名用：<code>rule **OldClass @1NewClass</code></p>
-</li>
+<li><p>用[jarjar][]修改jar中的包名或类名：</p>
+<pre><code>java -jar jarjar.jar process &lt;rulesFile&gt; &lt;inJar&gt; &lt;outJar&gt;</code></pre>
+<p><rulesFile>每条rule一行，包名或类名匹配多条rule时只取最上一条，rule格式：</p>
+<pre><code>rule &lt;pattern&gt; &lt;resule&gt;</code></pre>
+<p>替换包名用：<code>rule old.package.** new.package.@1</code><br />
+替换类名用：<code>rule **OldClass @1NewClass</code></p></li>
 </ul>
+<p>[jarjar]: [http://code.google.com/p/jarjar/wiki/CommandLineDocs]</p>
 <ul>
-<li>用<a href="[http://java.decompiler.free.fr/?q=jdgui]">jd-gui</a>查看jar包中.class的代码</li>
+<li>用[jd-gui][]查看jar包中.class的代码</li>
 </ul>
+<p>[jd-gui]: [http://java.decompiler.free.fr/?q=jdgui]</p>
 </span>
       
     </div>

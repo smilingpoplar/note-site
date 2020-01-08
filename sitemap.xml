@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://note.49px.com/machine-learning/</loc>
+    
+    <lastmod>2020-01-08T02:47:20.007Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://note.49px.com/cnn/</loc>
     
     <lastmod>2020-01-08T02:12:08.987Z</lastmod>
@@ -10,13 +17,6 @@
   
   <url>
     <loc>http://note.49px.com/linear-algebra/</loc>
-    
-    <lastmod>2020-01-08T02:12:08.987Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://note.49px.com/machine-learning/</loc>
     
     <lastmod>2020-01-08T02:12:08.987Z</lastmod>
     

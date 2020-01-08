@@ -41,12 +41,12 @@
   <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.1" />
 
 
-<meta name="description" content="xCode中开启c++11支持： Build Settings -&gt; C++ Language Dialect 选 C++11                -&gt; C++ StandardLibrary 选 libc++ lambda：   语法: [capture-list](args-list) -&gt;return-type {…}   可转类型：function&lt;re">
+<meta name="description" content="xCode中开启c++11支持：   Build Settings -&gt; C++ Language Dialect 选 C++11                  -&gt; C++ StandardLibrary 选 libc++ lambda： 语法: [capture-list](args-list) -&gt;return-type {…} 可转类型：function&lt;re">
 <meta property="og:type" content="article">
 <meta property="og:title" content="C++11笔记">
 <meta property="og:url" content="http://note.49px.com/cxx11/index.html">
 <meta property="og:site_name" content="Dev Note">
-<meta property="og:description" content="xCode中开启c++11支持： Build Settings -&gt; C++ Language Dialect 选 C++11                -&gt; C++ StandardLibrary 选 libc++ lambda：   语法: [capture-list](args-list) -&gt;return-type {…}   可转类型：function&lt;re">
+<meta property="og:description" content="xCode中开启c++11支持：   Build Settings -&gt; C++ Language Dialect 选 C++11                  -&gt; C++ StandardLibrary 选 libc++ lambda： 语法: [capture-list](args-list) -&gt;return-type {…} 可转类型：function&lt;re">
 <meta property="article:published_time" content="2012-09-04T16:00:00.000Z">
 <meta property="article:modified_time" content="2015-09-12T12:09:50.000Z">
 <meta property="article:author" content="Yang Le">
@@ -197,59 +197,56 @@
       
         <span itemprop="articleBody"><ul>
 <li><p>xCode中开启c++11支持：</p>
-<pre><code>Build Settings -&gt; C++ Language Dialect 选 C++11
-               -&gt; C++ StandardLibrary 选 libc++</code></pre></li>
+<pre><code>  Build Settings -&gt; C++ Language Dialect 选 C++11
+                 -&gt; C++ StandardLibrary 选 libc++</code></pre></li>
 <li><p>lambda：</p>
-<p>  语法: <code>[capture-list](args-list) -&gt;return-type {…}</code></p>
-<p>  可转类型：<code>function&lt;return-type (args-type-list)&gt;</code></p>
+<p>语法: <code>[capture-list](args-list) -&gt;return-type {…}</code></p>
+<p>可转类型：<code>function&lt;return-type (args-type-list)&gt;</code></p>
 <ul>
 <li><p>lambda的类型是实现了<code>operator()</code>的匿名类型，可转成<code>std::function&lt;&gt;</code>，但不是std::function&lt;&gt;，因此</p>
-<pre><code>template&lt;typename ...Args&gt;
-void call(Args&amp;&amp; ...args) { std::cout &lt;&lt; &quot;call 1&quot;; }
-template&lt;typename ...Args&gt;
-void call(std::function&lt;void ()&gt;, Args&amp;&amp; ...args) { std::cout &lt;&lt; &quot;call 2&quot;; }</code></pre><p>  调用<code>call([](){});</code>输出<em>call 1<em>，而不是</em>call 2</em></p>
-<p>  要输出<em>call 2</em>，函数调用时要显式将lambda参数转成std::function类型：</p>
-<pre><code>call(std::function&lt;void ()&gt;([](){}))</code></pre></li>
-</ul>
-</li>
+<pre><code>  template&lt;typename ...Args&gt;
+  void call(Args&amp;&amp; ...args) { std::cout &lt;&lt; &quot;call 1&quot;; }
+  template&lt;typename ...Args&gt;
+  void call(std::function&lt;void ()&gt;, Args&amp;&amp; ...args) { std::cout &lt;&lt; &quot;call 2&quot;; }</code></pre>
+<p>调用<code>call([](){});</code>输出<em>call 1</em>，而不是<em>call 2</em></p>
+<p>要输出<em>call 2</em>，函数调用时要显式将lambda参数转成std::function类型：</p>
+<pre><code>  call(std::function&lt;void ()&gt;([](){}))</code></pre></li>
+</ul></li>
 <li><p>range-based for:</p>
-<p>  遍历map:</p>
-<pre><code>for (auto&amp; kv : aMap) {
-    cout &lt;&lt; kv.first &lt;&lt; &quot; has value &quot; &lt;&lt; kv.second &lt;&lt; endl;
-} </code></pre><p>  非成员函数的<code>begin()</code>和<code>end()</code>：要定义在CustomClass所在的namespace中</p>
-</li>
-<li><p>取tuple中第i个元素：<code>std::get&lt;i&gt;(tuple)</code></p>
-</li>
+<p>遍历map:</p>
+<pre><code>  for (auto&amp; kv : aMap) {
+      cout &lt;&lt; kv.first &lt;&lt; &quot; has value &quot; &lt;&lt; kv.second &lt;&lt; endl;
+  } </code></pre>
+<p>非成员函数的<code>begin()</code>和<code>end()</code>：要定义在CustomClass所在的namespace中</p></li>
+<li><p>取tuple中第i个元素：<code>std::get&lt;i&gt;(tuple)</code></p></li>
 <li><p>string和number间互转：</p>
-<pre><code>string to_string(int val);
-string to_string(float val);
-…
-int stoi(const string&amp; str, size_t *idx=0, int base=10);
-float stof(const string&amp; str, size_t *idx=0);
-…</code></pre></li>
+<pre><code>  string to_string(int val);
+  string to_string(float val);
+  …
+  int stoi(const string&amp; str, size_t *idx=0, int base=10);
+  float stof(const string&amp; str, size_t *idx=0);
+  …</code></pre></li>
 <li><p>unique_ptr使用自定义deleter，例如：</p>
-<pre><code>template&lt;typename T&gt;
-using cc_unique_ptr = std::unique_ptr&lt;T, std::function&lt;void(void *)&gt;&gt;;
-template&lt;typename T&gt;
-cc_unique_ptr&lt;T&gt; make_unique(T *ptr) {
-    if (ptr) ptr-&gt;retain();
-    auto deleter = [](void *p) {
-        auto ptr = static_cast&lt;T *&gt;(p);
-        if (ptr) ptr-&gt;release();
-    };
-    return cc_unique_ptr&lt;T&gt;(ptr, deleter);
-}</code></pre></li>
-<li><p>为enum指定underlying type: <code>enum E : short { kValue1, kValue2, ... }</code>，然后可以使用forward declare: <code>enmu E : short;</code></p>
-</li>
+<pre><code>  template&lt;typename T&gt;
+  using cc_unique_ptr = std::unique_ptr&lt;T, std::function&lt;void(void *)&gt;&gt;;
+  template&lt;typename T&gt;
+  cc_unique_ptr&lt;T&gt; make_unique(T *ptr) {
+      if (ptr) ptr-&gt;retain();
+      auto deleter = [](void *p) {
+          auto ptr = static_cast&lt;T *&gt;(p);
+          if (ptr) ptr-&gt;release();
+      };
+      return cc_unique_ptr&lt;T&gt;(ptr, deleter);
+  }</code></pre></li>
+<li><p>为enum指定underlying type: <code>enum E : short { kValue1, kValue2, ... }</code>，然后可以使用forward declare: <code>enmu E : short;</code></p></li>
 <li><p>强类型enum用关键字<code>enum class</code>声明，其枚举值不会暴露在surrounding scope</p>
-<pre><code>enum class Options {None, One, All};
-Options o = Options::All;</code></pre></li>
-<li><p>可给函数方法添加后置标识符<code>override</code>（指明某函数重载父类函数）和<code>final</code>(指明某函数不能被子类重载)</p>
-</li>
-<li><p>支持正则表达式<code>&lt;regex&gt;</code></p>
-</li>
+<pre><code>  enum class Options {None, One, All};
+  Options o = Options::All;</code></pre></li>
+<li><p>可给函数方法添加后置标识符<code>override</code>（指明某函数重载父类函数）和<code>final</code>(指明某函数不能被子类重载)</p></li>
+<li><p>支持正则表达式<code>&lt;regex&gt;</code></p></li>
 </ul>
-<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><ul>
+<h3 id="参考">参考</h3>
+<ul>
 <li><a href="http://herbsutter.com/elements-of-modern-c-style/" target="_blank" rel="noopener">Elements of Modern C++ Style</a></li>
 <li><a href="http://www.stroustrup.com/C++11FAQ.html" target="_blank" rel="noopener">C++11 FAQ</a></li>
 <li><a href="http://gcc.gnu.org/projects/cxx0x.html" target="_blank" rel="noopener">C++11 Support in GCC</a></li>

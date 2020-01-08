@@ -196,45 +196,36 @@
 
       
         <span itemprop="articleBody"><ul>
-<li><p><a href="https://developer.apple.com/library/ios/documentation/cocoa/Conceptual/CoreData/Articles/cdBasics.html" target="_blank" rel="noopener">Core Data Programming Guide</a></p>
+<li><a href="https://developer.apple.com/library/ios/documentation/cocoa/Conceptual/CoreData/Articles/cdBasics.html" target="_blank" rel="noopener">Core Data Programming Guide</a>
 <ul>
 <li>数据库的table对应object，table的column对应property</li>
 <li>NSManagedObjectContext通过coordinator管理存储，NSPersistentStoreCoordinator将实际的NSPersistentStore（如sqlite文件）和NSManagedObjectModel（编译后的data model）关联。</li>
-</ul>
-</li>
-<li><p>CoreData使用多个数据库：</p>
-<ol>
-<li><p>在Xcode的DataModel中添加config，让entiey分属不同的config</p>
-</li>
-<li><p>ManagedObjectContext只关联一个PersistentStoreCoordinator，coordinator中可添加多个PersistentStore，让这些store分别对应不同的config：[coordinator addPersistentStoreWithType:<strong>configuration:</strong>URL:options:error:]</p>
-</li>
-<li><p>relationship只能用在同个PersistentStore中，跨store要使用FetchedRequest</p>
-<p>参考：<a href="http://stackoverflow.com/questions/5231775/can-multiple-two-persistent-stores-be-used-with-one-object-model-while-mainta" target="_blank" rel="noopener">stackoverflow</a></p>
-</li>
+</ul></li>
+<li>CoreData使用多个数据库：
+<ol type="1">
+<li>在Xcode的DataModel中添加config，让entiey分属不同的config</li>
+<li>ManagedObjectContext只关联一个PersistentStoreCoordinator，coordinator中可添加多个PersistentStore，让这些store分别对应不同的config：[coordinator addPersistentStoreWithType:<strong>configuration:</strong>URL:options:error:]</li>
+<li>relationship只能用在同个PersistentStore中，跨store要使用FetchedRequest</li>
 </ol>
-</li>
+参考：<a href="http://stackoverflow.com/questions/5231775/can-multiple-two-persistent-stores-be-used-with-one-object-model-while-mainta" target="_blank" rel="noopener">stackoverflow</a></li>
 </ul>
-<h3 id="加密CoreData"><a href="#加密CoreData" class="headerlink" title="加密CoreData"></a>加密CoreData</h3><ul>
+<h3 id="加密coredata">加密CoreData</h3>
+<ul>
 <li><p>使用<a href="https://github.com/sqlcipher/sqlcipher" target="_blank" rel="noopener">sqlcipher</a>加密sqlite，可使用其<a href="https://github.com/sqlcipher/sqlcipher/tree/Xcode5" target="_blank" rel="noopener">Xcode5分支</a>：</p>
-<ol>
+<ol type="1">
 <li><p>编译：</p>
-<pre><code>./configure --with-crypto-lib=commoncrypto --enable-tempstore=yes CFLAGS=&quot;-DSQLITE_HAS_CODEC -DSQLITE_TEMP_STORE=2 -DSQLCIPHER_CRYPTO_CC&quot; LDFLAGS=&quot;-framework Security&quot; &amp;&amp; make sqlite3.c</code></pre><p>要禁掉sqlcipher项目的warnings，在Build Phases的<code>Compile Sources</code>中给sqlite3.c加上Compiler Flags：<code>-w</code></p>
-</li>
-<li><p>把<code>sqlcipher.xcodeproj</code>拉进Xcode作为子项目，在父项目Build Phases的<code>Target Depedencies</code>和<code>Link Binary With Libraries</code>中添加<code>sqlcipher</code></p>
-</li>
-<li><p>在父项目Build Settings的<code>Other C Flags</code>中添加：<code>-DSQLITE_HAS_CODEC</code></p>
-</li>
-</ol>
-</li>
-<li><p>使用<a href="https://github.com/project-imas/encrypted-core-data" target="_blank" rel="noopener">encrypted-core-data</a>加密CoreData，encrypted-core-data依赖sqlcipher</p>
-</li>
+<pre><code> ./configure --with-crypto-lib=commoncrypto --enable-tempstore=yes CFLAGS=&quot;-DSQLITE_HAS_CODEC -DSQLITE_TEMP_STORE=2 -DSQLCIPHER_CRYPTO_CC&quot; LDFLAGS=&quot;-framework Security&quot; &amp;&amp; make sqlite3.c</code></pre>
+<p>要禁掉sqlcipher项目的warnings，在Build Phases的<code>Compile Sources</code>中给sqlite3.c加上Compiler Flags：<code>-w</code></p></li>
+<li><p>把<code>sqlcipher.xcodeproj</code>拉进Xcode作为子项目，在父项目Build Phases的<code>Target Depedencies</code>和<code>Link Binary With Libraries</code>中添加<code>sqlcipher</code></p></li>
+<li><p>在父项目Build Settings的<code>Other C Flags</code>中添加：<code>-DSQLITE_HAS_CODEC</code></p></li>
+</ol></li>
+<li><p>使用<a href="https://github.com/project-imas/encrypted-core-data" target="_blank" rel="noopener">encrypted-core-data</a>加密CoreData，encrypted-core-data依赖sqlcipher</p></li>
 <li><p>使用<a href="https://github.com/magicalpanda/MagicalRecord" target="_blank" rel="noopener">MagicalRecord</a>方便CoreData，见<a href="http://ablfx.com/blog/article/2" target="_blank" rel="noopener">使用入门</a></p>
 <ul>
 <li><p>使用前需要在<code>.pch</code>文件中添加：</p>
-<pre><code>#define MR_SHORTHAND
-#import &quot;CoreData+MagicalRecord.h&quot;</code></pre></li>
-</ul>
-</li>
+<pre><code>  #define MR_SHORTHAND
+  #import &quot;CoreData+MagicalRecord.h&quot;</code></pre></li>
+</ul></li>
 </ul>
 </span>
       
@@ -374,7 +365,7 @@
           <div class="post-toc">
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#加密CoreData"><span class="nav-number">1.</span> <span class="nav-text">加密CoreData</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#加密coredata"><span class="nav-number">1.</span> <span class="nav-text">加密CoreData</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>

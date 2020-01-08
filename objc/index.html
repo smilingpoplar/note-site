@@ -41,12 +41,12 @@
   <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.1" />
 
 
-<meta name="description" content="block block分stack&#x2F;heap&#x2F;global：block通常是其创建时所在作用域的栈变量，出了作用域这块内存可能被释放可能不释放；通过copy后block变成堆变量，使用引用计数；未引用任何外部变量和参数的block是全局变量，copy无用也不dealloc。      block的参数列表为空时是接受_可变参数_，void (^block)();和void (^block)(voi">
+<meta name="description" content="block  block分stack&#x2F;heap&#x2F;global：block通常是其创建时所在作用域的栈变量，出了作用域这块内存可能被释放可能不释放；通过copy后block变成堆变量，使用引用计数；未引用任何外部变量和参数的block是全局变量，copy无用也不dealloc。 block的参数列表为空时是接受_可变参数_，void (^block)();和void (^block)(void);不">
 <meta property="og:type" content="article">
 <meta property="og:title" content="ObjectiveC笔记">
 <meta property="og:url" content="http://note.49px.com/objc/index.html">
 <meta property="og:site_name" content="Dev Note">
-<meta property="og:description" content="block block分stack&#x2F;heap&#x2F;global：block通常是其创建时所在作用域的栈变量，出了作用域这块内存可能被释放可能不释放；通过copy后block变成堆变量，使用引用计数；未引用任何外部变量和参数的block是全局变量，copy无用也不dealloc。      block的参数列表为空时是接受_可变参数_，void (^block)();和void (^block)(voi">
+<meta property="og:description" content="block  block分stack&#x2F;heap&#x2F;global：block通常是其创建时所在作用域的栈变量，出了作用域这块内存可能被释放可能不释放；通过copy后block变成堆变量，使用引用计数；未引用任何外部变量和参数的block是全局变量，copy无用也不dealloc。 block的参数列表为空时是接受_可变参数_，void (^block)();和void (^block)(void);不">
 <meta property="article:published_time" content="2014-05-03T16:00:00.000Z">
 <meta property="article:modified_time" content="2015-09-12T12:22:07.000Z">
 <meta property="article:author" content="Yang Le">
@@ -196,96 +196,68 @@
       
 
       
-        <span itemprop="articleBody"><h3 id="block"><a href="#block" class="headerlink" title="block"></a>block</h3><ul>
-<li><p>block分stack/heap/global：block通常是其创建时所在作用域的栈变量，出了作用域这块内存可能被释放可能不释放；通过copy后block变成堆变量，使用引用计数；未引用任何外部变量和参数的block是全局变量，copy无用也不dealloc。    </p>
-</li>
-<li><p>block的参数列表为空时是接受_可变参数_，<code>void (^block)();</code>和<code>void (^block)(void);</code>不同。</p>
-<p>  参见：<a href="http://blog.sunnyxx.com/2014/08/02/objc-weird-code/" target="_blank" rel="noopener">ObjC非主流代码技巧</a></p>
-</li>
-<li><p>block中避免循环引用self：先在block外：</p>
-  <figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">__<span class="keyword">weak</span> __<span class="keyword">typeof</span>(<span class="keyword">self</span>) weakSelf = <span class="keyword">self</span>;</span><br></pre></td></tr></table></figure>
-<p>  然后在block中:</p>
-  <figure class="highlight elm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">__strong</span> __typeof(weakSelf) strongSelf = weakSelf;</span><br></pre></td></tr></table></figure>
-<p>  注意：block中的_ivar会隐式引用self（即self-&gt;_ivar），要改成weakSelf-&gt;_ivar或weakSelf.ivar。更优雅的方法是使用ReactiveCocoa的<a href="https://github.com/jspahrsummers/libextobjc" target="_blank" rel="noopener">libextobjc</a>中的<code>@weakify(self)</code>和<code>@strongify(self)</code>。</p>
-</li>
-<li><p>在block中要小心使用<code>NSAssert</code>，因为NSAssert宏展开中使用了self很可能导致循环引用，可用<code>NSCassert</code>。</p>
-</li>
-</ul>
-<h3 id="selector"><a href="#selector" class="headerlink" title="selector"></a>selector</h3><ul>
-<li><p>performSelector延迟调用可用<code>dispatch_after()</code>替代，如：</p>
-  <figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// [self performSelector:@selector(doSomething) withObject:nil afterDelay:5.0];</span></span><br><span class="line">dispatch_time time = dispatch<span class="constructor">_time(DISPATCH_TIME_NOW, (<span class="params">int64_t</span>)</span>(<span class="number">5.0</span><span class="operator"> * </span>NSEC_PER_SEC));</span><br><span class="line">dispatch<span class="constructor">_after(<span class="params">time</span>, <span class="params">dispatch_get_main_queue</span>()</span>, ^(void)&#123;</span><br><span class="line">    <span class="literal">[<span class="identifier">self</span> <span class="identifier">doSomething</span>]</span>;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>performSelector调用的方法至多接收两个id参数，要调用其他签名形式的方法可使用<code>NSInvocation</code>实现。比如，为调用类似<code>- (void)drawPoint:(CGPoint)point;</code>形式的方法，可写工具类：</p>
-  <figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">+ (<span class="keyword">void</span>)<span class="string">performSelector:</span>(SEL)selector <span class="string">atTarget:</span>(id)target <span class="string">withArgument:</span>(<span class="keyword">void</span> *)argument &#123;</span><br><span class="line">    NSMethodSignature *signature = [target <span class="string">methodSignatureForSelector:</span>selector];</span><br><span class="line">    NSInvocation *invocation = [NSInvocation <span class="string">invocationWithMethodSignature:</span>signature];</span><br><span class="line">    invocation.target = target;</span><br><span class="line">    invocation.selector = selector;</span><br><span class="line">    [invocation <span class="string">setArgument:</span>argument <span class="string">atIndex:</span><span class="number">2</span>];</span><br><span class="line">    [invocation invoke];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>  参见：<a href="http://greenchiu.github.io/blog/2013/04/27/yong-nsinvocationlai-qu-dai-performselector/" target="_blank" rel="noopener">NSInvocation更详细用法</a></p>
-</li>
-<li><p>当object收到未知消息时会调用<code>- (void)forwardInvocation:(NSInvocation *)anInvocation</code>，因此有机会转发消息。</p>
-<p>  参见：<a href="https://developer.apple.com/library/mac/#documentation/Cocoa/Conceptual/ObjCRuntimeGuide/Articles/ocrtForwarding.html" target="_blank" rel="noopener">Message Forwarding</a></p>
-</li>
-</ul>
-<h3 id="预处理指令"><a href="#预处理指令" class="headerlink" title="预处理指令"></a>预处理指令</h3><ul>
-<li><p>为确保文件被引用时开启ARC，添加</p>
-  <figure class="highlight vala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#if ! __has_feature(objc_arc)</span></span><br><span class="line"><span class="meta">#error This class is ARC only. Either turn on ARC for the project or use -fobjc-arc flag</span></span><br><span class="line"><span class="meta">#endif</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>用<code>#pragma</code>supress warning：</p>
-  <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> clang diagnostic push</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> clang diagnostic ignored <span class="meta-string">"-Wxxx"</span></span></span><br><span class="line"><span class="comment">// ...</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> clang diagnostic pop</span></span><br></pre></td></tr></table></figure>
-
+        <span itemprop="articleBody"><h3 id="block">block</h3>
 <ul>
-<li><p>category中方法重载的warning：-Wobjc-protocol-method-implementation</p>
-</li>
-<li><p>调用deprecated方法的warning：-Wdeprecated-declarations</p>
-<p>pragma的其他用法见<a href="http://raptureinvenice.com/pragmas-arent-just-for-marks/" target="_blank" rel="noopener">Pragmas Aren’t Just For Marks</a></p>
-</li>
+<li><p>block分stack/heap/global：block通常是其创建时所在作用域的栈变量，出了作用域这块内存可能被释放可能不释放；通过copy后block变成堆变量，使用引用计数；未引用任何外部变量和参数的block是全局变量，copy无用也不dealloc。</p></li>
+<li><p>block的参数列表为空时是接受_可变参数_，<code>void (^block)();</code>和<code>void (^block)(void);</code>不同。</p>
+<p>参见：<a href="http://blog.sunnyxx.com/2014/08/02/objc-weird-code/" target="_blank" rel="noopener">ObjC非主流代码技巧</a></p></li>
+<li><p>block中避免循环引用self：先在block外：</p>
+<p><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">__<span class="keyword">weak</span> __<span class="keyword">typeof</span>(<span class="keyword">self</span>) weakSelf = <span class="keyword">self</span>;</span><br></pre></td></tr></table></figure> 然后在block中:</p>
+<p><figure class="highlight elm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">__strong</span> __typeof(weakSelf) strongSelf = weakSelf;</span><br></pre></td></tr></table></figure> 注意：block中的_ivar会隐式引用self（即self-&gt;_ivar），要改成weakSelf-&gt;_ivar或weakSelf.ivar。更优雅的方法是使用ReactiveCocoa的<a href="https://github.com/jspahrsummers/libextobjc" target="_blank" rel="noopener">libextobjc</a>中的<code>@weakify(self)</code>和<code>@strongify(self)</code>。</p></li>
+<li><p>在block中要小心使用<code>NSAssert</code>，因为NSAssert宏展开中使用了self很可能导致循环引用，可用<code>NSCassert</code>。</p></li>
 </ul>
-</li>
+<h3 id="selector">selector</h3>
+<ul>
+<li><p>performSelector延迟调用可用<code>dispatch_after()</code>替代，如：</p>
+<p><figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// [self performSelector:@selector(doSomething) withObject:nil afterDelay:5.0];</span></span><br><span class="line">dispatch_time time = dispatch<span class="constructor">_time(DISPATCH_TIME_NOW, (<span class="params">int64_t</span>)</span>(<span class="number">5.0</span><span class="operator"> * </span>NSEC_PER_SEC));</span><br><span class="line">dispatch<span class="constructor">_after(<span class="params">time</span>, <span class="params">dispatch_get_main_queue</span>()</span>, ^(void)&#123;</span><br><span class="line">    <span class="literal">[<span class="identifier">self</span> <span class="identifier">doSomething</span>]</span>;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p></li>
+<li><p>performSelector调用的方法至多接收两个id参数，要调用其他签名形式的方法可使用<code>NSInvocation</code>实现。比如，为调用类似<code>- (void)drawPoint:(CGPoint)point;</code>形式的方法，可写工具类：</p>
+<p><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">+ (<span class="keyword">void</span>)<span class="string">performSelector:</span>(SEL)selector <span class="string">atTarget:</span>(id)target <span class="string">withArgument:</span>(<span class="keyword">void</span> *)argument &#123;</span><br><span class="line">    NSMethodSignature *signature = [target <span class="string">methodSignatureForSelector:</span>selector];</span><br><span class="line">    NSInvocation *invocation = [NSInvocation <span class="string">invocationWithMethodSignature:</span>signature];</span><br><span class="line">    invocation.target = target;</span><br><span class="line">    invocation.selector = selector;</span><br><span class="line">    [invocation <span class="string">setArgument:</span>argument <span class="string">atIndex:</span><span class="number">2</span>];</span><br><span class="line">    [invocation invoke];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure> 参见：<a href="http://greenchiu.github.io/blog/2013/04/27/yong-nsinvocationlai-qu-dai-performselector/" target="_blank" rel="noopener">NSInvocation更详细用法</a></p></li>
+<li><p>当object收到未知消息时会调用<code>- (void)forwardInvocation:(NSInvocation *)anInvocation</code>，因此有机会转发消息。</p>
+<p>参见：<a href="https://developer.apple.com/library/mac/#documentation/Cocoa/Conceptual/ObjCRuntimeGuide/Articles/ocrtForwarding.html" target="_blank" rel="noopener">Message Forwarding</a></p></li>
 </ul>
-<h3 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h3><ul>
-<li><p>在category中使用<a href="https://github.com/rentzsch/jrswizzle" target="_blank" rel="noopener">Method Swizzle</a>，要在+load()中swizzle，在+initialize()中调用会因category的initialize()和原类中被重载的initialize()的两次调用互相抵消。</p>
-</li>
-<li><p><a href="http://philjordan.eu/article/mixing-objective-c-c++-and-objective-c++" target="_blank" rel="noopener">混用ObjectiveC和C++</a></p>
-</li>
-<li><p>NSMutableArray的底层实现<code>__NSArrayM</code>是个循环数组，所以在首尾两端插入删除无需移动元素，最坏情况在中间插入删除要移动n/2个元素。插入元素时若空间不足，则空间按1.625倍增长，空间增长后即使删除元素空间也不再变小。见<a href="http://ciechanowski.me/blog/2014/03/05/exposing-nsmutablearray/" target="_blank" rel="noopener">Exposing NSMutableArray</a></p>
-</li>
+<h3 id="预处理指令">预处理指令</h3>
+<ul>
+<li><p>为确保文件被引用时开启ARC，添加</p>
+<p><figure class="highlight vala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#if ! __has_feature(objc_arc)</span></span><br><span class="line"><span class="meta">#error This class is ARC only. Either turn on ARC for the project or use -fobjc-arc flag</span></span><br><span class="line"><span class="meta">#endif</span></span><br></pre></td></tr></table></figure></p></li>
+<li><p>用<code>#pragma</code>supress warning：</p>
+<p><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> clang diagnostic push</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> clang diagnostic ignored <span class="meta-string">"-Wxxx"</span></span></span><br><span class="line"><span class="comment">// ...</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> clang diagnostic pop</span></span><br></pre></td></tr></table></figure></p>
+<ul>
+<li><p>category中方法重载的warning：-Wobjc-protocol-method-implementation</p></li>
+<li><p>调用deprecated方法的warning：-Wdeprecated-declarations</p></li>
+</ul>
+<p>pragma的其他用法见<a href="http://raptureinvenice.com/pragmas-arent-just-for-marks/" target="_blank" rel="noopener">Pragmas Aren’t Just For Marks</a></p></li>
+</ul>
+<h3 id="其他">其他</h3>
+<ul>
+<li><p>在category中使用<a href="https://github.com/rentzsch/jrswizzle" target="_blank" rel="noopener">Method Swizzle</a>，要在+load()中swizzle，在+initialize()中调用会因category的initialize()和原类中被重载的initialize()的两次调用互相抵消。</p></li>
+<li><p><a href="http://philjordan.eu/article/mixing-objective-c-c++-and-objective-c++" target="_blank" rel="noopener">混用ObjectiveC和C++</a></p></li>
+<li><p>NSMutableArray的底层实现<code>__NSArrayM</code>是个循环数组，所以在首尾两端插入删除无需移动元素，最坏情况在中间插入删除要移动n/2个元素。插入元素时若空间不足，则空间按1.625倍增长，空间增长后即使删除元素空间也不再变小。见<a href="http://ciechanowski.me/blog/2014/03/05/exposing-nsmutablearray/" target="_blank" rel="noopener">Exposing NSMutableArray</a></p></li>
 <li><p>给类添加类似array的index存取功能，实现</p>
-  <figure class="highlight erlang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">- <span class="params">(id)</span>objectAtIndexedSubscript:<span class="params">(NSUInteger)</span>idx;</span><br><span class="line">- <span class="params">(void)</span>setObject:<span class="params">(id)</span>obj atIndexedSubscript:<span class="params">(NSUInteger)</span>idx;</span><br></pre></td></tr></table></figure>
-
-<p>  添加类似dict的key存取功能，实现</p>
-  <figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="keyword">id</span>)objectAtKeyedSubscript:(<span class="keyword">id</span> &lt;<span class="built_in">NSCopying</span>&gt;)key;</span><br><span class="line">- (<span class="keyword">void</span>)setObject:(<span class="keyword">id</span>)obj forKeyedSubscript:(<span class="keyword">id</span> &lt;<span class="built_in">NSCopying</span>&gt;)key;</span><br></pre></td></tr></table></figure>
-</li>
+<p><figure class="highlight erlang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">- <span class="params">(id)</span>objectAtIndexedSubscript:<span class="params">(NSUInteger)</span>idx;</span><br><span class="line">- <span class="params">(void)</span>setObject:<span class="params">(id)</span>obj atIndexedSubscript:<span class="params">(NSUInteger)</span>idx;</span><br></pre></td></tr></table></figure></p>
+<p>添加类似dict的key存取功能，实现</p>
+<p><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="keyword">id</span>)objectAtKeyedSubscript:(<span class="keyword">id</span> &lt;<span class="built_in">NSCopying</span>&gt;)key;</span><br><span class="line">- (<span class="keyword">void</span>)setObject:(<span class="keyword">id</span>)obj forKeyedSubscript:(<span class="keyword">id</span> &lt;<span class="built_in">NSCopying</span>&gt;)key;</span><br></pre></td></tr></table></figure></p></li>
 <li><p>release build中去掉NSLog，在<code>Prefix.pch</code>中添加:</p>
-  <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">ifdef</span> NDEBUG</span></span><br><span class="line">    <span class="meta">#<span class="meta-keyword">define</span> NSLog(...) <span class="comment">/* suppress NSLog for release mode */</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br></pre></td></tr></table></figure>
-</li>
+<p><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">ifdef</span> NDEBUG</span></span><br><span class="line">    <span class="meta">#<span class="meta-keyword">define</span> NSLog(...) <span class="comment">/* suppress NSLog for release mode */</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br></pre></td></tr></table></figure></p></li>
 <li><p>non-retaining array/set for delegates:</p>
-  <figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">CFArrayCallBacks</span> callbacks = &#123; <span class="number">0</span>, <span class="literal">NULL</span>, <span class="literal">NULL</span>, <span class="built_in">CFCopyDescription</span>, <span class="built_in">CFEqual</span> &#125;;</span><br><span class="line"><span class="built_in">NSMutableArray</span> *noRetainArray = (<span class="built_in">NSMutableArray</span> *)<span class="built_in">CFArrayCreateMutable</span>(<span class="literal">NULL</span>, <span class="number">0</span>, &amp;callbacks);</span><br><span class="line"></span><br><span class="line"><span class="built_in">NSMutableSet</span> *noRetainSet = (<span class="built_in">NSMutableSet</span> *)<span class="built_in">CFSetCreateMutable</span>(<span class="literal">NULL</span>, <span class="number">0</span>, <span class="literal">NULL</span>);</span><br></pre></td></tr></table></figure>
-</li>
+<p><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">CFArrayCallBacks</span> callbacks = &#123; <span class="number">0</span>, <span class="literal">NULL</span>, <span class="literal">NULL</span>, <span class="built_in">CFCopyDescription</span>, <span class="built_in">CFEqual</span> &#125;;</span><br><span class="line"><span class="built_in">NSMutableArray</span> *noRetainArray = (<span class="built_in">NSMutableArray</span> *)<span class="built_in">CFArrayCreateMutable</span>(<span class="literal">NULL</span>, <span class="number">0</span>, &amp;callbacks);</span><br><span class="line"></span><br><span class="line"><span class="built_in">NSMutableSet</span> *noRetainSet = (<span class="built_in">NSMutableSet</span> *)<span class="built_in">CFSetCreateMutable</span>(<span class="literal">NULL</span>, <span class="number">0</span>, <span class="literal">NULL</span>);</span><br></pre></td></tr></table></figure></p></li>
 <li><p>倒序数组：</p>
-  <figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">array</span><span class="selector-class">.reverseObjectEnumerator</span><span class="selector-class">.allObjects</span>`</span><br></pre></td></tr></table></figure>
-</li>
+<p><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">array</span><span class="selector-class">.reverseObjectEnumerator</span><span class="selector-class">.allObjects</span>`</span><br></pre></td></tr></table></figure></p></li>
 <li><p>快速遍历含不同类型x值的集合：</p>
-  <figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">id</span>&lt;<span class="built_in">NSFastEnumeration</span>&gt; collection = values;</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">id</span> object <span class="keyword">in</span> collection) &#123; … &#125;</span><br></pre></td></tr></table></figure></li>
+<p><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">id</span>&lt;<span class="built_in">NSFastEnumeration</span>&gt; collection = values;</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">id</span> object <span class="keyword">in</span> collection) &#123; … &#125;</span><br></pre></td></tr></table></figure></p></li>
 <li><p>作为dict键值的object要遵循<code>&lt;NSCopying&gt;</code>，如果不遵循又要做键值，使用</p>
-  <figure class="highlight ceylon"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[NSValue valueWithNonretainedObject:<span class="keyword">object</span>]]</span><br></pre></td></tr></table></figure></li>
+<p><figure class="highlight ceylon"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[NSValue valueWithNonretainedObject:<span class="keyword">object</span>]]</span><br></pre></td></tr></table></figure></p></li>
 <li><p>使用block遍历collection：</p>
-  <figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Array</span></span><br><span class="line"><span class="built_in">NSArray</span> *array = <span class="comment">/* ... */</span>;</span><br><span class="line">[array enumerateObjectsUsingBlock:^(<span class="keyword">id</span> object, <span class="built_in">NSUInteger</span> idx, <span class="built_in">BOOL</span> *stop) &#123;</span><br><span class="line">&#125;];</span><br><span class="line"><span class="comment">// Dictioinary</span></span><br><span class="line"><span class="built_in">NSDictionary</span> *dict = <span class="comment">/* ... */</span>;</span><br><span class="line">[dict enumerateKeysAndObjectsUsingBlock:^(<span class="built_in">NSString</span> *key, <span class="built_in">NSString</span> *obj, <span class="built_in">BOOL</span> *stop) &#123;</span><br><span class="line">&#125;];    </span><br><span class="line"><span class="comment">// Set</span></span><br><span class="line"><span class="built_in">NSSet</span> *set = <span class="comment">/* ... */</span>;</span><br><span class="line">[set enumerateObjectsUsingBlock:^(<span class="keyword">id</span> object, <span class="built_in">BOOL</span> *stop) &#123;</span><br><span class="line">&#125;];</span><br></pre></td></tr></table></figure>
-
-<p>  此外还有带options的版本，如：<code>enumerateObjectsWithOptions:usingBlock:</code>。</p>
-<p>  通过options可指定是否并行迭代<code>NSEnumerationConcurrent</code>，是否反向迭代<code>NSEnumerationReverse</code>。</p>
-</li>
-<li><p>使用NSURL.h、NSPathUtilities.h、<code>NSURLComponents</code>操作url</p>
-</li>
-<li><p>使用<code>NSByteCountFormatter</code>美化下载字节计数：<code>[formatter stringFromByteCount:byteCount]</code></p>
-</li>
+<p><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Array</span></span><br><span class="line"><span class="built_in">NSArray</span> *array = <span class="comment">/* ... */</span>;</span><br><span class="line">[array enumerateObjectsUsingBlock:^(<span class="keyword">id</span> object, <span class="built_in">NSUInteger</span> idx, <span class="built_in">BOOL</span> *stop) &#123;</span><br><span class="line">&#125;];</span><br><span class="line"><span class="comment">// Dictioinary</span></span><br><span class="line"><span class="built_in">NSDictionary</span> *dict = <span class="comment">/* ... */</span>;</span><br><span class="line">[dict enumerateKeysAndObjectsUsingBlock:^(<span class="built_in">NSString</span> *key, <span class="built_in">NSString</span> *obj, <span class="built_in">BOOL</span> *stop) &#123;</span><br><span class="line">&#125;];    </span><br><span class="line"><span class="comment">// Set</span></span><br><span class="line"><span class="built_in">NSSet</span> *set = <span class="comment">/* ... */</span>;</span><br><span class="line">[set enumerateObjectsUsingBlock:^(<span class="keyword">id</span> object, <span class="built_in">BOOL</span> *stop) &#123;</span><br><span class="line">&#125;];</span><br></pre></td></tr></table></figure></p>
+<p>此外还有带options的版本，如：<code>enumerateObjectsWithOptions:usingBlock:</code>。</p>
+<p>通过options可指定是否并行迭代<code>NSEnumerationConcurrent</code>，是否反向迭代<code>NSEnumerationReverse</code>。</p></li>
+<li><p>使用NSURL.h、NSPathUtilities.h、<code>NSURLComponents</code>操作url</p></li>
+<li><p>使用<code>NSByteCountFormatter</code>美化下载字节计数：<code>[formatter stringFromByteCount:byteCount]</code></p></li>
 <li><p>只在某.m中使用的常量：</p>
-  <figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// .m</span></span><br><span class="line"><span class="keyword">static</span> <span class="keyword">const</span> <span class="built_in">NSString</span> *kStringConstant = <span class="string">@"VALUE"</span>;`</span><br></pre></td></tr></table></figure>
-<p>  全局常量：</p>
-  <figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// .h</span></span><br><span class="line"><span class="keyword">extern</span> <span class="built_in">NSString</span> *<span class="keyword">const</span> EOCStringConstant;</span><br><span class="line"><span class="comment">// .m</span></span><br><span class="line"><span class="built_in">NSString</span> *<span class="keyword">const</span> EOCStringConstant = <span class="string">@"VALUE"</span>;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>使用宏<code>NS_ENUM</code>和<code>NS_OPTIONS</code>来定义指定类型的枚举</p>
-</li>
-<li><p>使用NSCache而不是NSDictionary来cache，可在系统内存不足时自动清理</p>
-</li>
-<li><p>switch语句处理枚举值时不要实现default语句，这样当添加新的枚举值后，编译器会警告你没有处理完所有枚举值</p>
-</li>
+<p><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// .m</span></span><br><span class="line"><span class="keyword">static</span> <span class="keyword">const</span> <span class="built_in">NSString</span> *kStringConstant = <span class="string">@"VALUE"</span>;`</span><br></pre></td></tr></table></figure> 全局常量：</p>
+<p><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// .h</span></span><br><span class="line"><span class="keyword">extern</span> <span class="built_in">NSString</span> *<span class="keyword">const</span> EOCStringConstant;</span><br><span class="line"><span class="comment">// .m</span></span><br><span class="line"><span class="built_in">NSString</span> *<span class="keyword">const</span> EOCStringConstant = <span class="string">@"VALUE"</span>;</span><br></pre></td></tr></table></figure></p></li>
+<li><p>使用宏<code>NS_ENUM</code>和<code>NS_OPTIONS</code>来定义指定类型的枚举</p></li>
+<li><p>使用NSCache而不是NSDictionary来cache，可在系统内存不足时自动清理</p></li>
+<li><p>switch语句处理枚举值时不要实现default语句，这样当添加新的枚举值后，编译器会警告你没有处理完所有枚举值</p></li>
 </ul>
 </span>
       

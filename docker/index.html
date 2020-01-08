@@ -41,12 +41,12 @@
   <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.1" />
 
 
-<meta name="description" content="docker engine包含client和daemon，client（如docker命令）通过restful接口与daemon通讯 daemon管理着3种资源：  image，只读，分层，是程序运行的”源文件” registry，保存image的地方 container，在隔离用户空间运行的程序  注：docker machine用来设置运行着engine主机，以后不用了，用docker Mac">
+<meta name="description" content="docker engine 包含client和daemon，client（如docker命令）通过restful接口与daemon通讯 daemon管理着3种资源： - image，只读，分层，是程序运行的“源文件” - registry，保存image的地方 - container，在隔离用户空间运行的程序 注：docker machine用来设置运行着engine主机，以后不用了，用docke">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Docker笔记">
 <meta property="og:url" content="http://note.49px.com/docker/index.html">
 <meta property="og:site_name" content="Dev Note">
-<meta property="og:description" content="docker engine包含client和daemon，client（如docker命令）通过restful接口与daemon通讯 daemon管理着3种资源：  image，只读，分层，是程序运行的”源文件” registry，保存image的地方 container，在隔离用户空间运行的程序  注：docker machine用来设置运行着engine主机，以后不用了，用docker Mac">
+<meta property="og:description" content="docker engine 包含client和daemon，client（如docker命令）通过restful接口与daemon通讯 daemon管理着3种资源： - image，只读，分层，是程序运行的“源文件” - registry，保存image的地方 - container，在隔离用户空间运行的程序 注：docker machine用来设置运行着engine主机，以后不用了，用docke">
 <meta property="article:published_time" content="2016-08-18T16:00:00.000Z">
 <meta property="article:modified_time" content="2016-08-22T08:43:02.000Z">
 <meta property="article:author" content="Yang Le">
@@ -195,46 +195,54 @@
       
 
       
-        <span itemprop="articleBody"><h3 id="docker-engine"><a href="#docker-engine" class="headerlink" title="docker engine"></a>docker engine</h3><p>包含client和daemon，client（如<code>docker</code>命令）通过restful接口与daemon通讯</p>
-<p>daemon管理着3种资源：</p>
-<ul>
-<li>image，只读，分层，是程序运行的”源文件”</li>
-<li>registry，保存image的地方</li>
-<li>container，在隔离用户空间运行的程序</li>
-</ul>
+        <span itemprop="articleBody"><h3 id="docker-engine">docker engine</h3>
+<p>包含client和daemon，client（如<code>docker</code>命令）通过restful接口与daemon通讯</p>
+<p>daemon管理着3种资源： - image，只读，分层，是程序运行的“源文件” - registry，保存image的地方 - container，在隔离用户空间运行的程序</p>
 <p>注：<em>docker machine</em>用来设置运行着engine主机，以后不用了，用<em>docker Mac</em>代替</p>
-<h3 id="docker-image"><a href="#docker-image" class="headerlink" title="docker image"></a>docker image</h3><p><code>union mount</code>把许多filesystem一层层mount到一起。container在启动装载了image的所有层后，在最上面会再mount一层可读写filesystem，我们要container执行的进程将在这一层执行。</p>
+<h3 id="docker-image">docker image</h3>
+<p><code>union mount</code>把许多filesystem一层层mount到一起。container在启动装载了image的所有层后，在最上面会再mount一层可读写filesystem，我们要container执行的进程将在这一层执行。</p>
 <p>读写层初始是空的，当我们修改文件时，文件会从下面的只读层拷贝到读写层。初始的只读文件依然存在，但被上面的读写层拷贝所隐藏。这就是所谓的<code>copy on write</code>。</p>
 <p><code>docker images</code> image列表</p>
 <p><code>docker rmi &lt;image&gt;</code> 删除image</p>
-<h4 id="通过Dockfile构建image"><a href="#通过Dockfile构建image" class="headerlink" title="通过Dockfile构建image"></a>通过Dockfile构建image</h4><p><code>Dockfile</code>执行每条命令都相当于：给image添加一层，<code>docker commit</code>提交新image，从新image运行新container</p>
+<h4 id="通过dockfile构建image">通过Dockfile构建image</h4>
+<p><code>Dockfile</code>执行每条命令都相当于：给image添加一层，<code>docker commit</code>提交新image，从新image运行新container</p>
 <p><code>docker build -t &lt;image-name&gt;</code> 根据<code>Dockfile</code>构建image</p>
-<h3 id="docker-volume"><a href="#docker-volume" class="headerlink" title="docker volume"></a>docker volume</h3><p>volume是绕过了<code>union mount</code>机制的指定目录，使数据保存功能可以独立于容器。</p>
+<h3 id="docker-volume">docker volume</h3>
+<p>volume是绕过了<code>union mount</code>机制的指定目录，使数据保存功能可以独立于容器。</p>
 <p><code>docker run -v &lt;host-dir&gt;:&lt;container-dir&gt;[:&lt;rw-mode&gt;]</code> 用<code>-v</code>选项指定volume对应着主机的哪个目录</p>
 <p>还有一种用法叫<em>docker volume container</em>，<code>docker run -v &lt;container-dir&gt;[:&lt;rw-mode&gt;] --name=&lt;volume-container-name&gt;</code>，不用知道也无法知道数据存在主机的哪个目录，其他容器通过<code>docker run --volumes-from=&lt;volume-container-name&gt;</code>使用该volume。即使所有使用该volume的容器都删除了，volume依然存在。</p>
 <p><em>疑：说无法知道数据存在主机的哪个目录，因为用<code>docker inspect &lt;volume-container&gt;</code>查到的对应目录在主机上竟不存在？</em></p>
-<h3 id="docker-networking"><a href="#docker-networking" class="headerlink" title="docker networking"></a>docker networking</h3><p>把多个容器加入同一网络就可通信，默认网络是网桥模式。当容器创建时，会在容器端和主机端创建一对虚拟接口，相当于管道的两端，一端是容器的网络接口，一端插入主机的默认网桥。</p>
+<h3 id="docker-networking">docker networking</h3>
+<p>把多个容器加入同一网络就可通信，默认网络是网桥模式。当容器创建时，会在容器端和主机端创建一对虚拟接口，相当于管道的两端，一端是容器的网络接口，一端插入主机的默认网桥。</p>
 <p>同一网络中的容器通过<em>容器名</em>和<em>端口号</em>通信。因为docker会自动修改所有容器的<code>/etc/hosts</code>文件，把容器名映射到容器的虚拟内网ip。或者也可在运行<code>docker run -h &lt;host-name&gt; ...</code>时指定主机名。</p>
 <p><code>docker network create &lt;network-name&gt;</code> 创建网络，然后<code>docker run --net=&lt;network-name&gt; ...</code>运行容器或<code>docker network connect &lt;network-name&gt; &lt;container&gt;</code>把已有容器加入网络</p>
 <p><code>docker network inspece &lt;network-name&gt;</code> 查看网络元信息</p>
-<h3 id="docker-orchestration"><a href="#docker-orchestration" class="headerlink" title="docker orchestration"></a>docker orchestration</h3><p>orchestration（编排）指管理多个容器，编排工具有<code>docker-compose</code>、<code>swarm</code>等</p>
-<h4 id="docker-compose"><a href="#docker-compose" class="headerlink" title="docker-compose"></a>docker-compose</h4><p>在<code>docker-compose.yml</code>中配置应用的组件（如images, volumes, links等），然后<code>docker-compose up</code>运行。或着<code>docker-compose up -d</code>来daemon化，然后<code>docker-compose ps</code>查看容器，<code>docker-compose logs</code>查看日志。</p>
-<h4 id="swarm"><a href="#swarm" class="headerlink" title="swarm"></a>swarm</h4><p>把多个docker主机合成一个对外的虚拟主机</p>
-<h3 id="常用docker命令"><a href="#常用docker命令" class="headerlink" title="常用docker命令"></a>常用docker命令</h3><h4 id="docker-run"><a href="#docker-run" class="headerlink" title="docker run"></a>docker run</h4><p><code>docker run -i -t ubuntu /bin/bash</code> 打开终端，<code>-i</code> interactive，<code>-t</code> tty</p>
-<p><code>docker run -d ubuntu /bin/sh -c &quot;...&quot;</code> daemon方式运行，用<code>docker stop &lt;container&gt;</code>停止，<code>docker start &lt;container&gt;</code> 启动，<code>docker attach &lt;container&gt;</code> 再登录</p>
+<h3 id="docker-orchestration">docker orchestration</h3>
+<p>orchestration（编排）指管理多个容器，编排工具有<code>docker-compose</code>、<code>swarm</code>等</p>
+<h4 id="docker-compose">docker-compose</h4>
+<p>在<code>docker-compose.yml</code>中配置应用的组件（如images, volumes, links等），然后<code>docker-compose up</code>运行。或着<code>docker-compose up -d</code>来daemon化，然后<code>docker-compose ps</code>查看容器，<code>docker-compose logs</code>查看日志。</p>
+<h4 id="swarm">swarm</h4>
+<p>把多个docker主机合成一个对外的虚拟主机</p>
+<h3 id="常用docker命令">常用docker命令</h3>
+<h4 id="docker-run">docker run</h4>
+<p><code>docker run -i -t ubuntu /bin/bash</code> 打开终端，<code>-i</code> interactive，<code>-t</code> tty</p>
+<p><code>docker run -d ubuntu /bin/sh -c "..."</code> daemon方式运行，用<code>docker stop &lt;container&gt;</code>停止，<code>docker start &lt;container&gt;</code> 启动，<code>docker attach &lt;container&gt;</code> 再登录</p>
 <p><code>docker run --name=&lt;container-name&gt; ...</code> 给容器命名</p>
 <p><code>docker run -p 8080:80 …</code> 主机端口8080 -&gt; 容器端口80，<code>docker run -d -p 80 ...</code> 主机[32768,61000]随机端口 -&gt; 容器端口80，用<code>docker port &lt;container&gt; &lt;container-port&gt;</code>查看对应的主机端口</p>
 <p><code>docker run -P ...</code> 把容器用到的端口映射到主机的相同端口</p>
-<p><code>docker run --rm ...</code> 运行完就删除的一次性容器 </p>
-<h4 id="docker-ps"><a href="#docker-ps" class="headerlink" title="docker ps"></a>docker ps</h4><p><code>docker ps</code>（容器列表：正运行的），<code>docker ps -a</code>（正运行或未运行的），<code>docker ps -l</code>（上次运行的）</p>
-<h4 id="docker-inspect"><a href="#docker-inspect" class="headerlink" title="docker inspect"></a>docker inspect</h4><p><code>docker inspect &lt;container&gt;</code> 查看容器元信息 </p>
-<h4 id="docker-logs"><a href="#docker-logs" class="headerlink" title="docker logs"></a>docker logs</h4><p><code>docker logs &lt;container&gt;</code> 查看容器运行输出，<code>docker logs -f &lt;container&gt;</code>类似于<code>tail -f</code>命令</p>
-<h4 id="docker-top"><a href="#docker-top" class="headerlink" title="docker top"></a>docker top</h4><p><code>docker top &lt;container&gt;</code>类似于<code>top</code>命令</p>
-<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><ul>
-<li><a href="https://segmentfault.com/a/1190000006245007" target="_blank" rel="noopener">后端的轮子（四）— 容器</a></li>
-</ul>
+<p><code>docker run --rm ...</code> 运行完就删除的一次性容器</p>
+<h4 id="docker-ps">docker ps</h4>
+<p><code>docker ps</code>（容器列表：正运行的），<code>docker ps -a</code>（正运行或未运行的），<code>docker ps -l</code>（上次运行的）</p>
+<h4 id="docker-inspect">docker inspect</h4>
+<p><code>docker inspect &lt;container&gt;</code> 查看容器元信息</p>
+<h4 id="docker-logs">docker logs</h4>
+<p><code>docker logs &lt;container&gt;</code> 查看容器运行输出，<code>docker logs -f &lt;container&gt;</code>类似于<code>tail -f</code>命令</p>
+<h4 id="docker-top">docker top</h4>
+<p><code>docker top &lt;container&gt;</code>类似于<code>top</code>命令</p>
+<h3 id="参考">参考</h3>
 <ul>
-<li>《The Docker Book》<em>by James Turnbull</em>  i.e.《第一本Docker书》  </li>
+<li> <a href="https://segmentfault.com/a/1190000006245007" target="_blank" rel="noopener">后端的轮子（四）— 容器</a></li>
+<li>《The Docker Book》<em>by James Turnbull</em> i.e.《第一本Docker书》</li>
 </ul>
 </span>
       
@@ -374,7 +382,7 @@
           <div class="post-toc">
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#docker-engine"><span class="nav-number">1.</span> <span class="nav-text">docker engine</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#docker-image"><span class="nav-number">2.</span> <span class="nav-text">docker image</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#通过Dockfile构建image"><span class="nav-number">2.1.</span> <span class="nav-text">通过Dockfile构建image</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#docker-volume"><span class="nav-number">3.</span> <span class="nav-text">docker volume</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#docker-networking"><span class="nav-number">4.</span> <span class="nav-text">docker networking</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#docker-orchestration"><span class="nav-number">5.</span> <span class="nav-text">docker orchestration</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#docker-compose"><span class="nav-number">5.1.</span> <span class="nav-text">docker-compose</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#swarm"><span class="nav-number">5.2.</span> <span class="nav-text">swarm</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#常用docker命令"><span class="nav-number">6.</span> <span class="nav-text">常用docker命令</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#docker-run"><span class="nav-number">6.1.</span> <span class="nav-text">docker run</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#docker-ps"><span class="nav-number">6.2.</span> <span class="nav-text">docker ps</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#docker-inspect"><span class="nav-number">6.3.</span> <span class="nav-text">docker inspect</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#docker-logs"><span class="nav-number">6.4.</span> <span class="nav-text">docker logs</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#docker-top"><span class="nav-number">6.5.</span> <span class="nav-text">docker top</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考"><span class="nav-number">7.</span> <span class="nav-text">参考</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#docker-engine"><span class="nav-number">1.</span> <span class="nav-text">docker engine</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#docker-image"><span class="nav-number">2.</span> <span class="nav-text">docker image</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#通过dockfile构建image"><span class="nav-number">2.1.</span> <span class="nav-text">通过Dockfile构建image</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#docker-volume"><span class="nav-number">3.</span> <span class="nav-text">docker volume</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#docker-networking"><span class="nav-number">4.</span> <span class="nav-text">docker networking</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#docker-orchestration"><span class="nav-number">5.</span> <span class="nav-text">docker orchestration</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#docker-compose"><span class="nav-number">5.1.</span> <span class="nav-text">docker-compose</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#swarm"><span class="nav-number">5.2.</span> <span class="nav-text">swarm</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#常用docker命令"><span class="nav-number">6.</span> <span class="nav-text">常用docker命令</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#docker-run"><span class="nav-number">6.1.</span> <span class="nav-text">docker run</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#docker-ps"><span class="nav-number">6.2.</span> <span class="nav-text">docker ps</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#docker-inspect"><span class="nav-number">6.3.</span> <span class="nav-text">docker inspect</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#docker-logs"><span class="nav-number">6.4.</span> <span class="nav-text">docker logs</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#docker-top"><span class="nav-number">6.5.</span> <span class="nav-text">docker top</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考"><span class="nav-number">7.</span> <span class="nav-text">参考</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>

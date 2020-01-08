@@ -197,8 +197,8 @@
       
         <span itemprop="articleBody"><p>touch handling时先<code>hitTest:withEvent:</code>找出hitView：</p>
 <figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="built_in">UIView</span> *)hitTest:withEvent: &#123;</span><br><span class="line">    <span class="keyword">if</span> <span class="comment">/* pointInside:withEvent:, eg. point is in our bounds */</span> &#123;</span><br><span class="line">        <span class="keyword">for</span> <span class="comment">/* each subview, in reverse order (eg. from top to bottom) */</span> &#123;</span><br><span class="line">            hitView = <span class="comment">/* recursive call hitTest:withEvent: on subview */</span></span><br><span class="line">            <span class="keyword">if</span> (hitView != <span class="literal">nil</span>) <span class="keyword">return</span> hitView;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">self</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">nil</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h4 id="Responder-Chain"><a href="#Responder-Chain" class="headerlink" title="Responder Chain"></a>Responder Chain</h4><p>然后UIWindow就<code>sendEvent:</code>给这个view。hitView遵循responderChain：</p>
+<h4 id="responder-chain">Responder Chain</h4>
+<p>然后UIWindow就<code>sendEvent:</code>给这个view。hitView遵循responderChain：</p>
 <ul>
 <li>若hitView实现了<code>touchesBegan:</code>，不管有没实现其他3个方法：调hitView的<code>touchesBegan:</code>方法，再调hitView的其他3个方法（如果实现了的话）</li>
 <li>若hitView没实现<code>touchesBegan:</code>，但实现了其他3个方法：沿chain找到第一个响应<code>touchesBegan:</code>的ancestorView，其他3个方法在沿着chain从<code>[hitView -&gt; ancestorView]</code>的各个view上依次调用。</li>
@@ -206,7 +206,8 @@
 <p>responderChain基本就是沿着superview转发touch。如果这个superview是viewController.view，那实际上是将touch交给viewController处理。例如，parentView -&gt; parent’s viewController -&gt; window -&gt; application -&gt; applicationDelegate。</p>
 <p>但我们不能手动将touch传给nextResponder（下面的写法不太work）：</p>
 <figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">-</span> (void)<span class="selector-tag">touchesBegan</span><span class="selector-pseudo">:(NSSet</span> *)<span class="selector-tag">touches</span> <span class="selector-tag">withEvent</span><span class="selector-pseudo">:(UIEvent</span> *)<span class="selector-tag">event</span> &#123;</span><br><span class="line">    <span class="selector-attr">[[self nextResponder]</span> <span class="selector-tag">touchesBegan</span><span class="selector-pseudo">:touches</span> <span class="selector-tag">withEvent</span><span class="selector-pseudo">:event</span>];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h4 id="Gesture-Recognizer"><a href="#Gesture-Recognizer" class="headerlink" title="Gesture Recognizer"></a>Gesture Recognizer</h4><p>gestureRecognizer不依赖responderChain。从<code>[hitView -&gt; window]</code>链上的所有gestureRecognizers都可以处理touch。<code>touchesBegan:</code>和<code>touchesMoved:</code>会同时发给hitView和<code>[hitView -&gt; window]</code>链上的所有gestureRecognizers。在touchesEnded阶段，如果沿链有gestureRecognizer识别成功就给hitView发<code>touchesCancelled:</code>（默认<code>gestureRecognizer.cancelsTouchesInView == YES</code>），如果识别失败就给hitView发<code>touchesEnded:withEvent:</code>。</p>
+<h4 id="gesture-recognizer">Gesture Recognizer</h4>
+<p>gestureRecognizer不依赖responderChain。从<code>[hitView -&gt; window]</code>链上的所有gestureRecognizers都可以处理touch。<code>touchesBegan:</code>和<code>touchesMoved:</code>会同时发给hitView和<code>[hitView -&gt; window]</code>链上的所有gestureRecognizers。在touchesEnded阶段，如果沿链有gestureRecognizer识别成功就给hitView发<code>touchesCancelled:</code>（默认<code>gestureRecognizer.cancelsTouchesInView == YES</code>），如果识别失败就给hitView发<code>touchesEnded:withEvent:</code>。</p>
 <p>gestureRecognizer默认不能与其他gestureRecognizers同时识别成功，可以重载delegate方法：<code>gestureRecognizer:shouldRecognizeSimultaneouslyWithGestureRecognizer:</code></p>
 <p>gestureRecognizer的默认属性：</p>
 <ul>
@@ -214,12 +215,15 @@
 <li>delaysTouchesBegan (default NO)，<code>touchesBegan:</code>会同时发往touch.view，若设为YES则得等自己识别失败才把<code>touchesBegan:</code>发往touch.view</li>
 <li>delaysTouchesEnded (default YES)，例如，这样就不会把双击识别成两次单击</li>
 </ul>
-<h4 id="UIScrollView"><a href="#UIScrollView" class="headerlink" title="UIScrollView"></a>UIScrollView</h4><p>scrollView不管有没实现<code>touchesBegan:</code>等4个方法，都会自己处理touch不会向responderChain转发。这很可能是因为scrollView默认实现了<code>touchesBegan:</code>方法。</p>
-<p>webView即使实现了<code>touchesBegan:</code>等4个方法也不会调用到，touch都被隐藏嵌套的<code>_UIWebViewScrollView</code>（<em>: UIWebScrollView : UIScrollView*）吞掉了，交给干活的子view，如<code>UIWebBrowserView</code>（</em>: UIWebDocumentView : UIWebTiledView : UIView*）处理。由于webView内部scrollView会吞掉touch，甚至在touchMoved几次后把touch.view变成nil。要对将传给webView的touch做其他处理，可重载UIWindow的<code>sendEvent:</code>，先截获感兴趣的touch做处理，再<code>[super sendEvent:event];</code>走正常流程将touch传给webView。</p>
+<h4 id="uiscrollview">UIScrollView</h4>
+<p>scrollView不管有没实现<code>touchesBegan:</code>等4个方法，都会自己处理touch不会向responderChain转发。这很可能是因为scrollView默认实现了<code>touchesBegan:</code>方法。</p>
+<p>webView即使实现了<code>touchesBegan:</code>等4个方法也不会调用到，touch都被隐藏嵌套的<code>_UIWebViewScrollView</code>（<em>: UIWebScrollView : UIScrollView</em>）吞掉了，交给干活的子view，如<code>UIWebBrowserView</code>（<em>: UIWebDocumentView : UIWebTiledView : UIView</em>）处理。由于webView内部scrollView会吞掉touch，甚至在touchMoved几次后把touch.view变成nil。要对将传给webView的touch做其他处理，可重载UIWindow的<code>sendEvent:</code>，先截获感兴趣的touch做处理，再<code>[super sendEvent:event];</code>走正常流程将touch传给webView。</p>
 <p>默认<code>scrollView.delaysContentTouches == YES</code>，即scrollView有个内装定时器的gestureRecognizer，设置有<code>gestureRecognizer.delaysTouchesBegan = YES</code>，要等这小定时器超时gestureRecognizer识别失败才给view转发touchesBegan:消息。当快速滚动scrollView时，panGestureRecognizer立即识别成功，识别成功的gestureRecognizer默认cancelsTouchesInView。由于touchesBegan:消息还没发出，不再发送touchesCancelled:，直接把touchesBegan:消息丢掉。</p>
-<h4 id="Others"><a href="#Others" class="headerlink" title="Others"></a>Others</h4><p>若target小于<code>44pt</code>不好点中，应重载target的<code>pointInside:withEvent:</code>来扩展可点击区域<code>CGRectInset(self.bounds, -expansion, -expansion)</code></p>
-<hr>
-<h3 id="参考："><a href="#参考：" class="headerlink" title="参考："></a>参考：</h3><ul>
+<h4 id="others">Others</h4>
+<p>若target小于<code>44pt</code>不好点中，应重载target的<code>pointInside:withEvent:</code>来扩展可点击区域<code>CGRectInset(self.bounds, -expansion, -expansion)</code></p>
+<hr />
+<h3 id="参考">参考：</h3>
+<ul>
 <li><a href="https://developer.apple.com/library/ios/documentation/EventHandling/Conceptual/EventHandlingiPhoneOS/Introduction/Introduction.html" target="_blank" rel="noopener">Event Handling Guide for iOS</a></li>
 <li>Advanced ScrollViews and Touch Handling Techniques, WWDC2014#235</li>
 <li>Enhancing User Experience with Scroll Views, WWDC2012#223</li>
@@ -364,7 +368,7 @@
           <div class="post-toc">
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#Responder-Chain"><span class="nav-number">1.</span> <span class="nav-text">Responder Chain</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Gesture-Recognizer"><span class="nav-number">2.</span> <span class="nav-text">Gesture Recognizer</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#UIScrollView"><span class="nav-number">3.</span> <span class="nav-text">UIScrollView</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Others"><span class="nav-number">4.</span> <span class="nav-text">Others</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考："><span class="nav-number"></span> <span class="nav-text">参考：</span></a></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#responder-chain"><span class="nav-number">1.</span> <span class="nav-text">Responder Chain</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#gesture-recognizer"><span class="nav-number">2.</span> <span class="nav-text">Gesture Recognizer</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#uiscrollview"><span class="nav-number">3.</span> <span class="nav-text">UIScrollView</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#others"><span class="nav-number">4.</span> <span class="nav-text">Others</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考"><span class="nav-number"></span> <span class="nav-text">参考：</span></a></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>

@@ -41,12 +41,12 @@
   <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.1" />
 
 
-<meta name="description" content="超参数调整training&#x2F;dev&#x2F;test集dev集就是validation集，用于评估超参数选择的好坏。test集只在训练完成后做一次评估。要确保dev&#x2F;test集的数据来自同一分布。如果来自实际应用的数据太少，优先划分到dev&#x2F;test集。 bias和variancehigh bias对应欠拟合，high variance对应过拟合  若training集误差比人类误差（比如0）高得多，说明">
+<meta name="description" content="超参数调整 training&#x2F;dev&#x2F;test集 dev集就是validation集，用于评估超参数选择的好坏。test集只在训练完成后做一次评估。要确保dev&#x2F;test集的数据来自同一分布。如果来自实际应用的数据太少，优先划分到dev&#x2F;test集。 bias和variance high bias对应欠拟合，high variance对应过拟合  若training集误差比人类误差（比如0）高得多">
 <meta property="og:type" content="article">
 <meta property="og:title" content="深度学习">
 <meta property="og:url" content="http://note.49px.com/deep-learning/index.html">
 <meta property="og:site_name" content="Dev Note">
-<meta property="og:description" content="超参数调整training&#x2F;dev&#x2F;test集dev集就是validation集，用于评估超参数选择的好坏。test集只在训练完成后做一次评估。要确保dev&#x2F;test集的数据来自同一分布。如果来自实际应用的数据太少，优先划分到dev&#x2F;test集。 bias和variancehigh bias对应欠拟合，high variance对应过拟合  若training集误差比人类误差（比如0）高得多，说明">
+<meta property="og:description" content="超参数调整 training&#x2F;dev&#x2F;test集 dev集就是validation集，用于评估超参数选择的好坏。test集只在训练完成后做一次评估。要确保dev&#x2F;test集的数据来自同一分布。如果来自实际应用的数据太少，优先划分到dev&#x2F;test集。 bias和variance high bias对应欠拟合，high variance对应过拟合  若training集误差比人类误差（比如0）高得多">
 <meta property="article:published_time" content="2018-05-11T16:00:00.000Z">
 <meta property="article:modified_time" content="2019-04-30T08:05:44.000Z">
 <meta property="article:author" content="Yang Le">
@@ -194,79 +194,99 @@
       
 
       
-        <span itemprop="articleBody"><h4 id="超参数调整"><a href="#超参数调整" class="headerlink" title="超参数调整"></a>超参数调整</h4><h5 id="training-dev-test集"><a href="#training-dev-test集" class="headerlink" title="training/dev/test集"></a>training/dev/test集</h5><p>dev集就是validation集，用于评估超参数选择的好坏。test集只在训练完成后做一次评估。要确保dev/test集的数据来自同一分布。如果来自实际应用的数据太少，优先划分到dev/test集。</p>
-<h6 id="bias和variance"><a href="#bias和variance" class="headerlink" title="bias和variance"></a>bias和variance</h6><p>high bias对应欠拟合，high variance对应过拟合</p>
+        <span itemprop="articleBody"><h4 id="超参数调整">超参数调整</h4>
+<h5 id="trainingdevtest集">training/dev/test集</h5>
+<p>dev集就是validation集，用于评估超参数选择的好坏。test集只在训练完成后做一次评估。要确保dev/test集的数据来自同一分布。如果来自实际应用的数据太少，优先划分到dev/test集。</p>
+<h6 id="bias和variance">bias和variance</h6>
+<p>high bias对应欠拟合，high variance对应过拟合</p>
 <ul>
 <li>若training集误差比人类误差（比如0）高得多，说明high bias、欠拟合。</li>
 <li>若dev集误差比training集误差高得多，说明high variance、过拟合。</li>
 <li>若test集误差比dev集误差高得多，说明dev集过拟合，需要扩充dev集。</li>
 </ul>
-<h6 id="training集的数据可来自不同分布"><a href="#training集的数据可来自不同分布" class="headerlink" title="training集的数据可来自不同分布"></a>training集的数据可来自不同分布</h6><p>如果training集的数据来自不同分布，就要从training集随机取些数据构成training-dev集。training-dev集与training集来自同一分布，但不参与训练，部分取代原先dev集的功能。</p>
+<h6 id="training集的数据可来自不同分布">training集的数据可来自不同分布</h6>
+<p>如果training集的数据来自不同分布，就要从training集随机取些数据构成training-dev集。training-dev集与training集来自同一分布，但不参与训练，部分取代原先dev集的功能。</p>
 <ul>
 <li>若training-dev集误差比training集误差高得多，说明high variance、过拟合。</li>
 <li>若training-dev集误差和training集误差差不多，但dev集误差比training-dev集误差高得多，说明数据不匹配。这时要多制造或者采集符合dev/test集特征的training集数据。</li>
 </ul>
-<h5 id="防止过拟合"><a href="#防止过拟合" class="headerlink" title="防止过拟合"></a>防止过拟合</h5><p>regularization（正则化）：在代价函数J(w,b)中给权重矩阵w添加惩罚。一般用L2正则 $||w||_2^2 = \sum w_j^2$，效果是参数值减小。</p>
-<blockquote>
-<p>L1正则 $|w|_1 = \sum |w_j|$ 效果是参数值为0。因为|w|图像关于y轴对称，在x=0处取极小值。</p>
-</blockquote>
+<h5 id="防止过拟合">防止过拟合</h5>
+<p>regularization（正则化）：在代价函数J(w,b)中给权重矩阵w添加惩罚。一般用L2正则 <span class="math inline">\(||w||_2^2 = \sum w_j^2\)</span>，效果是参数值减小。 &gt; L1正则 <span class="math inline">\(|w|_1 = \sum |w_j|\)</span> 效果是参数值为0。因为|w|图像关于y轴对称，在x=0处取极小值。</p>
 <p>dropout（随机失活）：每次前向-后向传播中，各层随机保留keep-prob比例的单元，并将单元输出/=keep-prob以弥补关掉单元的输出。各层的keep-prob参数可以不同。</p>
 <p>data augmentation（数据扩展）：比如把图片翻转、旋转、切变、裁切、变色等。</p>
-<h5 id="输入归一化（normalize）"><a href="#输入归一化（normalize）" class="headerlink" title="输入归一化（normalize）"></a>输入归一化（normalize）</h5><p>$x = (x-μ)/σ$，均值归0、方差归1</p>
-<h5 id="梯度爆炸或消失"><a href="#梯度爆炸或消失" class="headerlink" title="梯度爆炸或消失"></a>梯度爆炸或消失</h5><p>梯度爆炸只需clipping掉太大的梯度。</p>
+<h5 id="输入归一化normalize">输入归一化（normalize）</h5>
+<p><span class="math inline">\(x = (x-μ)/σ\)</span>，均值归0、方差归1</p>
+<h5 id="梯度爆炸或消失">梯度爆炸或消失</h5>
+<p>梯度爆炸只需clipping掉太大的梯度。</p>
 <p>梯度消失可从一些方面缓解，比如激活函数、权重矩阵初始化、跨层连接</p>
 <ul>
 <li>将激活函数从tanh/sigmoid换成relu，因为relu当x&gt;0时梯度为1，乘上不会减小。</li>
-<li>将权重矩阵初始化为单位矩阵I。更常用Xavier初始化，使输入输出方差相同：$rand()\sqrt{ \frac{1}{n_{in}} }$，$n_{in}$是该层输入单元的个数；若激活函数是relu，有一半情况不激活：$rand()\sqrt{ \frac{2}{n_{in}} }$。</li>
+<li>将权重矩阵初始化为单位矩阵I。更常用Xavier初始化，使输入输出方差相同：<span class="math inline">\(rand()\sqrt{ \frac{1}{n_{in}} }\)</span>，<span class="math inline">\(n_{in}\)</span>是该层输入单元的个数；若激活函数是relu，有一半情况不激活：<span class="math inline">\(rand()\sqrt{ \frac{2}{n_{in}} }\)</span>。</li>
 <li>ResNet中跨层连接；RNN中使用GRU或LSTM等门单元。</li>
 </ul>
-<h5 id="mini-batch"><a href="#mini-batch" class="headerlink" title="mini-batch"></a>mini-batch</h5><p>每次只取m个样本，在这mini-batch上梯度下降。m大时算得快，因为mini-batch整体向量化参与计算。经验上最好m&lt;=32，小mini-batch训练出的模型泛化能力更强。<br>特例：m=1，叫作stochastic梯度下降；m=总样本数，叫作batch梯度下降。</p>
-<h5 id="梯度下降的加速"><a href="#梯度下降的加速" class="headerlink" title="梯度下降的加速"></a>梯度下降的加速</h5><p>高维空间容易遇到”鞍点”减慢下降速度，下面算法都能解决鞍点问题。</p>
-<p>常用的Adam算法整合了Momentum和RMSprop</p>
-<h6 id="Momentum"><a href="#Momentum" class="headerlink" title="Momentum"></a>Momentum</h6><p>指数加权移动平均：$v_t = βv_{t-1} + (1-β)*θ_t$。可修正初始偏差 $v_t / (1-β^t)$</p>
-<p>用梯度的移动平均更新权重：<br>$V_{dW} = βV_{dW} + (1-β)dW$，$W=W-αV_{dW}$。b同理更新。</p>
-<h6 id="RMSprop（root-mean-square-prop）"><a href="#RMSprop（root-mean-square-prop）" class="headerlink" title="RMSprop（root mean square prop）"></a>RMSprop（root mean square prop）</h6><p>$S_{dW}=βS_{dW} + (1-β)dW^2（dW^2按元素乘$），$W=W-α\frac{dW}{\sqrt{S_{dW}}}$。<br>因为$dW$值较小，$S_{dW}$较小，$\frac{dW}{\sqrt{S_{dW}}}$较大，W移动变快，W方向收敛加快。</p>
+<h5 id="mini-batch">mini-batch</h5>
+<p>每次只取m个样本，在这mini-batch上梯度下降。m大时算得快，因为mini-batch整体向量化参与计算。经验上最好m&lt;=32，小mini-batch训练出的模型泛化能力更强。 特例：m=1，叫作stochastic梯度下降；m=总样本数，叫作batch梯度下降。</p>
+<h5 id="梯度下降的加速">梯度下降的加速</h5>
+<p>高维空间容易遇到“鞍点”减慢下降速度，下面算法都能解决鞍点问题。</p>
+<p>常用的Adam算法整合了Momentum和RMSprop ###### Momentum 指数加权移动平均：<span class="math inline">\(v_t = βv_{t-1} + (1-β)*θ_t\)</span>。可修正初始偏差 <span class="math inline">\(v_t / (1-β^t)\)</span></p>
+<p>用梯度的移动平均更新权重： <span class="math inline">\(V_{dW} = βV_{dW} + (1-β)dW\)</span>，<span class="math inline">\(W=W-αV_{dW}\)</span>。b同理更新。</p>
+<h6 id="rmsproproot-mean-square-prop">RMSprop（root mean square prop）</h6>
+<p><span class="math inline">\(S_{dW}=βS_{dW} + (1-β)dW^2（dW^2按元素乘\)</span>），<span class="math inline">\(W=W-α\frac{dW}{\sqrt{S_{dW}}}\)</span>。 因为<span class="math inline">\(dW\)</span>值较小，<span class="math inline">\(S_{dW}\)</span>较小，<span class="math inline">\(\frac{dW}{\sqrt{S_{dW}}}\)</span>较大，W移动变快，W方向收敛加快。</p>
 <p>b同理更新，b移动变慢，b方向振荡减小。</p>
-<h5 id="学习率衰减（learning-rate-decay）"><a href="#学习率衰减（learning-rate-decay）" class="headerlink" title="学习率衰减（learning rate decay）"></a>学习率衰减（learning rate decay）</h5><p>跑一遍数据叫<em>1 epoch</em>，随着epoch增加，减小学习率。</p>
-<h4 id="提前停止"><a href="#提前停止" class="headerlink" title="提前停止"></a>提前停止</h4><p>一般不用这方法，因为它同时有两种不正交的影响：提高了dev集拟合、降低train集拟合。</p>
-<h5 id="Batch-Norm"><a href="#Batch-Norm" class="headerlink" title="Batch Norm"></a>Batch Norm</h5><p>隐藏层在应用激活函数a=g(z)前，先对该层z值进行归一化，使它们有相同的均值（不一定是0）和方差（不一定是1）。</p>
-<p>新添BN层，输入z值计算均值μ和方差σ，$z_{norm}^{(i)} = \frac{z^{(i)} - μ}{\sqrt{σ^2 + ε}}$，$\tilde{z}^{(i)} = γz_{norm}^{(i)} + β$。其中γ和β是待学习的参数，输出值$\tilde{z}^{(i)}$代替$z^{(i)}$进激活函数层。</p>
-<p>使用BN时 $z^{[l]} = W^{[l]}a^{[l-1]} + b^{[l]}$ 中的$b^{[l]}$项可省略，不省略也将被归一化减掉。</p>
+<h5 id="学习率衰减learning-rate-decay">学习率衰减（learning rate decay）</h5>
+<p>跑一遍数据叫<em>1 epoch</em>，随着epoch增加，减小学习率。</p>
+<h4 id="提前停止">提前停止</h4>
+<p>一般不用这方法，因为它同时有两种不正交的影响：提高了dev集拟合、降低train集拟合。</p>
+<h5 id="batch-norm">Batch Norm</h5>
+<p>隐藏层在应用激活函数a=g(z)前，先对该层z值进行归一化，使它们有相同的均值（不一定是0）和方差（不一定是1）。</p>
+<p>新添BN层，输入z值计算均值μ和方差σ，<span class="math inline">\(z_{norm}^{(i)} = \frac{z^{(i)} - μ}{\sqrt{σ^2 + ε}}\)</span>，<span class="math inline">\(\tilde{z}^{(i)} = γz_{norm}^{(i)} + β\)</span>。其中γ和β是待学习的参数，输出值<span class="math inline">\(\tilde{z}^{(i)}\)</span>代替<span class="math inline">\(z^{(i)}\)</span>进激活函数层。</p>
+<p>使用BN时 <span class="math inline">\(z^{[l]} = W^{[l]}a^{[l-1]} + b^{[l]}\)</span> 中的<span class="math inline">\(b^{[l]}\)</span>项可省略，不省略也将被归一化减掉。</p>
 <p>训练时在一个个mini-batch上应用BN，更新μ和σ的移动平均；测试时用μ和σ的移动平均作总体μ和σ的估算。</p>
-<h5 id="迁移学习"><a href="#迁移学习" class="headerlink" title="迁移学习"></a>迁移学习</h5><p>为利用大数据量任务A训练好的深度网络N，相同类型的小数据量任务B换掉N的最后几层换上新层，然后在最后一些层上更新权重（其余层不更新权重）。</p>
-<p>如果更新所有层的权重，那么原先A上的训练叫做pre-training，现在B上的训练叫做fine-tuning。 </p>
-<hr>
-<h3 id="CNN"><a href="#CNN" class="headerlink" title="CNN"></a>CNN</h3><h4 id="物体分类和定位一起做"><a href="#物体分类和定位一起做" class="headerlink" title="物体分类和定位一起做"></a>物体分类和定位一起做</h4><p>图片中单物体定位：输出标签 anchorBox [ 图片是否包含物体?，若包含时物体定位框的四个点，物体的各个分类]。</p>
-<p>滑动窗口算法：一小块一小块窗口卷积地看图片是否包含物体。<br>全卷积网络优化：把Convs-FullyConnected的网络改成Convs-1x1Convs的全卷积网络，然后在整个图片上卷积，一下子算出了各块窗口的卷积。</p>
+<h5 id="迁移学习">迁移学习</h5>
+<p>为利用大数据量任务A训练好的深度网络N，相同类型的小数据量任务B换掉N的最后几层换上新层，然后在最后一些层上更新权重（其余层不更新权重）。</p>
+<p>如果更新所有层的权重，那么原先A上的训练叫做pre-training，现在B上的训练叫做fine-tuning。</p>
+<hr />
+<h3 id="cnn">CNN</h3>
+<h4 id="物体分类和定位一起做">物体分类和定位一起做</h4>
+<p>图片中单物体定位：输出标签 anchorBox [ 图片是否包含物体?，若包含时物体定位框的四个点，物体的各个分类]。</p>
+<p>滑动窗口算法：一小块一小块窗口卷积地看图片是否包含物体。 全卷积网络优化：把Convs-FullyConnected的网络改成Convs-1x1Convs的全卷积网络，然后在整个图片上卷积，一下子算出了各块窗口的卷积。</p>
 <p>YOLO算法（You Only Look Once）：把图片分成一些不重叠网格，每个网格对应输出中的一维anchorBox。物体中心在哪个网格则物体在哪个网格，每个网格识别中心落在该网格的物体。同样用全卷积网络，一下子算出各网格的卷积。</p>
 <p>去掉多余定位框：两个矩形框的重叠率用IoU（Intersection over Union）表示。在物体定位时会找到大大小小多个定位框，首先去掉识别概率 &lt; threshold的框；然后先选个概率最高的框k，去掉与k的重叠率较高的框（non-max supression，非极大值抑制），如此继续。</p>
 <p>一个网格识别多个物体：各种形状矩形定义一个anchorBox，扩展输出标签 [anchorBox1, anchorBox2, anchorBox3…]</p>
 <p>另：多物体的分类和定位，region-based CNN，先用分割算法找出些候选色块，再分类。</p>
-<h4 id="人脸识别：要训练相似度函数"><a href="#人脸识别：要训练相似度函数" class="headerlink" title="人脸识别：要训练相似度函数"></a>人脸识别：要训练相似度函数</h4><p>Siamese网络是共享权值的两个相同网络Conv-Pool-FC，两个输出连到最后一层，训练的相似度函数。要使相同人脸的向量距离小、不同人脸的向量距离大。训练网络时是需要有同一人的多张人脸。<br>可以：每次同时输入三张图片，一张基准Anchor、一张相同人的Positive、一张不同人的Negative，要求$d(A, P) + α &lt;= d(A, N)，α&gt;0$。$L = max( d(A, P) - d(A, N) + α, 0 )$，α限制要显著地小。<br>或者：每次同时输入两张图片，最后做相不相似的二元分类。$y = σ( \sum( w * | f^{(i)}_k - f^{(j)}_k | ) + b )$</p>
-<h4 id="神经风格转换：给Content图片C加上Style图片S的风格"><a href="#神经风格转换：给Content图片C加上Style图片S的风格" class="headerlink" title="神经风格转换：给Content图片C加上Style图片S的风格"></a>神经风格转换：给Content图片C加上Style图片S的风格</h4><p>先随机生成图片G，然后最小化代价函数，根据梯度调整G。代价函数由内容和风格两部分构成，$J(G) = αJ_{content}(C, G) + βJ_{style}(S, G)$。<br>内容代价是在隐藏层L上计算与内容图片激活情况的差距，$J_{content}(C,G) = 1/2 * || a^{C} - a^{G} ||<em>2^2$。<br>风格是隐藏层L（<code>w*h*c</code>）的c个子层间的“相关性”。因为一个子层是一种卷积核运算的结果，表示提取了某种特性。两子层间的相关性表示两种特征同时出现的情况，各子层间的相关性表示各种特征同时出现的情况，就表示了某种风格。风格矩阵（Gram矩阵）：维度<code>c*c</code>的矩阵，每个元素表示两个子层相同位置激活值相乘的的卷积值，是一种非标准的”相关性”。风格代价是在隐藏层L上计算和风格图片的Gram矩阵的差距，$J</em>{style}(S, G) = 1/(2hwc)^2 || Gram^{S} - Gram^{G} ||_2^2$。<br>最后，不仅考虑某隐藏层L，所有层都可以加入到损失函数计算中，这就考虑了各层风格。</p>
-<hr>
-<h3 id="序列模型"><a href="#序列模型" class="headerlink" title="序列模型"></a>序列模型</h3><h4 id="RNN（循环神经网络）"><a href="#RNN（循环神经网络）" class="headerlink" title="RNN（循环神经网络）"></a>RNN（循环神经网络）</h4><p>t时刻输入$x_t$，t-1时刻激活值$a_{<t-1>}$参与当前激活值计算 $a_{<t>} = g( w_{aa}a^{<t-1>} + w_{ax}x^{<t>} + b_{a} )$，当前预测值 $y^{<t>} = g( w_{ya}a^{<t>} + b_{y} )$。计算激活值时的g通常选tanh、偶尔relu，计算预测值时的g根据分类问题二元sigmod、多元softmax。<br>$[A,B]$表示两矩阵横向拼接、$[A;B]$表示两矩阵竖向拼接，让$w_{a} = [w_{ax}, w{ax}]$，$a_{<t>} = g( w_{a} [a^{<t-1>}; x^{<t>}] + b_{a} )$</p>
-<h5 id="语言模型"><a href="#语言模型" class="headerlink" title="语言模型"></a>语言模型</h5><p>有个词表，单词用词表长one-hot向量表示。每次输入一个单词，输出此刻各个单词的概率。最小化代价是各时刻猜测概率与实际出现单词的交叉熵。</p>
-<p>RNN按时间一层层展开，就是一层层深度，梯度会消失。梯度消失导致无法长期依赖，可使用门单元组件解决，如GRU、LSTM等。</p>
-<h4 id="GRU（Gate-Recurrent-Unit，门控循环单元）"><a href="#GRU（Gate-Recurrent-Unit，门控循环单元）" class="headerlink" title="GRU（Gate Recurrent Unit，门控循环单元）"></a>GRU（Gate Recurrent Unit，门控循环单元）</h4><p>记忆细胞$c^{<t>}=a^{<t>}$记录t时刻的激活值，<br>按RNN激活值计算作为候选$z^{<t>} = w_c [ c^{<t-1>};  x^{<t>} ] + b_c$，$c’^{<t>}=tanh( z^{<t>} )$，<br>一个门（简化版）控制取候选$c’^{<t>}$还是取前一值$c^{<t-1>}$，$G_u=σ( 形似z^{<t>} )$，形似$z^{<t>}$有自己的w、b参数<br>$c^{<t>} = G_u * c’^{<t>} + (1-G_u) * c^{<t-1>}$。</p>
-<p>因为$G_{u}$通常接近于0，$c^{<t>}=c^{<t-1>}$，保持旧状态，没有梯度消失问题</p>
-<h4 id="LSTM（Long-Short-Term-Memory，长短期记忆）"><a href="#LSTM（Long-Short-Term-Memory，长短期记忆）" class="headerlink" title="LSTM（Long Short Term Memory，长短期记忆）"></a>LSTM（Long Short Term Memory，长短期记忆）</h4><p>三个门，更新门$G_u$、忘记门$G_f$、输出门$G_o$<br>$z^{<t>} = w_c [ a^{<t-1>}; x^{<t>} ] + b_c$， $c’^{<t>}=tanh( z^{<t>} )$，<br>$G_u = σ( 形似z^{<t>} )$, $G_o = σ(  形似z^{<t>} )$, $G_o = σ( 形似z^{<t>} )$，形似$z^{<t>}$有自己的w、b参数<br>$c^{<t>} = G_u * c’^{<t>} + G_f * c^{<t-1>}$，$a^{<t>} = G_o * c^{<t>}$</p>
-<h4 id="词嵌入学习"><a href="#词嵌入学习" class="headerlink" title="词嵌入学习"></a>词嵌入学习</h4><p>用“词嵌入”表示单词，词嵌入向量表示单词与各种语义的关联度。</p>
-<p>skip-grams：学习映射关系 context词=&gt;附近某target词<br>负采样：选一个 context词=&gt;附近某target词 作为正样本，再取一些到随机词的映射作为负样本，训练分辨映射是从附近词中选的还是随机选的<br>glove：统计target词在content词周围出现的次数，最小化它特定的代价函数</p>
-<h5 id="情感分类"><a href="#情感分类" class="headerlink" title="情感分类"></a>情感分类</h5><p>词嵌入作输入，经过多对一RNN，再多元分类</p>
-<h4 id="seq2seq模型（序列到序列）"><a href="#seq2seq模型（序列到序列）" class="headerlink" title="seq2seq模型（序列到序列）"></a>seq2seq模型（序列到序列）</h4><p>一个encoder网络，接一个decoder网络</p>
-<p>beam search（定向搜索）一次搜索k个最可能结果，是扩大搜索范围的贪婪搜索<br>要翻译句子，首先输入句子到encoder网络，decoder网络t=0时刻输出各单词概率，beam search选其中概率最高的k个进入t=1时刻。t=1时刻在试着选定第一个词的情况下算第二个词的概率，再选其中概率最高的k个。如此继续。</p>
-<h5 id="注意力模型"><a href="#注意力模型" class="headerlink" title="注意力模型"></a>注意力模型</h5><p>为解决先编码再解码的中间向量瓶颈，引入注意力模型。</p>
-<p>在decoder的某时刻t，对encoder各时刻t’的输出值$a^{&lt;t’&gt;}$的注意力分布$a^{&lt;t,t’&gt;}$，加权和$\sum( a^{&lt;t,t’&gt;}a^{&lt;t’&gt;} )$作为decoder时刻t的输入。</p>
-<p>注意力分布$a^{&lt;t,t’&gt;}$由decoder时刻t-1的输出、encoder时刻t’的输出$a^{&lt;t’&gt;}$之间算相关度评分，再maxsoft归一化而得。相关度评分比如可以算两者的向量cos距离，或再引入个额外神经网络计算。</p>
+<h4 id="人脸识别要训练相似度函数">人脸识别：要训练相似度函数</h4>
+<p>Siamese网络是共享权值的两个相同网络Conv-Pool-FC，两个输出连到最后一层，训练的相似度函数。要使相同人脸的向量距离小、不同人脸的向量距离大。训练网络时是需要有同一人的多张人脸。 可以：每次同时输入三张图片，一张基准Anchor、一张相同人的Positive、一张不同人的Negative，要求<span class="math inline">\(d(A, P) + α &lt;= d(A, N)，α&gt;0\)</span>。<span class="math inline">\(L = max( d(A, P) - d(A, N) + α, 0 )\)</span>，α限制要显著地小。 或者：每次同时输入两张图片，最后做相不相似的二元分类。<span class="math inline">\(y = σ( \sum( w * | f^{(i)}_k - f^{(j)}_k | ) + b )\)</span></p>
+<h4 id="神经风格转换给content图片c加上style图片s的风格">神经风格转换：给Content图片C加上Style图片S的风格</h4>
+<p>先随机生成图片G，然后最小化代价函数，根据梯度调整G。代价函数由内容和风格两部分构成，<span class="math inline">\(J(G) = αJ_{content}(C, G) + βJ_{style}(S, G)\)</span>。 内容代价是在隐藏层L上计算与内容图片激活情况的差距，<span class="math inline">\(J_{content}(C,G) = 1/2 * || a^{C} - a^{G} ||_2^2\)</span>。 风格是隐藏层L（<code>w*h*c</code>）的c个子层间的“相关性”。因为一个子层是一种卷积核运算的结果，表示提取了某种特性。两子层间的相关性表示两种特征同时出现的情况，各子层间的相关性表示各种特征同时出现的情况，就表示了某种风格。风格矩阵（Gram矩阵）：维度<code>c*c</code>的矩阵，每个元素表示两个子层相同位置激活值相乘的的卷积值，是一种非标准的”相关性"。风格代价是在隐藏层L上计算和风格图片的Gram矩阵的差距，<span class="math inline">\(J_{style}(S, G) = 1/(2hwc)^2 || Gram^{S} - Gram^{G} ||_2^2\)</span>。 最后，不仅考虑某隐藏层L，所有层都可以加入到损失函数计算中，这就考虑了各层风格。</p>
+<hr />
+<h3 id="序列模型">序列模型</h3>
+<h4 id="rnn循环神经网络">RNN（循环神经网络）</h4>
+<p>t时刻输入<span class="math inline">\(x_t\)</span>，t-1时刻激活值<span class="math inline">\(a_{&lt;t-1&gt;}\)</span>参与当前激活值计算 <span class="math inline">\(a_{&lt;t&gt;} = g( w_{aa}a^{&lt;t-1&gt;} + w_{ax}x^{&lt;t&gt;} + b_{a} )\)</span>，当前预测值 <span class="math inline">\(y^{&lt;t&gt;} = g( w_{ya}a^{&lt;t&gt;} + b_{y} )\)</span>。计算激活值时的g通常选tanh、偶尔relu，计算预测值时的g根据分类问题二元sigmod、多元softmax。 <span class="math inline">\([A,B]\)</span>表示两矩阵横向拼接、<span class="math inline">\([A;B]\)</span>表示两矩阵竖向拼接，让<span class="math inline">\(w_{a} = [w_{ax}, w{ax}]\)</span>，<span class="math inline">\(a_{&lt;t&gt;} = g( w_{a} [a^{&lt;t-1&gt;}; x^{&lt;t&gt;}] + b_{a} )\)</span></p>
+<h5 id="语言模型">语言模型</h5>
+<p>有个词表，单词用词表长one-hot向量表示。每次输入一个单词，输出此刻各个单词的概率。最小化代价是各时刻猜测概率与实际出现单词的交叉熵。</p>
+<p>RNN按时间一层层展开，就是一层层深度，梯度会消失。梯度消失导致无法长期依赖，可使用门单元组件解决，如GRU、LSTM等。 #### GRU（Gate Recurrent Unit，门控循环单元） 记忆细胞<span class="math inline">\(c^{&lt;t&gt;}=a^{&lt;t&gt;}\)</span>记录t时刻的激活值， 按RNN激活值计算作为候选<span class="math inline">\(z^{&lt;t&gt;} = w_c [ c^{&lt;t-1&gt;}; x^{&lt;t&gt;} ] + b_c\)</span>，<span class="math inline">\(c’^{&lt;t&gt;}=tanh( z^{&lt;t&gt;} )\)</span>， 一个门（简化版）控制取候选<span class="math inline">\(c’^{&lt;t&gt;}\)</span>还是取前一值<span class="math inline">\(c^{&lt;t-1&gt;}\)</span>，<span class="math inline">\(G_u=σ( 形似z^{&lt;t&gt;} )\)</span>，形似<span class="math inline">\(z^{&lt;t&gt;}\)</span>有自己的w、b参数 <span class="math inline">\(c^{&lt;t&gt;} = G_u * c’^{&lt;t&gt;} + (1-G_u) * c^{&lt;t-1&gt;}\)</span>。</p>
+<p>因为<span class="math inline">\(G_{u}\)</span>通常接近于0，<span class="math inline">\(c^{&lt;t&gt;}=c^{&lt;t-1&gt;}\)</span>，保持旧状态，没有梯度消失问题</p>
+<h4 id="lstmlong-short-term-memory长短期记忆">LSTM（Long Short Term Memory，长短期记忆）</h4>
+<p>三个门，更新门<span class="math inline">\(G_u\)</span>、忘记门<span class="math inline">\(G_f\)</span>、输出门<span class="math inline">\(G_o\)</span> <span class="math inline">\(z^{&lt;t&gt;} = w_c [ a^{&lt;t-1&gt;}; x^{&lt;t&gt;} ] + b_c\)</span>， <span class="math inline">\(c’^{&lt;t&gt;}=tanh( z^{&lt;t&gt;} )\)</span>， <span class="math inline">\(G_u = σ( 形似z^{&lt;t&gt;} )\)</span>, <span class="math inline">\(G_o = σ( 形似z^{&lt;t&gt;} )\)</span>, <span class="math inline">\(G_o = σ( 形似z^{&lt;t&gt;} )\)</span>，形似<span class="math inline">\(z^{&lt;t&gt;}\)</span>有自己的w、b参数 <span class="math inline">\(c^{&lt;t&gt;} = G_u * c’^{&lt;t&gt;} + G_f * c^{&lt;t-1&gt;}\)</span>，<span class="math inline">\(a^{&lt;t&gt;} = G_o * c^{&lt;t&gt;}\)</span></p>
+<h4 id="词嵌入学习">词嵌入学习</h4>
+<p>用“词嵌入”表示单词，词嵌入向量表示单词与各种语义的关联度。</p>
+<p>skip-grams：学习映射关系 context词=&gt;附近某target词 负采样：选一个 context词=&gt;附近某target词 作为正样本，再取一些到随机词的映射作为负样本，训练分辨映射是从附近词中选的还是随机选的 glove：统计target词在content词周围出现的次数，最小化它特定的代价函数</p>
+<h5 id="情感分类">情感分类</h5>
+<p>词嵌入作输入，经过多对一RNN，再多元分类</p>
+<h4 id="seq2seq模型序列到序列">seq2seq模型（序列到序列）</h4>
+<p>一个encoder网络，接一个decoder网络</p>
+<p>beam search（定向搜索）一次搜索k个最可能结果，是扩大搜索范围的贪婪搜索 要翻译句子，首先输入句子到encoder网络，decoder网络t=0时刻输出各单词概率，beam search选其中概率最高的k个进入t=1时刻。t=1时刻在试着选定第一个词的情况下算第二个词的概率，再选其中概率最高的k个。如此继续。</p>
+<h5 id="注意力模型">注意力模型</h5>
+<p>为解决先编码再解码的中间向量瓶颈，引入注意力模型。</p>
+<p>在decoder的某时刻t，对encoder各时刻t’的输出值<span class="math inline">\(a^{&lt;t’&gt;}\)</span>的注意力分布<span class="math inline">\(a^{&lt;t,t’&gt;}\)</span>，加权和<span class="math inline">\(\sum( a^{&lt;t,t’&gt;}a^{&lt;t’&gt;} )\)</span>作为decoder时刻t的输入。</p>
+<p>注意力分布<span class="math inline">\(a^{&lt;t,t’&gt;}\)</span>由decoder时刻t-1的输出、encoder时刻t’的输出<span class="math inline">\(a^{&lt;t&#39;&gt;}\)</span>之间算相关度评分，再maxsoft归一化而得。相关度评分比如可以算两者的向量cos距离，或再引入个额外神经网络计算。</p>
 <p>详细解释<a href="https://www.zhihu.com/question/68482809/answer/264632289" target="_blank" rel="noopener">参见</a></p>
-<h5 id="语音识别"><a href="#语音识别" class="headerlink" title="语音识别"></a>语音识别</h5><p>音频预处理成时频谱spectrogram：横坐标时间、纵坐标频率、颜色亮度表示能量强度。</p>
-<blockquote>
-<p>频谱spectrum：时频谱中垂直于横坐标的截面，横坐标是频率、纵坐标是能量强度。</p>
-</blockquote>
-<hr>
-<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><ul>
-<li><a href="http://mooc.study.163.com/university/deeplearning_ai" target="_blank" rel="noopener">DeepLearning.ai</a>  by Andrew Ng</li>
+<h5 id="语音识别">语音识别</h5>
+<p>音频预处理成时频谱spectrogram：横坐标时间、纵坐标频率、颜色亮度表示能量强度。 &gt; 频谱spectrum：时频谱中垂直于横坐标的截面，横坐标是频率、纵坐标是能量强度。</p>
+<hr />
+<h3 id="参考">参考</h3>
+<ul>
+<li><a href="http://mooc.study.163.com/university/deeplearning_ai" target="_blank" rel="noopener">DeepLearning.ai</a> by Andrew Ng</li>
 </ul>
 </span>
       
@@ -398,7 +418,7 @@
           <div class="post-toc">
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#超参数调整"><span class="nav-number">1.</span> <span class="nav-text">超参数调整</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#training-dev-test集"><span class="nav-number">1.1.</span> <span class="nav-text">training&#x2F;dev&#x2F;test集</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#bias和variance"><span class="nav-number">1.1.1.</span> <span class="nav-text">bias和variance</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#training集的数据可来自不同分布"><span class="nav-number">1.1.2.</span> <span class="nav-text">training集的数据可来自不同分布</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#防止过拟合"><span class="nav-number">1.2.</span> <span class="nav-text">防止过拟合</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#输入归一化（normalize）"><span class="nav-number">1.3.</span> <span class="nav-text">输入归一化（normalize）</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#梯度爆炸或消失"><span class="nav-number">1.4.</span> <span class="nav-text">梯度爆炸或消失</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#mini-batch"><span class="nav-number">1.5.</span> <span class="nav-text">mini-batch</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#梯度下降的加速"><span class="nav-number">1.6.</span> <span class="nav-text">梯度下降的加速</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#Momentum"><span class="nav-number">1.6.1.</span> <span class="nav-text">Momentum</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#RMSprop（root-mean-square-prop）"><span class="nav-number">1.6.2.</span> <span class="nav-text">RMSprop（root mean square prop）</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#学习率衰减（learning-rate-decay）"><span class="nav-number">1.7.</span> <span class="nav-text">学习率衰减（learning rate decay）</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#提前停止"><span class="nav-number">2.</span> <span class="nav-text">提前停止</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#Batch-Norm"><span class="nav-number">2.1.</span> <span class="nav-text">Batch Norm</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#迁移学习"><span class="nav-number">2.2.</span> <span class="nav-text">迁移学习</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CNN"><span class="nav-number"></span> <span class="nav-text">CNN</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#物体分类和定位一起做"><span class="nav-number">1.</span> <span class="nav-text">物体分类和定位一起做</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#人脸识别：要训练相似度函数"><span class="nav-number">2.</span> <span class="nav-text">人脸识别：要训练相似度函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#神经风格转换：给Content图片C加上Style图片S的风格"><span class="nav-number">3.</span> <span class="nav-text">神经风格转换：给Content图片C加上Style图片S的风格</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#序列模型"><span class="nav-number"></span> <span class="nav-text">序列模型</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#RNN（循环神经网络）"><span class="nav-number">1.</span> <span class="nav-text">RNN（循环神经网络）</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#语言模型"><span class="nav-number">1.1.</span> <span class="nav-text">语言模型</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#GRU（Gate-Recurrent-Unit，门控循环单元）"><span class="nav-number">2.</span> <span class="nav-text">GRU（Gate Recurrent Unit，门控循环单元）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#LSTM（Long-Short-Term-Memory，长短期记忆）"><span class="nav-number">3.</span> <span class="nav-text">LSTM（Long Short Term Memory，长短期记忆）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#词嵌入学习"><span class="nav-number">4.</span> <span class="nav-text">词嵌入学习</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#情感分类"><span class="nav-number">4.1.</span> <span class="nav-text">情感分类</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#seq2seq模型（序列到序列）"><span class="nav-number">5.</span> <span class="nav-text">seq2seq模型（序列到序列）</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#注意力模型"><span class="nav-number">5.1.</span> <span class="nav-text">注意力模型</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#语音识别"><span class="nav-number">5.2.</span> <span class="nav-text">语音识别</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考"><span class="nav-number"></span> <span class="nav-text">参考</span></a></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#超参数调整"><span class="nav-number">1.</span> <span class="nav-text">超参数调整</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#trainingdevtest集"><span class="nav-number">1.1.</span> <span class="nav-text">training&#x2F;dev&#x2F;test集</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#bias和variance"><span class="nav-number">1.1.1.</span> <span class="nav-text">bias和variance</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#training集的数据可来自不同分布"><span class="nav-number">1.1.2.</span> <span class="nav-text">training集的数据可来自不同分布</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#防止过拟合"><span class="nav-number">1.2.</span> <span class="nav-text">防止过拟合</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#输入归一化normalize"><span class="nav-number">1.3.</span> <span class="nav-text">输入归一化（normalize）</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#梯度爆炸或消失"><span class="nav-number">1.4.</span> <span class="nav-text">梯度爆炸或消失</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#mini-batch"><span class="nav-number">1.5.</span> <span class="nav-text">mini-batch</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#梯度下降的加速"><span class="nav-number">1.6.</span> <span class="nav-text">梯度下降的加速</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#rmsproproot-mean-square-prop"><span class="nav-number">1.6.1.</span> <span class="nav-text">RMSprop（root mean square prop）</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#学习率衰减learning-rate-decay"><span class="nav-number">1.7.</span> <span class="nav-text">学习率衰减（learning rate decay）</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#提前停止"><span class="nav-number">2.</span> <span class="nav-text">提前停止</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#batch-norm"><span class="nav-number">2.1.</span> <span class="nav-text">Batch Norm</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#迁移学习"><span class="nav-number">2.2.</span> <span class="nav-text">迁移学习</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#cnn"><span class="nav-number"></span> <span class="nav-text">CNN</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#物体分类和定位一起做"><span class="nav-number">1.</span> <span class="nav-text">物体分类和定位一起做</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#人脸识别要训练相似度函数"><span class="nav-number">2.</span> <span class="nav-text">人脸识别：要训练相似度函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#神经风格转换给content图片c加上style图片s的风格"><span class="nav-number">3.</span> <span class="nav-text">神经风格转换：给Content图片C加上Style图片S的风格</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#序列模型"><span class="nav-number"></span> <span class="nav-text">序列模型</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#rnn循环神经网络"><span class="nav-number">1.</span> <span class="nav-text">RNN（循环神经网络）</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#语言模型"><span class="nav-number">1.1.</span> <span class="nav-text">语言模型</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#lstmlong-short-term-memory长短期记忆"><span class="nav-number">2.</span> <span class="nav-text">LSTM（Long Short Term Memory，长短期记忆）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#词嵌入学习"><span class="nav-number">3.</span> <span class="nav-text">词嵌入学习</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#情感分类"><span class="nav-number">3.1.</span> <span class="nav-text">情感分类</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#seq2seq模型序列到序列"><span class="nav-number">4.</span> <span class="nav-text">seq2seq模型（序列到序列）</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#注意力模型"><span class="nav-number">4.1.</span> <span class="nav-text">注意力模型</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#语音识别"><span class="nav-number">4.2.</span> <span class="nav-text">语音识别</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考"><span class="nav-number"></span> <span class="nav-text">参考</span></a></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>

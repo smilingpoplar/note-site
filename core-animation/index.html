@@ -221,7 +221,8 @@
 <p><code>duration</code>是动画一次迭代的时间；若配合迭代次数<code>repeatCount</code>，则动画总时间是<code>duration * repeatCount</code>；若配合动画总时间<code>repeatDuration</code>，则迭代次数是<code>repeatDuration / duration</code></p>
 <p>即使你不显式地用<code>[CATransaction begin]</code>开始一次事务，任何一次runloop循环中属性的改变都会被集中到一个新的<code>CATransaction</code>，然后做一次默认0.25秒的动画。</p>
 <p>按Home键退出app时，系统会在layer上调<code>removeAllAnimations</code></p>
-<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><ul>
+<h3 id="参考">参考</h3>
+<ul>
 <li><a href="https://developer.apple.com/library/ios/documentation/Cocoa/Conceptual/CoreAnimation_guide/Introduction/Introduction.html" target="_blank" rel="noopener">Core Animation Programming Guide</a></li>
 <li><a href="https://github.com/AttackOnDobby/iOS-Core-Animation-Advanced-Techniques" target="_blank" rel="noopener">iOS Core Animation Advanced Techniques</a></li>
 </ul>

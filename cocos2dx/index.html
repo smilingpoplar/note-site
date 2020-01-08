@@ -41,12 +41,12 @@
   <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.1" />
 
 
-<meta name="description" content="搭建环境  开启c++11支持，在jni&#x2F;Application.mk中添加： APP_CPPFLAGS +&#x3D; -std&#x3D;c++11 NDK_TOOLCHAIN_VERSION :&#x3D; 4.7 把..&#x2F;..&#x2F;Classes&#x2F;*.cpp文件加入编译，使用 LOCAL_SRC_FILES :&#x3D; main.cpp \     $(subst jni&#x2F;, , $(wildcard $(LOCAL_PATH">
+<meta name="description" content="搭建环境 开启c++11支持，在jni&#x2F;Application.mk中添加：   APP_CPPFLAGS +&#x3D; -std&#x3D;c++11   NDK_TOOLCHAIN_VERSION :&#x3D; 4.7 把..&#x2F;..&#x2F;Classes&#x2F;*.cpp文件加入编译，使用   LOCAL_SRC_FILES :&#x3D; main.cpp \       $(subst jni&#x2F;, , $(wildcard $(LOC">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Cocos2D-X笔记">
 <meta property="og:url" content="http://note.49px.com/cocos2dx/index.html">
 <meta property="og:site_name" content="Dev Note">
-<meta property="og:description" content="搭建环境  开启c++11支持，在jni&#x2F;Application.mk中添加： APP_CPPFLAGS +&#x3D; -std&#x3D;c++11 NDK_TOOLCHAIN_VERSION :&#x3D; 4.7 把..&#x2F;..&#x2F;Classes&#x2F;*.cpp文件加入编译，使用 LOCAL_SRC_FILES :&#x3D; main.cpp \     $(subst jni&#x2F;, , $(wildcard $(LOCAL_PATH">
+<meta property="og:description" content="搭建环境 开启c++11支持，在jni&#x2F;Application.mk中添加：   APP_CPPFLAGS +&#x3D; -std&#x3D;c++11   NDK_TOOLCHAIN_VERSION :&#x3D; 4.7 把..&#x2F;..&#x2F;Classes&#x2F;*.cpp文件加入编译，使用   LOCAL_SRC_FILES :&#x3D; main.cpp \       $(subst jni&#x2F;, , $(wildcard $(LOC">
 <meta property="article:published_time" content="2012-07-17T16:00:00.000Z">
 <meta property="article:modified_time" content="2017-01-14T04:32:48.000Z">
 <meta property="article:author" content="Yang Le">
@@ -196,35 +196,40 @@
 
       
         <span itemprop="articleBody"><ul>
-<li><p><a href="http://www.raywenderlich.com/11283/cocos2d-x-for-ios-and-android-getting-started" target="_blank" rel="noopener">搭建环境</a></p>
-</li>
+<li><p><a href="http://www.raywenderlich.com/11283/cocos2d-x-for-ios-and-android-getting-started" target="_blank" rel="noopener">搭建环境</a></p></li>
 <li><p>开启c++11支持，在jni/Application.mk中添加：</p>
-<pre><code>APP_CPPFLAGS += -std=c++11
-NDK_TOOLCHAIN_VERSION := 4.7</code></pre></li>
+<pre><code>  APP_CPPFLAGS += -std=c++11
+  NDK_TOOLCHAIN_VERSION := 4.7</code></pre></li>
 <li><p>把<code>../../Classes/*.cpp</code>文件加入编译，使用</p>
-<pre><code>LOCAL_SRC_FILES := main.cpp \
-    $(subst jni/, , $(wildcard $(LOCAL_PATH)/../../Classes/*.c*))</code></pre><p>  jni/Android.mk中的<code>LOCAL_PATH := $(call my-dir)</code>表示<em>Android.mk</em>文件所在的目录。</p>
-</li>
+<pre><code>  LOCAL_SRC_FILES := main.cpp \
+      $(subst jni/, , $(wildcard $(LOCAL_PATH)/../../Classes/*.c*))</code></pre>
+<p>jni/Android.mk中的<code>LOCAL_PATH := $(call my-dir)</code>表示<em>Android.mk</em>文件所在的目录。</p></li>
 <li><p>c++序列化可用<a href="http://msgpack.org/" target="_blank" rel="noopener">MessagePack</a>或<a href="http://sourceforge.net/projects/jsoncpp/files/jsoncpp/" target="_blank" rel="noopener">JsonCpp</a></p>
 <ul>
 <li>MessagePack中，对象会序列化成一个<em>由数据成员构成的数组</em></li>
 <li>不用boost::Serialization（<a href="https://github.com/MysticTreeGames/Boost-for-Android/" target="_blank" rel="noopener">编译出android可用的boost库</a>有9.3M）</li>
+</ul></li>
+<li><p><a href="http://www.cocos2dev.com/?p=149" target="_blank" rel="noopener">使用JNI从Java调C++</a></p></li>
+<li><p><a href="http://rastergrid.com/blog/2013/03/admob-extension-for-cocos2d-x-android/" target="_blank" rel="noopener">集成admob</a></p></li>
 </ul>
-</li>
-<li><p><a href="http://www.cocos2dev.com/?p=149" target="_blank" rel="noopener">使用JNI从Java调C++</a></p>
-</li>
-<li><p><a href="http://rastergrid.com/blog/2013/03/admob-extension-for-cocos2d-x-android/" target="_blank" rel="noopener">集成admob</a></p>
-</li>
-</ul>
-<hr>
-<h3 id="Problems"><a href="#Problems" class="headerlink" title="Problems"></a>Problems</h3><ul>
-<li><p>APP_PLATFORM android-14 is larger than android:minSdkVersion 7</p>
-<p>  因Eclipse误把warning做error。可在jni/Application.mk添加一行：</p>
-<pre><code>APP_PLATFORM := android-&lt;minSdkVersion&gt;    </code></pre><p>  minSdkVersion是你在Manifest.xml中指定的最小版本号</p>
-</li>
-</ul>
-<hr>
-<h3 id="References"><a href="#References" class="headerlink" title="References"></a>References</h3><ol>
+<table style="width:6%;">
+<colgroup>
+<col style="width: 5%" />
+</colgroup>
+<tbody>
+<tr class="odd">
+<td>### Problems * APP_PLATFORM android-14 is larger than android:minSdkVersion 7</td>
+</tr>
+<tr class="even">
+<td>因Eclipse误把warning做error。可在jni/Application.mk添加一行：</td>
+</tr>
+<tr class="odd">
+<td>APP_PLATFORM := android-<minSdkVersion> minSdkVersion是你在Manifest.xml中指定的最小版本号</td>
+</tr>
+</tbody>
+</table>
+<h3 id="references">References</h3>
+<ol type="1">
 <li><a href="http://paralaxer.com/" target="_blank" rel="noopener">paralaxer: a cocos2d-x example game project</a></li>
 <li><a href="http://developer.android.com/tools/sdk/ndk/index.html" target="_blank" rel="noopener">Android NDK</a></li>
 </ol>
@@ -366,7 +371,7 @@ NDK_TOOLCHAIN_VERSION := 4.7</code></pre></li>
           <div class="post-toc">
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Problems"><span class="nav-number">1.</span> <span class="nav-text">Problems</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#References"><span class="nav-number">2.</span> <span class="nav-text">References</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#references"><span class="nav-number">1.</span> <span class="nav-text">References</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>

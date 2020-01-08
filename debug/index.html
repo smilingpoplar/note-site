@@ -41,12 +41,12 @@
   <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.1" />
 
 
-<meta name="description" content="错误预防断言：  NSParameterAssert&#x2F;NSAssert用于ObjC函数，NSCParameterAssert&#x2F;NSCAssert用于C函数 ObjC函数中NSParameterAssert用在开头检查输入参数，其他情况都用NSAssert 不用assert，因为它只终止程序不输出信息  参数非nil的编译检查： 123- (void)doSomethingWithRequiredS">
+<meta name="description" content="错误预防 断言：  NSParameterAssert&#x2F;NSAssert用于ObjC函数，NSCParameterAssert&#x2F;NSCAssert用于C函数 ObjC函数中NSParameterAssert用在开头检查输入参数，其他情况都用NSAssert 不用assert，因为它只终止程序不输出信息  参数非nil的编译检查： 123- (void)doSomethingWithRequired">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Debug笔记">
 <meta property="og:url" content="http://note.49px.com/debug/index.html">
 <meta property="og:site_name" content="Dev Note">
-<meta property="og:description" content="错误预防断言：  NSParameterAssert&#x2F;NSAssert用于ObjC函数，NSCParameterAssert&#x2F;NSCAssert用于C函数 ObjC函数中NSParameterAssert用在开头检查输入参数，其他情况都用NSAssert 不用assert，因为它只终止程序不输出信息  参数非nil的编译检查： 123- (void)doSomethingWithRequiredS">
+<meta property="og:description" content="错误预防 断言：  NSParameterAssert&#x2F;NSAssert用于ObjC函数，NSCParameterAssert&#x2F;NSCAssert用于C函数 ObjC函数中NSParameterAssert用在开头检查输入参数，其他情况都用NSAssert 不用assert，因为它只终止程序不输出信息  参数非nil的编译检查： 123- (void)doSomethingWithRequired">
 <meta property="article:published_time" content="2014-12-11T16:00:00.000Z">
 <meta property="article:modified_time" content="2015-10-01T08:35:12.000Z">
 <meta property="article:author" content="Yang Le">
@@ -195,7 +195,8 @@
       
 
       
-        <span itemprop="articleBody"><h3 id="错误预防"><a href="#错误预防" class="headerlink" title="错误预防"></a>错误预防</h3><p>断言：</p>
+        <span itemprop="articleBody"><h3 id="错误预防">错误预防</h3>
+<p>断言：</p>
 <ul>
 <li>NSParameterAssert/NSAssert用于ObjC函数，NSCParameterAssert/NSCAssert用于C函数</li>
 <li>ObjC函数中<code>NSParameterAssert</code>用在开头检查输入参数，其他情况都用<code>NSAssert</code></li>
@@ -203,69 +204,57 @@
 </ul>
 <p>参数非nil的编译检查：</p>
 <figure class="highlight erlang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">- <span class="params">(void)</span>doSomethingWithRequiredString:<span class="params">(NSString *)</span>requiredString </span><br><span class="line">                                  bar:<span class="params">(NSString *)</span>optionalString </span><br><span class="line">                                  __attribute<span class="params">((nonnull(<span class="number">1</span>))</span>);</span><br></pre></td></tr></table></figure>
-<h3 id="LLDB"><a href="#LLDB" class="headerlink" title="LLDB"></a>LLDB</h3><p><code>e</code>（即<code>expression</code>）对表达式求值，是lldb最基本的命令</p>
+<h3 id="lldb">LLDB</h3>
+<p><code>e</code>（即<code>expression</code>）对表达式求值，是lldb最基本的命令</p>
 <p><code>p</code>（即<code>print</code>）是<code>expression --</code>的简写，<code>po</code>是<code>expression -O --</code>的简写</p>
 <p><code>p/&lt;format&gt;</code>可以指定print的<a href="https://sourceware.org/gdb/onlinedocs/gdb/Output-Formats.html" target="_blank" rel="noopener">输出格式</a>，如：</p>
 <figure class="highlight maxima"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">(lldb) p/x <span class="number">16</span>            // <span class="number">0x10</span></span><br><span class="line">(lldb) p/t (char)<span class="number">16</span>      // <span class="number">0b00010000</span>，t stands <span class="keyword">for</span> two</span><br></pre></td></tr></table></figure>
-
 <p>lldb可以声明变量名以<code>$</code>开始的变量：</p>
 <figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">(lldb) e <span class="built_in">int</span> $a = <span class="number">2</span></span><br><span class="line">(lldb) p $a * <span class="number">19</span>         <span class="comment">// 38</span></span><br></pre></td></tr></table></figure>
-
 <figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">(lldb) <span class="keyword">e</span> NSArray *<span class="variable">$array</span> = @[ @<span class="string">"Sunday"</span>, @<span class="string">"Monday"</span> ]</span><br><span class="line">(lldb) p [<span class="variable">$array</span> <span class="keyword">count</span>]  <span class="comment">// 2</span></span><br></pre></td></tr></table></figure>
-
 <p>若lldb不清楚返回值的类型，需要明确指定：</p>
 <figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(lldb) p (char)[[$<span class="built_in">array</span> objectAtIndex:<span class="number">0</span>] characterAtIndex:<span class="number">0</span>]    <span class="comment">// 'S'</span></span><br></pre></td></tr></table></figure>
-
 <p>或者导入框架，然后就不需指定返回值类型：</p>
 <figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">(lldb) expr @import UIKit</span><br><span class="line">(lldb) <span class="selector-tag">p</span> slef<span class="selector-class">.window</span>.bounds</span><br></pre></td></tr></table></figure>
-
 <p>为方便起见，可在~/.lldbinit中添加：</p>
 <figure class="highlight elm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">command</span> <span class="keyword">alias</span> uikit expr @<span class="keyword">import</span> UIKit</span><br></pre></td></tr></table></figure>
-
 <p><code>c</code>/<code>n</code>/<code>s</code>/<code>fin</code>（即continue / next / step / finish）分别对应Continue、Step Over、Step Into、Step Out</p>
 <p><code>frame info</code>可以查看当前函数调用帧</p>
 <p><code>thread return [value]</code>可以让函数直接return或return某个值</p>
-<h4 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h4><p>查看window的hierarchy（pviews）：</p>
+<h4 id="例子">例子</h4>
+<p>查看window的hierarchy（pviews）：</p>
 <figure class="highlight inform7"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">po <span class="comment">[<span class="comment">[UIWindow keyWindow]</span> recursiveDescription]</span></span><br></pre></td></tr></table></figure>
-
 <p>查看viewController的hierarchy（pvc）：</p>
 <figure class="highlight inform7"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">po <span class="comment">[<span class="comment">[<span class="comment">[UIWindow keyWindow]</span> rootViewController]</span> _printHierarchy]</span> // _printHierarchy是iOS8里的私有方法</span><br></pre></td></tr></table></figure>
-
 <p>更改视图属性后刷新界面（caflush）：</p>
 <figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">e (<span class="keyword">void</span>)[CATransaction <span class="built_in">flush</span>]</span><br></pre></td></tr></table></figure>
-
 <p>先找到某button的target：</p>
 <figure class="highlight pf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">(lldb) po [<span class="variable">$myButton</span> <span class="literal">all</span>Targets]</span><br><span class="line">&#123;(</span><br><span class="line">    <span class="variable">&lt;MagicEventListener: 0x7fb58bd2e240&gt;</span></span><br><span class="line">)&#125;</span><br><span class="line">(lldb) po [<span class="variable">$myButton</span> actionsForTarget:(id)<span class="number">0</span>x7fb58bd2e240 <span class="keyword">for</span>ControlEvent:<span class="number">0</span>]</span><br><span class="line"><span class="variable">&lt;__NSArrayM 0x7fb58bd2aa40&gt;</span>(</span><br><span class="line">_handleTap:</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
 <p>然后在<code>-[MyEventListener _handleTap:]</code>上设置符号断点</p>
-<h3 id="Chisel"><a href="#Chisel" class="headerlink" title="Chisel"></a>Chisel</h3><p>LLDB内置支持python，通过<code>script</code>命令可调用python代码：</p>
+<h3 id="chisel">Chisel</h3>
+<p>LLDB内置支持python，通过<code>script</code>命令可调用python代码：</p>
 <figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">(lldb)<span class="built_in"> script </span>import os</span><br><span class="line">(lldb)<span class="built_in"> script </span>os.system(<span class="string">"open http://www.objc.io/"</span>)</span><br></pre></td></tr></table></figure>
-
 <p><a href="https://github.com/facebook/chisel" target="_blank" rel="noopener">Chisel</a>就是通过<code>~/.lldbinit</code>加载的便利iOS调试的python脚本集合：</p>
 <ul>
-<li><p>查看window的hierarchy：<code>pviews</code></p>
-</li>
-<li><p>查看viewController的hierarchy：<code>pvc</code></p>
-</li>
-<li><p>查看responder链：<code>presponder</code></p>
-</li>
-<li><p>更改视图属性后刷新界面：<code>caflush</code></p>
-</li>
-<li><p>显示/隐藏视图：<code>show</code>/<code>hide</code></p>
-</li>
+<li><p>查看window的hierarchy：<code>pviews</code></p></li>
+<li><p>查看viewController的hierarchy：<code>pvc</code></p></li>
+<li><p>查看responder链：<code>presponder</code></p></li>
+<li><p>更改视图属性后刷新界面：<code>caflush</code></p></li>
+<li><p>显示/隐藏视图：<code>show</code>/<code>hide</code></p></li>
 <li><p>监视ivar变化：<code>wiar</code></p>
-  <figure class="highlight arcade"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(lldb) wivar <span class="symbol">$my</span>View _layer</span><br></pre></td></tr></table></figure></li>
+<p><figure class="highlight arcade"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(lldb) wivar <span class="symbol">$my</span>View _layer</span><br></pre></td></tr></table></figure></p></li>
 <li><p>在message上设置断点：<code>bmessage</code></p>
-  <figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(<span class="keyword">lldb) </span><span class="keyword">bmessage </span>-[MyViewController viewDidAppear:]</span><br></pre></td></tr></table></figure>
-
-</li>
+<p><figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(<span class="keyword">lldb) </span><span class="keyword">bmessage </span>-[MyViewController viewDidAppear:]</span><br></pre></td></tr></table></figure></p></li>
 </ul>
-<h3 id="Aspects"><a href="#Aspects" class="headerlink" title="Aspects"></a>Aspects</h3><p>用<a href="https://github.com/steipete/Aspects" target="_blank" rel="noopener">Aspects</a>可以hook进方法打印log：</p>
+<h3 id="aspects">Aspects</h3>
+<p>用<a href="https://github.com/steipete/Aspects" target="_blank" rel="noopener">Aspects</a>可以hook进方法打印log：</p>
 <figure class="highlight scheme"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[<span class="name">UIViewController</span> aspect_hookSelector:@selector(<span class="name">viewWillAppear:</span>) withOptions:AspectPositionAfter usingBlock:^(<span class="name">id&lt;AspectInfo&gt;</span> aspectInfo, BOOL animated) &#123;</span><br><span class="line">    NSLog(<span class="name">@</span><span class="string">"View Controller %@ will appear animated: %tu"</span>, aspectInfo.instance, animated)<span class="comment">;</span></span><br><span class="line">&#125; error:NULL]<span class="comment">;</span></span><br></pre></td></tr></table></figure>
 <p>其中block的第一个参数是<code>id&lt;AspectInfo&gt;</code>，其他参数（可选）就是被hook方法的参数列表</p>
-<h3 id="参考："><a href="#参考：" class="headerlink" title="参考："></a>参考：</h3><ul>
+<h3 id="参考">参考：</h3>
+<ul>
 <li><a href="http://www.objc.io/issue-19/debugging-case-study.html" target="_blank" rel="noopener">Debugging: A Case Study</a></li>
 <li><a href="http://www.objc.io/issue-19/lldb-debugging.html" target="_blank" rel="noopener">Dancing in the Debugger — A Waltz with LLDB</a></li>
-<li><a href="http://furbo.org/2015/05/11/an-import-ant-change-in-xcode/" target="_blank" rel="noopener">An @import-ant Change in Xcode</a></li>
+<li><span class="citation" data-cites="import-ant">[An @import-ant Change in Xcode]</span>(http://furbo.org/2015/05/11/an-import-ant-change-in-xcode/)</li>
 </ul>
 </span>
       
@@ -405,7 +394,7 @@
           <div class="post-toc">
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#错误预防"><span class="nav-number">1.</span> <span class="nav-text">错误预防</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#LLDB"><span class="nav-number">2.</span> <span class="nav-text">LLDB</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#例子"><span class="nav-number">2.1.</span> <span class="nav-text">例子</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Chisel"><span class="nav-number">3.</span> <span class="nav-text">Chisel</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Aspects"><span class="nav-number">4.</span> <span class="nav-text">Aspects</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考："><span class="nav-number">5.</span> <span class="nav-text">参考：</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#错误预防"><span class="nav-number">1.</span> <span class="nav-text">错误预防</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#lldb"><span class="nav-number">2.</span> <span class="nav-text">LLDB</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#例子"><span class="nav-number">2.1.</span> <span class="nav-text">例子</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#chisel"><span class="nav-number">3.</span> <span class="nav-text">Chisel</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#aspects"><span class="nav-number">4.</span> <span class="nav-text">Aspects</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考"><span class="nav-number">5.</span> <span class="nav-text">参考：</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>

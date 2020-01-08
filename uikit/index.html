@@ -41,12 +41,12 @@
   <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.1" />
 
 
-<meta name="description" content="UIView与display相关的功能都在CALayer中，UIView仅给CALayer添上touch处理功能。例如，UIView的位置相关信息保存在view.layer的四个属性中，view.frame根据它们导出：  view.layer.position &#x3D;&#x3D; view.center view.layer.bounds &#x3D;&#x3D; view.bounds view.layer.anchorPo">
+<meta name="description" content="UIView与display相关的功能都在CALayer中，UIView仅给CALayer添上touch处理功能。 例如，UIView的位置相关信息保存在view.layer的四个属性中，view.frame根据它们导出：  view.layer.position &#x3D;&#x3D; view.center view.layer.bounds &#x3D;&#x3D; view.bounds view.layer.anchorP">
 <meta property="og:type" content="article">
 <meta property="og:title" content="UIKit笔记">
 <meta property="og:url" content="http://note.49px.com/uikit/index.html">
 <meta property="og:site_name" content="Dev Note">
-<meta property="og:description" content="UIView与display相关的功能都在CALayer中，UIView仅给CALayer添上touch处理功能。例如，UIView的位置相关信息保存在view.layer的四个属性中，view.frame根据它们导出：  view.layer.position &#x3D;&#x3D; view.center view.layer.bounds &#x3D;&#x3D; view.bounds view.layer.anchorPo">
+<meta property="og:description" content="UIView与display相关的功能都在CALayer中，UIView仅给CALayer添上touch处理功能。 例如，UIView的位置相关信息保存在view.layer的四个属性中，view.frame根据它们导出：  view.layer.position &#x3D;&#x3D; view.center view.layer.bounds &#x3D;&#x3D; view.bounds view.layer.anchorP">
 <meta property="article:published_time" content="2013-01-03T16:00:00.000Z">
 <meta property="article:modified_time" content="2015-09-12T12:13:02.000Z">
 <meta property="article:author" content="Yang Le">
@@ -196,44 +196,40 @@
 
       
         <span itemprop="articleBody"><ul>
-<li><p>UIView与display相关的功能都在CALayer中，UIView仅给CALayer添上touch处理功能。<br>例如，UIView的位置相关信息保存在view.layer的四个属性中，<code>view.frame</code>根据它们导出：</p>
+<li><p>UIView与display相关的功能都在CALayer中，UIView仅给CALayer添上touch处理功能。 例如，UIView的位置相关信息保存在view.layer的四个属性中，<code>view.frame</code>根据它们导出：</p>
 <ul>
 <li>view.layer.position == view.center</li>
 <li>view.layer.bounds == view.bounds</li>
 <li>view.layer.anchorPoint</li>
 <li>view.layer.transform</li>
-</ul>
-</li>
+</ul></li>
 <li><p><code>view.layer.anchorPoint</code>默认为(0.5,0.5)，要将其设为view中另一点point:</p>
-  <figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">CGSize viewSize = view.frame.size;</span><br><span class="line">view.layer.anchorPoint = <span class="constructor">CGPointMake(<span class="params">point</span>.<span class="params">x</span><span class="operator">/</span><span class="params">viewSize</span>.<span class="params">width</span>, <span class="params">point</span>.<span class="params">y</span><span class="operator">/</span><span class="params">viewSize</span>.<span class="params">height</span>)</span>;</span><br><span class="line">view.layer.position = point;</span><br></pre></td></tr></table></figure>
-</li>
+<p><figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">CGSize viewSize = view.frame.size;</span><br><span class="line">view.layer.anchorPoint = <span class="constructor">CGPointMake(<span class="params">point</span>.<span class="params">x</span><span class="operator">/</span><span class="params">viewSize</span>.<span class="params">width</span>, <span class="params">point</span>.<span class="params">y</span><span class="operator">/</span><span class="params">viewSize</span>.<span class="params">height</span>)</span>;</span><br><span class="line">view.layer.position = point;</span><br></pre></td></tr></table></figure></p></li>
 <li><p>view.bounds指定view自己的坐标系统内正被观察到的矩形区域。比如，scrollView在scrolling时其实只是改变scrollView.bounds.origin (即scrollView.contentOffset)，而scrollView.contentSize只是和scrollView.bound.size一起限制scrollView.bounds.origin的变动范围。参见：<a href="http://oleb.net/blog/2014/04/understanding-uiscrollview/" target="_blank" rel="noopener">Understanding UIScrollView</a>。</p>
-<p>  view.frame.origin是view在其父view的坐标系统内的位置（由view.center配合view.layer.anchorPoint、view.bounds.size导出），而view.frame.size就是view.bounds.size。</p>
-</li>
-<li><p><code>UIWindow</code>含多个subview时，只有其<code>root</code> view才能自动处理autorotation。</p>
-</li>
-<li><p><code>[viewController presentViewController:animated:completion:]</code>时会把<code>presentingViewController.view</code>加到<code>viewController.view.superview</code>中，这superview是个隐藏节点<code>UITransitionView</code>。</p>
-</li>
+<p>view.frame.origin是view在其父view的坐标系统内的位置（由view.center配合view.layer.anchorPoint、view.bounds.size导出），而view.frame.size就是view.bounds.size。</p></li>
+<li><p><code>UIWindow</code>含多个subview时，只有其<code>root</code> view才能自动处理autorotation。</p></li>
+<li><p><code>[viewController presentViewController:animated:completion:]</code>时会把<code>presentingViewController.view</code>加到<code>viewController.view.superview</code>中，这superview是个隐藏节点<code>UITransitionView</code>。</p></li>
 <li><p>ContainerViewController（iOS5起引入）继承UIViewController，添加childViewController时:</p>
-<pre><code>1. [self addChildViewController:childViewController]; 
-// 1. will send [childViewController willMoveToParentViewController:self];  
-2. [self.view addSubview:childViewController.view];
-3. [childViewController didMoveToParentViewController:self];</code></pre><p>  移除childViewController时：</p>
-<pre><code>1. [childViewController willMoveToParentViewController:nil];
-2. [childViewController.view removeFromSuperview];
-3. [childViewController removeFromParentViewController];
-// 3. will send [childViewController didMoveToParentViewController:nil];</code></pre><p>  参考：<a href="http://mobile.tutsplus.com/tutorials/iphone/implementing-container-containment-sliding-menu-controller/" target="_blank" rel="noopener">Implementing Container Containment – Sliding Menu Controller</a></p>
-</li>
+<pre><code>  1. [self addChildViewController:childViewController]; 
+  // 1. will send [childViewController willMoveToParentViewController:self];  
+  2. [self.view addSubview:childViewController.view];
+  3. [childViewController didMoveToParentViewController:self];</code></pre>
+<p>移除childViewController时：</p>
+<pre><code>  1. [childViewController willMoveToParentViewController:nil];
+  2. [childViewController.view removeFromSuperview];
+  3. [childViewController removeFromParentViewController];
+  // 3. will send [childViewController didMoveToParentViewController:nil];</code></pre>
+<p>参考：<a href="http://mobile.tutsplus.com/tutorials/iphone/implementing-container-containment-sliding-menu-controller/" target="_blank" rel="noopener">Implementing Container Containment – Sliding Menu Controller</a></p></li>
 <li><p>要是创建项目时没有勾选<code>Use Storyboard</code>，从程序中加载storyboard要在<code>application:didFinishLaunchingWithOptions:</code>中：</p>
-<pre><code>// self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@&quot;MainStoryboard&quot; bundle:nil];
-self.window.rootViewController = [storyboard instantiateInitialViewController];
-// [self.window makeKeyAndVisible];</code></pre><p>  注：若打开第1行注释重设self.window，iOS8中需要在[YourApp]-Info.plist中去掉UIMainStoryboardFile值。</p>
-</li>
-<li><p><code>scrollViewWillEndDragging:withVelocity:targetContentOffset:</code>的<code>targetContentOffset</code>参数可以决定scrollView滑动停止在哪儿</p>
-</li>
+<pre><code>  // self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+  UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@&quot;MainStoryboard&quot; bundle:nil];
+  self.window.rootViewController = [storyboard instantiateInitialViewController];
+  // [self.window makeKeyAndVisible];</code></pre>
+<p>注：若打开第1行注释重设self.window，iOS8中需要在[YourApp]-Info.plist中去掉UIMainStoryboardFile值。</p></li>
+<li><p><code>scrollViewWillEndDragging:withVelocity:targetContentOffset:</code>的<code>targetContentOffset</code>参数可以决定scrollView滑动停止在哪儿</p></li>
 </ul>
-<h4 id="RunloopMode"><a href="#RunloopMode" class="headerlink" title="RunloopMode"></a>RunloopMode</h4><p>Runloop只会处理其mode中输入源：</p>
+<h4 id="runloopmode">RunloopMode</h4>
+<p>Runloop只会处理其mode中输入源：</p>
 <ul>
 <li>default mode包含大部分输入源、定时器等</li>
 <li>tracking mode处理UI事件（如scrollView滚动/减速等）</li>
@@ -241,9 +237,7 @@ self.window.rootViewController = [storyboard instantiateInitialViewController];
 </ul>
 <p>定时器运行在default mode，scrollView滚动等UI事件肯能block定时器准时执行，可把定时器设成common modes：</p>
 <figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">NSTimer</span> *timer = [<span class="built_in">NSTimer</span> timerWithTimeInterval:<span class="number">1.0</span> </span><br><span class="line">                                         target:<span class="keyword">self</span></span><br><span class="line">                                       selector:<span class="keyword">@selector</span>(handleTimer:) </span><br><span class="line">                                       userInfo:<span class="literal">nil</span> </span><br><span class="line">                                       repeats:<span class="literal">NO</span>]</span><br><span class="line">[[<span class="built_in">NSRunLoop</span> mainRunLoop] addTimer:timer forMode:<span class="built_in">NSRunLoopCommonModes</span>];</span><br></pre></td></tr></table></figure>
-
 <figure class="highlight scheme"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[<span class="name">self</span> performsSelector:@selector(<span class="name">performDelayedWork</span>)</span><br><span class="line">            withObject:nil</span><br><span class="line">            afterDelay:1.0</span><br><span class="line">               inModes:@[<span class="name">NSRunLoopCommonModes</span>]]<span class="comment">;</span></span><br></pre></td></tr></table></figure>
-
 <p>参考：</p>
 <ul>
 <li><a href="http://wufawei.com/2013/05/use-NSRunLoop/" target="_blank" rel="noopener">使用iOS的NSRunLoop</a></li>
@@ -387,7 +381,7 @@ self.window.rootViewController = [storyboard instantiateInitialViewController];
           <div class="post-toc">
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#RunloopMode"><span class="nav-number">1.</span> <span class="nav-text">RunloopMode</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#runloopmode"><span class="nav-number">1.</span> <span class="nav-text">RunloopMode</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>

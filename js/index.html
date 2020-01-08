@@ -41,12 +41,12 @@
   <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.1" />
 
 
-<meta name="description" content="所有变量都是传引用，没有传值的  数字的内部表示都为double，所以1和1.0是相同的值  被当做false的值：null, undefined, ‘’, 0, NaN  null，undefined不是对象；布尔，数字，字符串类似对象；其他都是对象，即可变的键值对集合  typeof检测的类型：’boolean’, ‘number’, ‘string’, ‘undefined’, ’func">
+<meta name="description" content="所有变量都是传引用，没有传值的 数字的内部表示都为double，所以1和1.0是相同的值 被当做false的值：null, undefined, ’’, 0, NaN null，undefined不是对象；布尔，数字，字符串类似对象；其他都是对象，即可变的键值对集合 typeof检测的类型：‘boolean’, ‘number’, ‘string’, ‘undefined’, ’function">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Javascript笔记">
 <meta property="og:url" content="http://note.49px.com/js/index.html">
 <meta property="og:site_name" content="Dev Note">
-<meta property="og:description" content="所有变量都是传引用，没有传值的  数字的内部表示都为double，所以1和1.0是相同的值  被当做false的值：null, undefined, ‘’, 0, NaN  null，undefined不是对象；布尔，数字，字符串类似对象；其他都是对象，即可变的键值对集合  typeof检测的类型：’boolean’, ‘number’, ‘string’, ‘undefined’, ’func">
+<meta property="og:description" content="所有变量都是传引用，没有传值的 数字的内部表示都为double，所以1和1.0是相同的值 被当做false的值：null, undefined, ’’, 0, NaN null，undefined不是对象；布尔，数字，字符串类似对象；其他都是对象，即可变的键值对集合 typeof检测的类型：‘boolean’, ‘number’, ‘string’, ‘undefined’, ’function">
 <meta property="article:published_time" content="2013-04-29T16:00:00.000Z">
 <meta property="article:modified_time" content="2015-09-12T12:10:51.000Z">
 <meta property="article:author" content="Yang Le">
@@ -196,68 +196,51 @@
 
       
         <span itemprop="articleBody"><ul>
-<li><p>所有变量都是传引用，没有传值的</p>
-</li>
-<li><p>数字的内部表示都为double，所以1和1.0是相同的值</p>
-</li>
-<li><p>被当做false的值：null, undefined, ‘’, 0, NaN</p>
-</li>
-<li><p>null，undefined不是对象；布尔，数字，字符串类似对象；其他都是对象，即可变的键值对集合</p>
-</li>
-<li><p>typeof检测的类型：’boolean’, ‘number’, ‘string’, ‘undefined’, ’function‘, ‘object’</p>
-</li>
-<li><p>key:value对中的key是合法标识符时（仅含数字字母下划线）可以不加引号</p>
-</li>
-<li><p>引用对象属性时可以用<code>.</code>或<code>[]</code>，若属性名不是合法标识符则只能用<code>[]</code></p>
-</li>
-<li><p><code>hasOwnProperty()</code>查对象属性时不查prototype链，<code>delete</code>可删除对象属性</p>
-</li>
-<li><p>只有函数会创建作用域，花括号代码块不创建作用域</p>
-</li>
-<li><p><code>||</code>可提供默认值：<code>var middle = stooge[&quot;middle-name&quot;] || &quot;(none)&quot;</code></p>
-</li>
+<li><p>所有变量都是传引用，没有传值的</p></li>
+<li><p>数字的内部表示都为double，所以1和1.0是相同的值</p></li>
+<li><p>被当做false的值：null, undefined, ’’, 0, NaN</p></li>
+<li><p>null，undefined不是对象；布尔，数字，字符串类似对象；其他都是对象，即可变的键值对集合</p></li>
+<li><p>typeof检测的类型：‘boolean’, ‘number’, ‘string’, ‘undefined’, ’function‘, ‘object’</p></li>
+<li><p>key:value对中的key是合法标识符时（仅含数字字母下划线）可以不加引号</p></li>
+<li><p>引用对象属性时可以用<code>.</code>或<code>[]</code>，若属性名不是合法标识符则只能用<code>[]</code></p></li>
+<li><p><code>hasOwnProperty()</code>查对象属性时不查prototype链，<code>delete</code>可删除对象属性</p></li>
+<li><p>只有函数会创建作用域，花括号代码块不创建作用域</p></li>
+<li><p><code>||</code>可提供默认值：<code>var middle = stooge["middle-name"] || "(none)"</code></p></li>
 <li><p>除了声明时定义的形式参数，函数还接受两个附加的参数：<code>this</code>和<code>arguments</code>。<code>this</code>值取于四种模式之一：</p>
-<ol>
-<li><p>当函数作为对象的属性时，this指向该对象</p>
-</li>
-<li><p>当函数不是对象的属性时，this指向全局对象。这设计错误导致内部函数的this指向了全局对象，而不是外部函数的this。解决方法是在外部函数中定义<code>var that = this;</code>，然后在内部函数中通过that来访问。</p>
-</li>
-<li><p>new Func()创建新对象时，this指向该对象</p>
-</li>
-<li><p>func.apply(that, arguments)调用函数时，this指向传进的that</p>
-<p>arguments可访问函数被调用时欲传进的实参列表，包括那些没有形参对应的多余参数。arguments类似数组，有length属性可下标访问，但设计错误使它没成为数组。吧arguments变成数组，使用<code>var args = Array.prototype.slice.apply(arguments)</code></p>
-</li>
+<ol type="1">
+<li>当函数作为对象的属性时，this指向该对象</li>
+<li>当函数不是对象的属性时，this指向全局对象。这设计错误导致内部函数的this指向了全局对象，而不是外部函数的this。解决方法是在外部函数中定义<code>var that = this;</code>，然后在内部函数中通过that来访问。</li>
+<li>new Func()创建新对象时，this指向该对象</li>
+<li>func.apply(that, arguments)调用函数时，this指向传进的that</li>
 </ol>
-</li>
-<li><p>函数总会返回一个值，没有指定返回值时返回undefined。如果以new Func()形式调用且返回值不是对象，则返回this（该新对象）。</p>
-</li>
-<li><p>模块：一个定义了私有变量和函数的函数，利用闭包创建可访问私有变量和函数的接口函数，最后返回这个接口函数，或者直接把接口内容存进某个可访问的函数中。</p>
-</li>
-<li><p>基于prototype继承是基于<em>对象</em>的继承，而不是基于类的继承</p>
-</li>
+<p>arguments可访问函数被调用时欲传进的实参列表，包括那些没有形参对应的多余参数。arguments类似数组，有length属性可下标访问，但设计错误使它没成为数组。吧arguments变成数组，使用<code>var args = Array.prototype.slice.apply(arguments)</code></p></li>
+<li><p>函数总会返回一个值，没有指定返回值时返回undefined。如果以new Func()形式调用且返回值不是对象，则返回this（该新对象）。</p></li>
+<li><p>模块：一个定义了私有变量和函数的函数，利用闭包创建可访问私有变量和函数的接口函数，最后返回这个接口函数，或者直接把接口内容存进某个可访问的函数中。</p></li>
+<li><p>基于prototype继承是基于<em>对象</em>的继承，而不是基于类的继承</p></li>
 <li><p>继承最好使用函数化模式：</p>
-<pre><code>var constructor = function(kv) {
-    私有实例变量（可通过闭包访问）
-    var that = 要继承的一个新对象
-    给that添加属性或方法
-    return that
-}</code></pre></li>
-<li><p>数组只是类似数组的对象，它把数组下标转成字符串，用其作为属性。可存放任意类型元素，内部表示不是线性分配的内存。</p>
-</li>
-<li><p>数组的length等于其最大整数属性名加1，不一定等于数组的元素个数</p>
-</li>
+<pre><code>  var constructor = function(kv) {
+      私有实例变量（可通过闭包访问）
+      var that = 要继承的一个新对象
+      给that添加属性或方法
+      return that
+  }</code></pre></li>
+<li><p>数组只是类似数组的对象，它把数组下标转成字符串，用其作为属性。可存放任意类型元素，内部表示不是线性分配的内存。</p></li>
+<li><p>数组的length等于其最大整数属性名加1，不一定等于数组的元素个数</p></li>
 </ul>
-<h4 id="References"><a href="#References" class="headerlink" title="References"></a>References</h4><ol>
+<h4 id="references">References</h4>
+<ol type="1">
 <li><a href="http://bonsaiden.github.io/JavaScript-Garden/" target="_blank" rel="noopener">Javascript秘密花园</a></li>
 <li>《Javascript语言精粹》</li>
 </ol>
-<hr>
-<h3 id="Promise"><a href="#Promise" class="headerlink" title="Promise"></a>Promise</h3><ul>
+<hr />
+<h3 id="promise">Promise</h3>
+<ul>
 <li>caller调then(callback)，callee调resolve()，两者都被调用后callback才会执行</li>
 <li>多个then()链式调用时，上一个then()的返回值是下一个then()的输入参数</li>
 <li><code>then(callback, errback)</code>的errback可提供reject()后的错误处理</li>
 </ul>
-<h4 id="References-1"><a href="#References-1" class="headerlink" title="References"></a>References</h4><ol>
+<h4 id="references-1">References</h4>
+<ol type="1">
 <li><a href="http://mattgreer.org/articles/promises-in-wicked-detail/" target="_blank" rel="noopener">JavaScript Promises … In Wicked Detail</a></li>
 </ol>
 </span>
@@ -398,7 +381,7 @@
           <div class="post-toc">
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#References"><span class="nav-number">1.</span> <span class="nav-text">References</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Promise"><span class="nav-number"></span> <span class="nav-text">Promise</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#References-1"><span class="nav-number">1.</span> <span class="nav-text">References</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#references"><span class="nav-number">1.</span> <span class="nav-text">References</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#promise"><span class="nav-number"></span> <span class="nav-text">Promise</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#references-1"><span class="nav-number">1.</span> <span class="nav-text">References</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>

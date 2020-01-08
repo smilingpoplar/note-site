@@ -196,45 +196,36 @@
       
         
           <span itemprop="articleBody"><ul>
-<li><p><a href="https://developer.apple.com/library/ios/documentation/cocoa/Conceptual/CoreData/Articles/cdBasics.html" target="_blank" rel="noopener">Core Data Programming Guide</a></p>
+<li><a href="https://developer.apple.com/library/ios/documentation/cocoa/Conceptual/CoreData/Articles/cdBasics.html" target="_blank" rel="noopener">Core Data Programming Guide</a>
 <ul>
 <li>数据库的table对应object，table的column对应property</li>
 <li>NSManagedObjectContext通过coordinator管理存储，NSPersistentStoreCoordinator将实际的NSPersistentStore（如sqlite文件）和NSManagedObjectModel（编译后的data model）关联。</li>
-</ul>
-</li>
-<li><p>CoreData使用多个数据库：</p>
-<ol>
-<li><p>在Xcode的DataModel中添加config，让entiey分属不同的config</p>
-</li>
-<li><p>ManagedObjectContext只关联一个PersistentStoreCoordinator，coordinator中可添加多个PersistentStore，让这些store分别对应不同的config：[coordinator addPersistentStoreWithType:<strong>configuration:</strong>URL:options:error:]</p>
-</li>
-<li><p>relationship只能用在同个PersistentStore中，跨store要使用FetchedRequest</p>
-<p>参考：<a href="http://stackoverflow.com/questions/5231775/can-multiple-two-persistent-stores-be-used-with-one-object-model-while-mainta" target="_blank" rel="noopener">stackoverflow</a></p>
-</li>
+</ul></li>
+<li>CoreData使用多个数据库：
+<ol type="1">
+<li>在Xcode的DataModel中添加config，让entiey分属不同的config</li>
+<li>ManagedObjectContext只关联一个PersistentStoreCoordinator，coordinator中可添加多个PersistentStore，让这些store分别对应不同的config：[coordinator addPersistentStoreWithType:<strong>configuration:</strong>URL:options:error:]</li>
+<li>relationship只能用在同个PersistentStore中，跨store要使用FetchedRequest</li>
 </ol>
-</li>
+参考：<a href="http://stackoverflow.com/questions/5231775/can-multiple-two-persistent-stores-be-used-with-one-object-model-while-mainta" target="_blank" rel="noopener">stackoverflow</a></li>
 </ul>
-<h3 id="加密CoreData"><a href="#加密CoreData" class="headerlink" title="加密CoreData"></a>加密CoreData</h3><ul>
+<h3 id="加密coredata">加密CoreData</h3>
+<ul>
 <li><p>使用<a href="https://github.com/sqlcipher/sqlcipher" target="_blank" rel="noopener">sqlcipher</a>加密sqlite，可使用其<a href="https://github.com/sqlcipher/sqlcipher/tree/Xcode5" target="_blank" rel="noopener">Xcode5分支</a>：</p>
-<ol>
+<ol type="1">
 <li><p>编译：</p>
-<pre><code>./configure --with-crypto-lib=commoncrypto --enable-tempstore=yes CFLAGS=&quot;-DSQLITE_HAS_CODEC -DSQLITE_TEMP_STORE=2 -DSQLCIPHER_CRYPTO_CC&quot; LDFLAGS=&quot;-framework Security&quot; &amp;&amp; make sqlite3.c</code></pre><p>要禁掉sqlcipher项目的warnings，在Build Phases的<code>Compile Sources</code>中给sqlite3.c加上Compiler Flags：<code>-w</code></p>
-</li>
-<li><p>把<code>sqlcipher.xcodeproj</code>拉进Xcode作为子项目，在父项目Build Phases的<code>Target Depedencies</code>和<code>Link Binary With Libraries</code>中添加<code>sqlcipher</code></p>
-</li>
-<li><p>在父项目Build Settings的<code>Other C Flags</code>中添加：<code>-DSQLITE_HAS_CODEC</code></p>
-</li>
-</ol>
-</li>
-<li><p>使用<a href="https://github.com/project-imas/encrypted-core-data" target="_blank" rel="noopener">encrypted-core-data</a>加密CoreData，encrypted-core-data依赖sqlcipher</p>
-</li>
+<pre><code> ./configure --with-crypto-lib=commoncrypto --enable-tempstore=yes CFLAGS=&quot;-DSQLITE_HAS_CODEC -DSQLITE_TEMP_STORE=2 -DSQLCIPHER_CRYPTO_CC&quot; LDFLAGS=&quot;-framework Security&quot; &amp;&amp; make sqlite3.c</code></pre>
+<p>要禁掉sqlcipher项目的warnings，在Build Phases的<code>Compile Sources</code>中给sqlite3.c加上Compiler Flags：<code>-w</code></p></li>
+<li><p>把<code>sqlcipher.xcodeproj</code>拉进Xcode作为子项目，在父项目Build Phases的<code>Target Depedencies</code>和<code>Link Binary With Libraries</code>中添加<code>sqlcipher</code></p></li>
+<li><p>在父项目Build Settings的<code>Other C Flags</code>中添加：<code>-DSQLITE_HAS_CODEC</code></p></li>
+</ol></li>
+<li><p>使用<a href="https://github.com/project-imas/encrypted-core-data" target="_blank" rel="noopener">encrypted-core-data</a>加密CoreData，encrypted-core-data依赖sqlcipher</p></li>
 <li><p>使用<a href="https://github.com/magicalpanda/MagicalRecord" target="_blank" rel="noopener">MagicalRecord</a>方便CoreData，见<a href="http://ablfx.com/blog/article/2" target="_blank" rel="noopener">使用入门</a></p>
 <ul>
 <li><p>使用前需要在<code>.pch</code>文件中添加：</p>
-<pre><code>#define MR_SHORTHAND
-#import &quot;CoreData+MagicalRecord.h&quot;</code></pre></li>
-</ul>
-</li>
+<pre><code>  #define MR_SHORTHAND
+  #import &quot;CoreData+MagicalRecord.h&quot;</code></pre></li>
+</ul></li>
 </ul>
 </span>
         
@@ -305,68 +296,51 @@
       
         
           <span itemprop="articleBody"><ul>
-<li><p>所有变量都是传引用，没有传值的</p>
-</li>
-<li><p>数字的内部表示都为double，所以1和1.0是相同的值</p>
-</li>
-<li><p>被当做false的值：null, undefined, ‘’, 0, NaN</p>
-</li>
-<li><p>null，undefined不是对象；布尔，数字，字符串类似对象；其他都是对象，即可变的键值对集合</p>
-</li>
-<li><p>typeof检测的类型：’boolean’, ‘number’, ‘string’, ‘undefined’, ’function‘, ‘object’</p>
-</li>
-<li><p>key:value对中的key是合法标识符时（仅含数字字母下划线）可以不加引号</p>
-</li>
-<li><p>引用对象属性时可以用<code>.</code>或<code>[]</code>，若属性名不是合法标识符则只能用<code>[]</code></p>
-</li>
-<li><p><code>hasOwnProperty()</code>查对象属性时不查prototype链，<code>delete</code>可删除对象属性</p>
-</li>
-<li><p>只有函数会创建作用域，花括号代码块不创建作用域</p>
-</li>
-<li><p><code>||</code>可提供默认值：<code>var middle = stooge[&quot;middle-name&quot;] || &quot;(none)&quot;</code></p>
-</li>
+<li><p>所有变量都是传引用，没有传值的</p></li>
+<li><p>数字的内部表示都为double，所以1和1.0是相同的值</p></li>
+<li><p>被当做false的值：null, undefined, ’’, 0, NaN</p></li>
+<li><p>null，undefined不是对象；布尔，数字，字符串类似对象；其他都是对象，即可变的键值对集合</p></li>
+<li><p>typeof检测的类型：‘boolean’, ‘number’, ‘string’, ‘undefined’, ’function‘, ‘object’</p></li>
+<li><p>key:value对中的key是合法标识符时（仅含数字字母下划线）可以不加引号</p></li>
+<li><p>引用对象属性时可以用<code>.</code>或<code>[]</code>，若属性名不是合法标识符则只能用<code>[]</code></p></li>
+<li><p><code>hasOwnProperty()</code>查对象属性时不查prototype链，<code>delete</code>可删除对象属性</p></li>
+<li><p>只有函数会创建作用域，花括号代码块不创建作用域</p></li>
+<li><p><code>||</code>可提供默认值：<code>var middle = stooge["middle-name"] || "(none)"</code></p></li>
 <li><p>除了声明时定义的形式参数，函数还接受两个附加的参数：<code>this</code>和<code>arguments</code>。<code>this</code>值取于四种模式之一：</p>
-<ol>
-<li><p>当函数作为对象的属性时，this指向该对象</p>
-</li>
-<li><p>当函数不是对象的属性时，this指向全局对象。这设计错误导致内部函数的this指向了全局对象，而不是外部函数的this。解决方法是在外部函数中定义<code>var that = this;</code>，然后在内部函数中通过that来访问。</p>
-</li>
-<li><p>new Func()创建新对象时，this指向该对象</p>
-</li>
-<li><p>func.apply(that, arguments)调用函数时，this指向传进的that</p>
-<p>arguments可访问函数被调用时欲传进的实参列表，包括那些没有形参对应的多余参数。arguments类似数组，有length属性可下标访问，但设计错误使它没成为数组。吧arguments变成数组，使用<code>var args = Array.prototype.slice.apply(arguments)</code></p>
-</li>
+<ol type="1">
+<li>当函数作为对象的属性时，this指向该对象</li>
+<li>当函数不是对象的属性时，this指向全局对象。这设计错误导致内部函数的this指向了全局对象，而不是外部函数的this。解决方法是在外部函数中定义<code>var that = this;</code>，然后在内部函数中通过that来访问。</li>
+<li>new Func()创建新对象时，this指向该对象</li>
+<li>func.apply(that, arguments)调用函数时，this指向传进的that</li>
 </ol>
-</li>
-<li><p>函数总会返回一个值，没有指定返回值时返回undefined。如果以new Func()形式调用且返回值不是对象，则返回this（该新对象）。</p>
-</li>
-<li><p>模块：一个定义了私有变量和函数的函数，利用闭包创建可访问私有变量和函数的接口函数，最后返回这个接口函数，或者直接把接口内容存进某个可访问的函数中。</p>
-</li>
-<li><p>基于prototype继承是基于<em>对象</em>的继承，而不是基于类的继承</p>
-</li>
+<p>arguments可访问函数被调用时欲传进的实参列表，包括那些没有形参对应的多余参数。arguments类似数组，有length属性可下标访问，但设计错误使它没成为数组。吧arguments变成数组，使用<code>var args = Array.prototype.slice.apply(arguments)</code></p></li>
+<li><p>函数总会返回一个值，没有指定返回值时返回undefined。如果以new Func()形式调用且返回值不是对象，则返回this（该新对象）。</p></li>
+<li><p>模块：一个定义了私有变量和函数的函数，利用闭包创建可访问私有变量和函数的接口函数，最后返回这个接口函数，或者直接把接口内容存进某个可访问的函数中。</p></li>
+<li><p>基于prototype继承是基于<em>对象</em>的继承，而不是基于类的继承</p></li>
 <li><p>继承最好使用函数化模式：</p>
-<pre><code>var constructor = function(kv) {
-    私有实例变量（可通过闭包访问）
-    var that = 要继承的一个新对象
-    给that添加属性或方法
-    return that
-}</code></pre></li>
-<li><p>数组只是类似数组的对象，它把数组下标转成字符串，用其作为属性。可存放任意类型元素，内部表示不是线性分配的内存。</p>
-</li>
-<li><p>数组的length等于其最大整数属性名加1，不一定等于数组的元素个数</p>
-</li>
+<pre><code>  var constructor = function(kv) {
+      私有实例变量（可通过闭包访问）
+      var that = 要继承的一个新对象
+      给that添加属性或方法
+      return that
+  }</code></pre></li>
+<li><p>数组只是类似数组的对象，它把数组下标转成字符串，用其作为属性。可存放任意类型元素，内部表示不是线性分配的内存。</p></li>
+<li><p>数组的length等于其最大整数属性名加1，不一定等于数组的元素个数</p></li>
 </ul>
-<h4 id="References"><a href="#References" class="headerlink" title="References"></a>References</h4><ol>
+<h4 id="references">References</h4>
+<ol type="1">
 <li><a href="http://bonsaiden.github.io/JavaScript-Garden/" target="_blank" rel="noopener">Javascript秘密花园</a></li>
 <li>《Javascript语言精粹》</li>
 </ol>
-<hr>
-<h3 id="Promise"><a href="#Promise" class="headerlink" title="Promise"></a>Promise</h3><ul>
+<hr />
+<h3 id="promise">Promise</h3>
+<ul>
 <li>caller调then(callback)，callee调resolve()，两者都被调用后callback才会执行</li>
 <li>多个then()链式调用时，上一个then()的返回值是下一个then()的输入参数</li>
 <li><code>then(callback, errback)</code>的errback可提供reject()后的错误处理</li>
 </ul>
-<h4 id="References-1"><a href="#References-1" class="headerlink" title="References"></a>References</h4><ol>
+<h4 id="references-1">References</h4>
+<ol type="1">
 <li><a href="http://mattgreer.org/articles/promises-in-wicked-detail/" target="_blank" rel="noopener">JavaScript Promises … In Wicked Detail</a></li>
 </ol>
 </span>
@@ -438,44 +412,40 @@
       
         
           <span itemprop="articleBody"><ul>
-<li><p>UIView与display相关的功能都在CALayer中，UIView仅给CALayer添上touch处理功能。<br>例如，UIView的位置相关信息保存在view.layer的四个属性中，<code>view.frame</code>根据它们导出：</p>
+<li><p>UIView与display相关的功能都在CALayer中，UIView仅给CALayer添上touch处理功能。 例如，UIView的位置相关信息保存在view.layer的四个属性中，<code>view.frame</code>根据它们导出：</p>
 <ul>
 <li>view.layer.position == view.center</li>
 <li>view.layer.bounds == view.bounds</li>
 <li>view.layer.anchorPoint</li>
 <li>view.layer.transform</li>
-</ul>
-</li>
+</ul></li>
 <li><p><code>view.layer.anchorPoint</code>默认为(0.5,0.5)，要将其设为view中另一点point:</p>
-  <figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">CGSize viewSize = view.frame.size;</span><br><span class="line">view.layer.anchorPoint = <span class="constructor">CGPointMake(<span class="params">point</span>.<span class="params">x</span><span class="operator">/</span><span class="params">viewSize</span>.<span class="params">width</span>, <span class="params">point</span>.<span class="params">y</span><span class="operator">/</span><span class="params">viewSize</span>.<span class="params">height</span>)</span>;</span><br><span class="line">view.layer.position = point;</span><br></pre></td></tr></table></figure>
-</li>
+<p><figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">CGSize viewSize = view.frame.size;</span><br><span class="line">view.layer.anchorPoint = <span class="constructor">CGPointMake(<span class="params">point</span>.<span class="params">x</span><span class="operator">/</span><span class="params">viewSize</span>.<span class="params">width</span>, <span class="params">point</span>.<span class="params">y</span><span class="operator">/</span><span class="params">viewSize</span>.<span class="params">height</span>)</span>;</span><br><span class="line">view.layer.position = point;</span><br></pre></td></tr></table></figure></p></li>
 <li><p>view.bounds指定view自己的坐标系统内正被观察到的矩形区域。比如，scrollView在scrolling时其实只是改变scrollView.bounds.origin (即scrollView.contentOffset)，而scrollView.contentSize只是和scrollView.bound.size一起限制scrollView.bounds.origin的变动范围。参见：<a href="http://oleb.net/blog/2014/04/understanding-uiscrollview/" target="_blank" rel="noopener">Understanding UIScrollView</a>。</p>
-<p>  view.frame.origin是view在其父view的坐标系统内的位置（由view.center配合view.layer.anchorPoint、view.bounds.size导出），而view.frame.size就是view.bounds.size。</p>
-</li>
-<li><p><code>UIWindow</code>含多个subview时，只有其<code>root</code> view才能自动处理autorotation。</p>
-</li>
-<li><p><code>[viewController presentViewController:animated:completion:]</code>时会把<code>presentingViewController.view</code>加到<code>viewController.view.superview</code>中，这superview是个隐藏节点<code>UITransitionView</code>。</p>
-</li>
+<p>view.frame.origin是view在其父view的坐标系统内的位置（由view.center配合view.layer.anchorPoint、view.bounds.size导出），而view.frame.size就是view.bounds.size。</p></li>
+<li><p><code>UIWindow</code>含多个subview时，只有其<code>root</code> view才能自动处理autorotation。</p></li>
+<li><p><code>[viewController presentViewController:animated:completion:]</code>时会把<code>presentingViewController.view</code>加到<code>viewController.view.superview</code>中，这superview是个隐藏节点<code>UITransitionView</code>。</p></li>
 <li><p>ContainerViewController（iOS5起引入）继承UIViewController，添加childViewController时:</p>
-<pre><code>1. [self addChildViewController:childViewController]; 
-// 1. will send [childViewController willMoveToParentViewController:self];  
-2. [self.view addSubview:childViewController.view];
-3. [childViewController didMoveToParentViewController:self];</code></pre><p>  移除childViewController时：</p>
-<pre><code>1. [childViewController willMoveToParentViewController:nil];
-2. [childViewController.view removeFromSuperview];
-3. [childViewController removeFromParentViewController];
-// 3. will send [childViewController didMoveToParentViewController:nil];</code></pre><p>  参考：<a href="http://mobile.tutsplus.com/tutorials/iphone/implementing-container-containment-sliding-menu-controller/" target="_blank" rel="noopener">Implementing Container Containment – Sliding Menu Controller</a></p>
-</li>
+<pre><code>  1. [self addChildViewController:childViewController]; 
+  // 1. will send [childViewController willMoveToParentViewController:self];  
+  2. [self.view addSubview:childViewController.view];
+  3. [childViewController didMoveToParentViewController:self];</code></pre>
+<p>移除childViewController时：</p>
+<pre><code>  1. [childViewController willMoveToParentViewController:nil];
+  2. [childViewController.view removeFromSuperview];
+  3. [childViewController removeFromParentViewController];
+  // 3. will send [childViewController didMoveToParentViewController:nil];</code></pre>
+<p>参考：<a href="http://mobile.tutsplus.com/tutorials/iphone/implementing-container-containment-sliding-menu-controller/" target="_blank" rel="noopener">Implementing Container Containment – Sliding Menu Controller</a></p></li>
 <li><p>要是创建项目时没有勾选<code>Use Storyboard</code>，从程序中加载storyboard要在<code>application:didFinishLaunchingWithOptions:</code>中：</p>
-<pre><code>// self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@&quot;MainStoryboard&quot; bundle:nil];
-self.window.rootViewController = [storyboard instantiateInitialViewController];
-// [self.window makeKeyAndVisible];</code></pre><p>  注：若打开第1行注释重设self.window，iOS8中需要在[YourApp]-Info.plist中去掉UIMainStoryboardFile值。</p>
-</li>
-<li><p><code>scrollViewWillEndDragging:withVelocity:targetContentOffset:</code>的<code>targetContentOffset</code>参数可以决定scrollView滑动停止在哪儿</p>
-</li>
+<pre><code>  // self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+  UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@&quot;MainStoryboard&quot; bundle:nil];
+  self.window.rootViewController = [storyboard instantiateInitialViewController];
+  // [self.window makeKeyAndVisible];</code></pre>
+<p>注：若打开第1行注释重设self.window，iOS8中需要在[YourApp]-Info.plist中去掉UIMainStoryboardFile值。</p></li>
+<li><p><code>scrollViewWillEndDragging:withVelocity:targetContentOffset:</code>的<code>targetContentOffset</code>参数可以决定scrollView滑动停止在哪儿</p></li>
 </ul>
-<h4 id="RunloopMode"><a href="#RunloopMode" class="headerlink" title="RunloopMode"></a>RunloopMode</h4><p>Runloop只会处理其mode中输入源：</p>
+<h4 id="runloopmode">RunloopMode</h4>
+<p>Runloop只会处理其mode中输入源：</p>
 <ul>
 <li>default mode包含大部分输入源、定时器等</li>
 <li>tracking mode处理UI事件（如scrollView滚动/减速等）</li>
@@ -483,9 +453,7 @@ self.window.rootViewController = [storyboard instantiateInitialViewController];
 </ul>
 <p>定时器运行在default mode，scrollView滚动等UI事件肯能block定时器准时执行，可把定时器设成common modes：</p>
 <figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">NSTimer</span> *timer = [<span class="built_in">NSTimer</span> timerWithTimeInterval:<span class="number">1.0</span> </span><br><span class="line">                                         target:<span class="keyword">self</span></span><br><span class="line">                                       selector:<span class="keyword">@selector</span>(handleTimer:) </span><br><span class="line">                                       userInfo:<span class="literal">nil</span> </span><br><span class="line">                                       repeats:<span class="literal">NO</span>]</span><br><span class="line">[[<span class="built_in">NSRunLoop</span> mainRunLoop] addTimer:timer forMode:<span class="built_in">NSRunLoopCommonModes</span>];</span><br></pre></td></tr></table></figure>
-
 <figure class="highlight scheme"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[<span class="name">self</span> performsSelector:@selector(<span class="name">performDelayedWork</span>)</span><br><span class="line">            withObject:nil</span><br><span class="line">            afterDelay:1.0</span><br><span class="line">               inModes:@[<span class="name">NSRunLoopCommonModes</span>]]<span class="comment">;</span></span><br></pre></td></tr></table></figure>
-
 <p>参考：</p>
 <ul>
 <li><a href="http://wufawei.com/2013/05/use-NSRunLoop/" target="_blank" rel="noopener">使用iOS的NSRunLoop</a></li>
@@ -561,89 +529,89 @@ self.window.rootViewController = [storyboard instantiateInitialViewController];
         
           <span itemprop="articleBody"><ul>
 <li><p>计算二进制中1的个数</p>
-<p>  实质是求该二进制数与0的hamming距离，详见<a href="http://en.wikipedia.org/wiki/Hamming_weight" target="_blank" rel="noopener">wiki</a>。其分治解法 <strong>按位分片</strong> 统计1的个数：</p>
-<pre><code>count 1s in each  2-bit piece
-count 1s in each  4-bit piece
-count 1s in each  8-bit piece
-count 1s in each 16-bit piece
-count 1s in each 32-bit piece</code></pre><p>  The best solutions known are based on adding counts in a tree pattern.</p>
-<pre><code>/*
- * For example, to count the number of 1 bits in the 8-bit binary number A=01101100
- * | Expression            | Binary   | Decimal | Comment                          |
- * | A                     | 01101100 |         | the original number              |
- * | B = A &amp; 01010101      | 01000100 | 1,0,1,0 | every other bit from A           |
- * | C = (A&gt;&gt;1) &amp; 01010101 | 00010100 | 0,1,1,0 | remaining bits from A            |
- * | D = B + C             | 01011000 | 1,1,2,0 | # of 1s in each 2-bit piece of A | 
- * | E = D &amp; 00110011      | 00010000 | 1,0     | every other count from D         |
- * | F = (D&gt;&gt;2) &amp; 00110011 | 00010010 | 1,2     | remaining counts from D          |
- * | G = E + F             | 00100010 | 2,2     | # of 1s in each 4-bit piece of A |
- * | H = G &amp; 00001111      | 00000010 | 2       | every other count from G         |
- * | I = (G&gt;&gt;4) &amp; 00001111 | 00000010 | 2       | remaining counts from G          |
- * | J = H + I             | 00000100 | 4       | the final answer                 |
+<p>实质是求该二进制数与0的hamming距离，详见<a href="http://en.wikipedia.org/wiki/Hamming_weight" target="_blank" rel="noopener">wiki</a>。其分治解法 <strong>按位分片</strong> 统计1的个数：</p>
+<pre><code>  count 1s in each  2-bit piece
+  count 1s in each  4-bit piece
+  count 1s in each  8-bit piece
+  count 1s in each 16-bit piece
+  count 1s in each 32-bit piece</code></pre>
+<p>The best solutions known are based on adding counts in a tree pattern.</p>
+<pre><code>  /*
+   * For example, to count the number of 1 bits in the 8-bit binary number A=01101100
+   * | Expression            | Binary   | Decimal | Comment                          |
+   * | A                     | 01101100 |         | the original number              |
+   * | B = A &amp; 01010101      | 01000100 | 1,0,1,0 | every other bit from A           |
+   * | C = (A&gt;&gt;1) &amp; 01010101 | 00010100 | 0,1,1,0 | remaining bits from A            |
+   * | D = B + C             | 01011000 | 1,1,2,0 | # of 1s in each 2-bit piece of A | 
+   * | E = D &amp; 00110011      | 00010000 | 1,0     | every other count from D         |
+   * | F = (D&gt;&gt;2) &amp; 00110011 | 00010010 | 1,2     | remaining counts from D          |
+   * | G = E + F             | 00100010 | 2,2     | # of 1s in each 4-bit piece of A |
+   * | H = G &amp; 00001111      | 00000010 | 2       | every other count from G         |
+   * | I = (G&gt;&gt;4) &amp; 00001111 | 00000010 | 2       | remaining counts from G          |
+   * | J = H + I             | 00000100 | 4       | the final answer                 |
 
-typedef unsigned int uint32;
-const uint32 m1  = 0x55555555; //binary: 0101...
-const uint32 m2  = 0x33333333; //binary: 00110011..
-const uint32 m4  = 0x0f0f0f0f; //binary: 0000111100001111..
-const uint32 m8  = 0x00ff00ff; //binary: 00000000111111110000000011111111
-const uint32 m16 = 0x0000ffff; //binary: 00000000000000001111111111111111
+  typedef unsigned int uint32;
+  const uint32 m1  = 0x55555555; //binary: 0101...
+  const uint32 m2  = 0x33333333; //binary: 00110011..
+  const uint32 m4  = 0x0f0f0f0f; //binary: 0000111100001111..
+  const uint32 m8  = 0x00ff00ff; //binary: 00000000111111110000000011111111
+  const uint32 m16 = 0x0000ffff; //binary: 00000000000000001111111111111111
 
-int population_count(uint32 x) {
-    x = (x &amp; m1 ) + ((x &gt;&gt;  1) &amp; m1 ); //put count of each  2 bits into those  2 bits 
-    x = (x &amp; m2 ) + ((x &gt;&gt;  2) &amp; m2 ); //put count of each  4 bits into those  4 bits 
-    x = (x &amp; m4 ) + ((x &gt;&gt;  4) &amp; m4 ); //put count of each  8 bits into those  8 bits 
-    x = (x &amp; m8 ) + ((x &gt;&gt;  8) &amp; m8 ); //put count of each 16 bits into those 16 bits 
-    x = (x &amp; m16) + ((x &gt;&gt; 16) &amp; m16); //put count of each 32 bits into those 32 bits 
-    return x;
-}</code></pre><p>  平时常见的解法：</p>
-<p>  This better when most bits in x are 0.</p>
-<pre><code>int population_count(uint32 x) {
-    int count;
-    for (count = 0; x; count++) {
-       x &amp;= x-1; // zero out the least significant bit
-    }
-    return count;
-}</code></pre></li>
+  int population_count(uint32 x) {
+      x = (x &amp; m1 ) + ((x &gt;&gt;  1) &amp; m1 ); //put count of each  2 bits into those  2 bits 
+      x = (x &amp; m2 ) + ((x &gt;&gt;  2) &amp; m2 ); //put count of each  4 bits into those  4 bits 
+      x = (x &amp; m4 ) + ((x &gt;&gt;  4) &amp; m4 ); //put count of each  8 bits into those  8 bits 
+      x = (x &amp; m8 ) + ((x &gt;&gt;  8) &amp; m8 ); //put count of each 16 bits into those 16 bits 
+      x = (x &amp; m16) + ((x &gt;&gt; 16) &amp; m16); //put count of each 32 bits into those 32 bits 
+      return x;
+  }</code></pre>
+<p>平时常见的解法：</p>
+<p>This better when most bits in x are 0.</p>
+<pre><code>  int population_count(uint32 x) {
+      int count;
+      for (count = 0; x; count++) {
+         x &amp;= x-1; // zero out the least significant bit
+      }
+      return count;
+  }</code></pre></li>
 </ul>
-<h3 id="least-significant-bit"><a href="#least-significant-bit" class="headerlink" title="least significant bit"></a>least significant bit</h3><ul>
-<li><p><code>-x</code> # == ~x+1, <strong>末位1前头的</strong>按位取反</p>
-</li>
-<li><p><code>x&amp;-x</code> # 末位1</p>
-</li>
-<li><p><code>x-1</code> # <strong>末位1起</strong>按位取反</p>
-</li>
-<li><p><code>x&amp;(x-1)</code> # 去掉末位1</p>
-</li>
-<li><p><code>(x&amp;(x-1)) == 0</code> # 是2的幂</p>
-</li>
+<h3 id="least-significant-bit">least significant bit</h3>
+<ul>
+<li><p><code>-x</code> # == ~x+1, <strong>末位1前头的</strong>按位取反</p></li>
+<li><p><code>x&amp;-x</code> # 末位1</p></li>
+<li><p><code>x-1</code> # <strong>末位1起</strong>按位取反</p></li>
+<li><p><code>x&amp;(x-1)</code> # 去掉末位1</p></li>
+<li><p><code>(x&amp;(x-1)) == 0</code> # 是2的幂</p></li>
 </ul>
-<h3 id="most-significant-bit"><a href="#most-significant-bit" class="headerlink" title="most significant bit"></a>most significant bit</h3><ul>
+<h3 id="most-significant-bit">most significant bit</h3>
+<ul>
 <li><p><strong>首位1起</strong>全置1</p>
-<pre><code>inline uint32 set_bits_from_msb(uint32 x) {
-    x |= (x &gt;&gt; 1);
-    x |= (x &gt;&gt; 2);
-    x |= (x &gt;&gt; 4);
-    x |= (x &gt;&gt; 8);
-    x |= (x &gt;&gt; 16);
-    return x;
-}</code></pre></li>
+<pre><code>  inline uint32 set_bits_from_msb(uint32 x) {
+      x |= (x &gt;&gt; 1);
+      x |= (x &gt;&gt; 2);
+      x |= (x &gt;&gt; 4);
+      x |= (x &gt;&gt; 8);
+      x |= (x &gt;&gt; 16);
+      return x;
+  }</code></pre></li>
 <li><p>首位1</p>
-<pre><code>uint32 msb(uint32 x) {
-    x = set_bits_from_msb(x);
-    return x &amp; ~(x &gt;&gt; 1);
-}</code></pre></li>
+<pre><code>  uint32 msb(uint32 x) {
+      x = set_bits_from_msb(x);
+      return x &amp; ~(x &gt;&gt; 1);
+  }</code></pre></li>
 <li><p>下个最近2的幂</p>
-<pre><code>uint32 next_largest_power_of_2(uint32 x) {
-    x = set_bits_from_msb(x);
-    return x+1;
-}</code></pre></li>
+<pre><code>  uint32 next_largest_power_of_2(uint32 x) {
+      x = set_bits_from_msb(x);
+      return x+1;
+  }</code></pre></li>
 <li><p>log2的floor</p>
-<pre><code>uint32 floor_of_log2(uint32 x) {
-    x = set_bits_from_msb(x);
-    return population_count(x) - 1;
-}</code></pre></li>
+<pre><code>  uint32 floor_of_log2(uint32 x) {
+      x = set_bits_from_msb(x);
+      return population_count(x) - 1;
+  }</code></pre></li>
 </ul>
-<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
+<h2 id="reference">Reference</h2>
+<ul>
 <li><a href="http://en.wikipedia.org/wiki/Hamming_weight" target="_blank" rel="noopener">Hamming Weight</a></li>
 <li><a href="http://aggregate.org/MAGIC/" target="_blank" rel="noopener">The Aggregate Magic Algorithms</a></li>
 </ul>
@@ -716,32 +684,31 @@ int population_count(uint32 x) {
       
         
           <span itemprop="articleBody"><ul>
-<li><p>sting interpolation: <code>&quot;#{var_name}&quot;</code></p>
+<li>sting interpolation: <code>"#{var_name}"</code>
 <ul>
-<li>双引号<code>&quot;&quot;</code>转义其中的内容，单引号<code>‘’</code>不转义</li>
-</ul>
-</li>
-<li><p>symbol是种不可变串，全局只创建一份，因此创建和比较等性能更高</p>
+<li>双引号<code>""</code>转义其中的内容，单引号<code>‘’</code>不转义</li>
+</ul></li>
+<li>symbol是种不可变串，全局只创建一份，因此创建和比较等性能更高
 <ul>
-<li><code>:&quot;hello&quot;</code>等同于<code>:hello</code></li>
-<li>symbol和string互转使用：<code>:hello.to_s</code>和<code>&quot;hello&quot;.intern</code></li>
-</ul>
-</li>
-<li><p>函数中的<code>yield(...)</code>会调用<em>函数调用时提供</em>的block，相当于把函数的一部分功能委派给这个未来的block，相当于函数多了一个叫yield的block参数</p>
+<li><code>:"hello"</code>等同于<code>:hello</code></li>
+<li>symbol和string互转使用：<code>:hello.to_s</code>和<code>"hello".intern</code></li>
+</ul></li>
+<li>函数中的<code>yield(...)</code>会调用<em>函数调用时提供</em>的block，相当于把函数的一部分功能委派给这个未来的block，相当于函数多了一个叫yield的block参数
 <ul>
 <li>如果这个block参数是可选的，函数中要用<code>yield(…) if block_given?</code></li>
+</ul></li>
+<li>将01串表示的二进制转成字节数组： <code>['1100110011'].pack('B*').unpack('C*')</code><br />
+参见：<a href="http://www.codeweblog.com/ruby-string-pack-unpack-detailed-usage/" target="_blank" rel="noopener">string的pack和unpack</a></li>
 </ul>
-</li>
-<li><p>将01串表示的二进制转成字节数组：<br><code>[&#39;1100110011&#39;].pack(&#39;B*&#39;).unpack(&#39;C*&#39;)</code><br>参见：<a href="http://www.codeweblog.com/ruby-string-pack-unpack-detailed-usage/" target="_blank" rel="noopener">string的pack和unpack</a></p>
-</li>
-</ul>
-<h2 id="nokogiri"><a href="#nokogiri" class="headerlink" title="nokogiri"></a>nokogiri</h2><ul>
-<li>取节点属性<code>node[&#39;attr-name&#39;]</code>，取某子节点内容<code>node.at_xpath(&#39;elem-name&#39;).text</code><ul>
+<h2 id="nokogiri">nokogiri</h2>
+<ul>
+<li>取节点属性<code>node['attr-name']</code>，取某子节点内容<code>node.at_xpath('elem-name').text</code>
+<ul>
 <li>方法<code>.at_xpath()</code>返回第一个节点，<code>.xpath()</code>返回节点数组</li>
+</ul></li>
 </ul>
-</li>
-</ul>
-<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><ul>
+<h3 id="参考">参考</h3>
+<ul>
 <li><a href="http://www.58bits.com/blog/2012/06/13/getting-started-nokogiri-xml-ruby/" target="_blank" rel="noopener">getting started with nokogori and xml in ruby</a></li>
 </ul>
 </span>
@@ -814,35 +781,29 @@ int population_count(uint32 x) {
         
           <span itemprop="articleBody"><p>在命令执行失败后退出：</p>
 <figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cmd || <span class="keyword">exit</span> <span class="number">1</span></span><br></pre></td></tr></table></figure>
-
 <p>子shell（把命令由括号括起来）：</p>
 <figure class="highlight coq"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cmd | <span class="type">(cmd1</span>; cmd2; cmd3) | <span class="type">cmd4</span></span><br></pre></td></tr></table></figure>
 <p>子shell中的<code>cmd1</code>可以改变工作目录，而不影响外部的<code>cmd4</code></p>
 <p>捕获键盘中断：</p>
 <figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">trap control_c SIGINT</span><br><span class="line"></span><br><span class="line">control_c() &#123;</span><br><span class="line">  echo `abort: ctrl-c`</span><br><span class="line">  <span class="keyword">exit</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
 <p>获得当前执行脚本的目录（<code>$0</code>就是当前执行脚本）：</p>
 <figure class="highlight mel"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$(<span class="keyword">dirname</span> $0)</span><br></pre></td></tr></table></figure>
-
 <p>if测试：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> [ ! -d <span class="variable">$A_DIR</span> ]; <span class="keyword">then</span></span><br><span class="line">  mkdir -p <span class="variable">$A_DIR</span></span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">  <span class="built_in">echo</span> <span class="string">'exists dir: '</span><span class="variable">$A_DIR</span></span><br><span class="line"><span class="keyword">fi</span></span><br></pre></td></tr></table></figure>
-
 <p>for循环：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> f <span class="keyword">in</span> *; <span class="keyword">do</span> </span><br><span class="line">  <span class="built_in">echo</span> <span class="variable">$f</span>; </span><br><span class="line"><span class="keyword">done</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="xargs"><a href="#xargs" class="headerlink" title="xargs"></a>xargs</h3><figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">ls</span> *<span class="string">.old</span> | xargs -n1 -I&#123;&#125; <span class="keyword">echo</span> mv &#123;&#125; &#123;&#125;<span class="string">.new</span></span><br></pre></td></tr></table></figure>
-
+<h3 id="xargs">xargs</h3>
+<figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">ls</span> *<span class="string">.old</span> | xargs -n1 -I&#123;&#125; <span class="keyword">echo</span> mv &#123;&#125; &#123;&#125;<span class="string">.new</span></span><br></pre></td></tr></table></figure>
 <ul>
-<li><code>-n N</code>，将输入参数规整成一行N个的形式（原先的输入参数由<code>&#39; &#39;</code>或<code>\n</code>分隔，每行个数可能不一样）</li>
+<li><code>-n N</code>，将输入参数规整成一行N个的形式（原先的输入参数由<code>' '</code>或<code>\n</code>分隔，每行个数可能不一样）</li>
 <li><code>-I {}</code>：由<code>-I</code>指定的字符串<code>{}</code>在每一次执行中都会被替换相应的输入参数</li>
 </ul>
 <figure class="highlight sqf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">find</span> . -<span class="built_in">type</span> f -<span class="built_in">name</span> <span class="string">"*.txt"</span> -print0 | xargs -<span class="number">0</span> rm -f</span><br></pre></td></tr></table></figure>
-
 <ul>
 <li><code>find -print0</code>指定输出的文件名以<code>\0</code>结尾</li>
-<li><code>xargs -0</code>指定<code>\0</code>作为参数分隔符，而不是默认的<code>&#39; &#39;</code>或<code>\n</code></li>
+<li><code>xargs -0</code>指定<code>\0</code>作为参数分隔符，而不是默认的<code>' '</code>或<code>\n</code></li>
 </ul>
-<p>只要把<code>find</code>的输出作为<code>xargs</code>的输入，就必须加<code>-print0</code>和<code>-0</code>参数，确保以<code>\0</code>来分隔输出。否则，文件名中包含的空格<code>&#39; &#39;</code>会被<code>xargs</code>会误以为是分隔符。</p>
+<p>只要把<code>find</code>的输出作为<code>xargs</code>的输入，就必须加<code>-print0</code>和<code>-0</code>参数，确保以<code>\0</code>来分隔输出。否则，文件名中包含的空格<code>' '</code>会被<code>xargs</code>会误以为是分隔符。</p>
 <figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">cat</span> <span class="keyword">args</span>.txt | ( <span class="keyword">while</span> <span class="keyword">read</span> arg; <span class="keyword">do</span> <span class="keyword">cat</span> <span class="variable">$arg</span>; done)</span><br><span class="line"># 等同于 <span class="keyword">cat</span> <span class="keyword">args</span>.txt | xargs -I&#123;&#125; <span class="keyword">cat</span> &#123;&#125;</span><br></pre></td></tr></table></figure>
 <p>为对同一个参数执行多条命令，使用while循环，将<code>cat $arg</code>换成任意数量的命令</p>
 </span>
@@ -915,23 +876,22 @@ int population_count(uint32 x) {
         
           <span itemprop="articleBody"><ul>
 <li><p>C99的inline用法和C++稍有不同，portable用法见<a href="http://www.greenend.org.uk/rjk/tech/inline.html" target="_blank" rel="noopener">Inline Functions In C</a></p>
-<p>  the xxx.h file:</p>
-<pre><code>#ifndef INLINE
-# if __GNUC__ &amp;&amp; !__GNUC_STDC_INLINE__
-#  define INLINE extern inline
-# else
-#  define INLINE inline
-# endif
-#endif
-INLINE int max(int a, int b) {
-    return a &gt; b ? a : b;
-}</code></pre><p>  the xxx.c file:</p>
-<pre><code>#define INLINE
-#include &quot;xxx.h&quot;</code></pre></li>
-<li><p><a href="http://stackoverflow.com/a/11517413/1263403" target="_blank" rel="noopener">参数个数不同的macro重载</a></p>
-</li>
-<li><p>由于内存对齐，定义struct时应将成员从大到小排列最省空间</p>
-</li>
+<p>the xxx.h file:</p>
+<pre><code>  #ifndef INLINE
+  # if __GNUC__ &amp;&amp; !__GNUC_STDC_INLINE__
+  #  define INLINE extern inline
+  # else
+  #  define INLINE inline
+  # endif
+  #endif
+  INLINE int max(int a, int b) {
+      return a &gt; b ? a : b;
+  }</code></pre>
+<p>the xxx.c file:</p>
+<pre><code>  #define INLINE
+  #include &quot;xxx.h&quot;</code></pre></li>
+<li><p><a href="http://stackoverflow.com/a/11517413/1263403" target="_blank" rel="noopener">参数个数不同的macro重载</a></p></li>
+<li><p>由于内存对齐，定义struct时应将成员从大到小排列最省空间</p></li>
 </ul>
 </span>
         
@@ -1002,14 +962,18 @@ INLINE int max(int a, int b) {
       
         
           <span itemprop="articleBody"><ul>
-<li><p>用<a href="[http://code.google.com/p/jarjar/wiki/CommandLineDocs]">jarjar</a>修改jar中的包名或类名：</p>
-<pre><code>java -jar jarjar.jar process &lt;rulesFile&gt; &lt;inJar&gt; &lt;outJar&gt;</code></pre><p><rulesFile>每条rule一行，包名或类名匹配多条rule时只取最上一条，rule格式：</p>
-<pre><code>rule &lt;pattern&gt; &lt;resule&gt;</code></pre><p>替换包名用：<code>rule old.package.** new.package.@1</code><br>替换类名用：<code>rule **OldClass @1NewClass</code></p>
-</li>
+<li><p>用[jarjar][]修改jar中的包名或类名：</p>
+<pre><code>java -jar jarjar.jar process &lt;rulesFile&gt; &lt;inJar&gt; &lt;outJar&gt;</code></pre>
+<p><rulesFile>每条rule一行，包名或类名匹配多条rule时只取最上一条，rule格式：</p>
+<pre><code>rule &lt;pattern&gt; &lt;resule&gt;</code></pre>
+<p>替换包名用：<code>rule old.package.** new.package.@1</code><br />
+替换类名用：<code>rule **OldClass @1NewClass</code></p></li>
 </ul>
+<p>[jarjar]: [http://code.google.com/p/jarjar/wiki/CommandLineDocs]</p>
 <ul>
-<li>用<a href="[http://java.decompiler.free.fr/?q=jdgui]">jd-gui</a>查看jar包中.class的代码</li>
+<li>用[jd-gui][]查看jar包中.class的代码</li>
 </ul>
+<p>[jd-gui]: [http://java.decompiler.free.fr/?q=jdgui]</p>
 </span>
         
       
@@ -1080,59 +1044,56 @@ INLINE int max(int a, int b) {
         
           <span itemprop="articleBody"><ul>
 <li><p>xCode中开启c++11支持：</p>
-<pre><code>Build Settings -&gt; C++ Language Dialect 选 C++11
-               -&gt; C++ StandardLibrary 选 libc++</code></pre></li>
+<pre><code>  Build Settings -&gt; C++ Language Dialect 选 C++11
+                 -&gt; C++ StandardLibrary 选 libc++</code></pre></li>
 <li><p>lambda：</p>
-<p>  语法: <code>[capture-list](args-list) -&gt;return-type {…}</code></p>
-<p>  可转类型：<code>function&lt;return-type (args-type-list)&gt;</code></p>
+<p>语法: <code>[capture-list](args-list) -&gt;return-type {…}</code></p>
+<p>可转类型：<code>function&lt;return-type (args-type-list)&gt;</code></p>
 <ul>
 <li><p>lambda的类型是实现了<code>operator()</code>的匿名类型，可转成<code>std::function&lt;&gt;</code>，但不是std::function&lt;&gt;，因此</p>
-<pre><code>template&lt;typename ...Args&gt;
-void call(Args&amp;&amp; ...args) { std::cout &lt;&lt; &quot;call 1&quot;; }
-template&lt;typename ...Args&gt;
-void call(std::function&lt;void ()&gt;, Args&amp;&amp; ...args) { std::cout &lt;&lt; &quot;call 2&quot;; }</code></pre><p>  调用<code>call([](){});</code>输出<em>call 1<em>，而不是</em>call 2</em></p>
-<p>  要输出<em>call 2</em>，函数调用时要显式将lambda参数转成std::function类型：</p>
-<pre><code>call(std::function&lt;void ()&gt;([](){}))</code></pre></li>
-</ul>
-</li>
+<pre><code>  template&lt;typename ...Args&gt;
+  void call(Args&amp;&amp; ...args) { std::cout &lt;&lt; &quot;call 1&quot;; }
+  template&lt;typename ...Args&gt;
+  void call(std::function&lt;void ()&gt;, Args&amp;&amp; ...args) { std::cout &lt;&lt; &quot;call 2&quot;; }</code></pre>
+<p>调用<code>call([](){});</code>输出<em>call 1</em>，而不是<em>call 2</em></p>
+<p>要输出<em>call 2</em>，函数调用时要显式将lambda参数转成std::function类型：</p>
+<pre><code>  call(std::function&lt;void ()&gt;([](){}))</code></pre></li>
+</ul></li>
 <li><p>range-based for:</p>
-<p>  遍历map:</p>
-<pre><code>for (auto&amp; kv : aMap) {
-    cout &lt;&lt; kv.first &lt;&lt; &quot; has value &quot; &lt;&lt; kv.second &lt;&lt; endl;
-} </code></pre><p>  非成员函数的<code>begin()</code>和<code>end()</code>：要定义在CustomClass所在的namespace中</p>
-</li>
-<li><p>取tuple中第i个元素：<code>std::get&lt;i&gt;(tuple)</code></p>
-</li>
+<p>遍历map:</p>
+<pre><code>  for (auto&amp; kv : aMap) {
+      cout &lt;&lt; kv.first &lt;&lt; &quot; has value &quot; &lt;&lt; kv.second &lt;&lt; endl;
+  } </code></pre>
+<p>非成员函数的<code>begin()</code>和<code>end()</code>：要定义在CustomClass所在的namespace中</p></li>
+<li><p>取tuple中第i个元素：<code>std::get&lt;i&gt;(tuple)</code></p></li>
 <li><p>string和number间互转：</p>
-<pre><code>string to_string(int val);
-string to_string(float val);
-…
-int stoi(const string&amp; str, size_t *idx=0, int base=10);
-float stof(const string&amp; str, size_t *idx=0);
-…</code></pre></li>
+<pre><code>  string to_string(int val);
+  string to_string(float val);
+  …
+  int stoi(const string&amp; str, size_t *idx=0, int base=10);
+  float stof(const string&amp; str, size_t *idx=0);
+  …</code></pre></li>
 <li><p>unique_ptr使用自定义deleter，例如：</p>
-<pre><code>template&lt;typename T&gt;
-using cc_unique_ptr = std::unique_ptr&lt;T, std::function&lt;void(void *)&gt;&gt;;
-template&lt;typename T&gt;
-cc_unique_ptr&lt;T&gt; make_unique(T *ptr) {
-    if (ptr) ptr-&gt;retain();
-    auto deleter = [](void *p) {
-        auto ptr = static_cast&lt;T *&gt;(p);
-        if (ptr) ptr-&gt;release();
-    };
-    return cc_unique_ptr&lt;T&gt;(ptr, deleter);
-}</code></pre></li>
-<li><p>为enum指定underlying type: <code>enum E : short { kValue1, kValue2, ... }</code>，然后可以使用forward declare: <code>enmu E : short;</code></p>
-</li>
+<pre><code>  template&lt;typename T&gt;
+  using cc_unique_ptr = std::unique_ptr&lt;T, std::function&lt;void(void *)&gt;&gt;;
+  template&lt;typename T&gt;
+  cc_unique_ptr&lt;T&gt; make_unique(T *ptr) {
+      if (ptr) ptr-&gt;retain();
+      auto deleter = [](void *p) {
+          auto ptr = static_cast&lt;T *&gt;(p);
+          if (ptr) ptr-&gt;release();
+      };
+      return cc_unique_ptr&lt;T&gt;(ptr, deleter);
+  }</code></pre></li>
+<li><p>为enum指定underlying type: <code>enum E : short { kValue1, kValue2, ... }</code>，然后可以使用forward declare: <code>enmu E : short;</code></p></li>
 <li><p>强类型enum用关键字<code>enum class</code>声明，其枚举值不会暴露在surrounding scope</p>
-<pre><code>enum class Options {None, One, All};
-Options o = Options::All;</code></pre></li>
-<li><p>可给函数方法添加后置标识符<code>override</code>（指明某函数重载父类函数）和<code>final</code>(指明某函数不能被子类重载)</p>
-</li>
-<li><p>支持正则表达式<code>&lt;regex&gt;</code></p>
-</li>
+<pre><code>  enum class Options {None, One, All};
+  Options o = Options::All;</code></pre></li>
+<li><p>可给函数方法添加后置标识符<code>override</code>（指明某函数重载父类函数）和<code>final</code>(指明某函数不能被子类重载)</p></li>
+<li><p>支持正则表达式<code>&lt;regex&gt;</code></p></li>
 </ul>
-<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><ul>
+<h3 id="参考">参考</h3>
+<ul>
 <li><a href="http://herbsutter.com/elements-of-modern-c-style/" target="_blank" rel="noopener">Elements of Modern C++ Style</a></li>
 <li><a href="http://www.stroustrup.com/C++11FAQ.html" target="_blank" rel="noopener">C++11 FAQ</a></li>
 <li><a href="http://gcc.gnu.org/projects/cxx0x.html" target="_blank" rel="noopener">C++11 Support in GCC</a></li>
@@ -1214,60 +1175,66 @@ Options o = Options::All;</code></pre></li>
 <li>设置memberVar，会在load过称中调用target的<code>onAssignCCBMemberVariable</code>，即target要实现<code>cocos2d::extension::CCBSelectorResolver</code></li>
 <li>设置menuItem的callback，会在load过称中调用target的<code>onResolveCCBCCMenuItemSelector</code>，即target要实现<code>cocos2d::extension::CCBSelectorResolver</code></li>
 </ul>
-<h4 id="Case-1：ccb中的CCLayer关联代码中的GameLayer"><a href="#Case-1：ccb中的CCLayer关联代码中的GameLayer" class="headerlink" title="Case 1：ccb中的CCLayer关联代码中的GameLayer"></a>Case 1：ccb中的CCLayer关联代码中的GameLayer</h4><ol>
-<li><p>ccb中CCLayer设置<em>Custom class<em>为</em>GameLayer</em></p>
-</li>
-<li><p>代码中为GameLayer添加loader类<code>class GameLayerLoader : public cocos2d::extension::CCLayerLoader</code>，为该loader实现<code>createCCNode()</code>方法。<br> 若在ccb中给该CCLayer设置了<em>custom property</em>，还得在loader类中实现相应的<code>onHandlePropTypeXXX()</code>方法。</p>
-</li>
+<h4 id="case-1ccb中的cclayer关联代码中的gamelayer">Case 1：ccb中的CCLayer关联代码中的GameLayer</h4>
+<ol type="1">
+<li><p>ccb中CCLayer设置<em>Custom class</em>为<em>GameLayer</em></p></li>
+<li><p>代码中为GameLayer添加loader类<code>class GameLayerLoader : public cocos2d::extension::CCLayerLoader</code>，为该loader实现<code>createCCNode()</code>方法。 若在ccb中给该CCLayer设置了<em>custom property</em>，还得在loader类中实现相应的<code>onHandlePropTypeXXX()</code>方法。</p></li>
 <li><p>在提供给CCBReader的CCNodeLoaderLibrary中注册loader对象</p>
-<pre><code>auto loaderLibrary = cocos2d::extension::CCNodeLoaderLibrary::newDefaultCCNodeLoaderLibrary();
-loaderLibrary-&gt;registerCCNodeLoader(“GameLayer”, nodeLoader);            </code></pre></li>
-<li><p>代码中可选实现<code>class GameLayer: public cocos2d::extension::CCNodeLoaderListener</code></p>
-</li>
+<pre><code> auto loaderLibrary = cocos2d::extension::CCNodeLoaderLibrary::newDefaultCCNodeLoaderLibrary();
+ loaderLibrary-&gt;registerCCNodeLoader(“GameLayer”, nodeLoader);            </code></pre></li>
+<li><p>代码中可选实现<code>class GameLayer: public cocos2d::extension::CCNodeLoaderListener</code></p></li>
 </ol>
-<p></p>
-* 该过称繁杂，可写[util函数](http://gist.github.com/4362371)，然后：
-
-<pre><code>    auto layer = ccb::layer&lt;GameLayer&gt;(/*init params*/);
-
-如GameLayer含*Custom Class*子类`CustomMenuItemImage`，可用：
-
-    auto loaderLibrary = ccb::defaultCCNodeLoaderLibrary&lt;GameLayer, CCLayerLoader&gt;();
-    ccb::registerCCNodeLoader&lt;CustomMenuItemImage, CCMenuItemImageLoader&gt;(loaderLibrary);
-    auto layer = ccb::layer&lt;GameLayer&gt;(loaderLibrary/*, other init params*/);</code></pre><h4 id="Case-2-ccb中的CCMenu关联代码GameLayer的buttonMenu"><a href="#Case-2-ccb中的CCMenu关联代码GameLayer的buttonMenu" class="headerlink" title="Case 2. ccb中的CCMenu关联代码GameLayer的buttonMenu"></a>Case 2. ccb中的CCMenu关联代码GameLayer的buttonMenu</h4><ol>
-<li><p>ccb中CMenu设置<em>Code connections<em>：选</em>Doc root var<em>填</em>memberVar</em>        </p>
-</li>
+<p>
+</p>
+<ul>
+<li><p>该过称繁杂，可写<a href="http://gist.github.com/4362371" target="_blank" rel="noopener">util函数</a>，然后：</p>
+<pre><code>  auto layer = ccb::layer&lt;GameLayer&gt;(/*init params*/);</code></pre>
+<p>如GameLayer含<em>Custom Class</em>子类<code>CustomMenuItemImage</code>，可用：</p>
+<pre><code>  auto loaderLibrary = ccb::defaultCCNodeLoaderLibrary&lt;GameLayer, CCLayerLoader&gt;();
+  ccb::registerCCNodeLoader&lt;CustomMenuItemImage, CCMenuItemImageLoader&gt;(loaderLibrary);
+  auto layer = ccb::layer&lt;GameLayer&gt;(loaderLibrary/*, other init params*/);</code></pre></li>
+</ul>
+<h4 id="case-2.-ccb中的ccmenu关联代码gamelayer的buttonmenu">Case 2. ccb中的CCMenu关联代码GameLayer的buttonMenu</h4>
+<ol type="1">
+<li><p>ccb中CMenu设置<em>Code connections</em>：选<em>Doc root var</em>填<em>memberVar</em><br />
+</p></li>
 <li><p>代码中<code>class GameLayer : public cocos2d::extension::CCBMemberVariableAssigner</code>，并实现：</p>
-<pre><code>bool onAssignCCBMemberVariable(cocos2d::CCObject * pTarget, cocos2d::CCString * pMemberVariableName, cocos2d::CCNode * pNode) {
-    CCB_MEMBERVARIABLEASSIGNER_GLUE(this, &quot;_buttonMenu&quot;, CCMenu *, _buttonMenu);
-    return false;
-}</code></pre><p></p>
-</li>
+<pre><code> bool onAssignCCBMemberVariable(cocos2d::CCObject * pTarget, cocos2d::CCString * pMemberVariableName, cocos2d::CCNode * pNode) {
+     CCB_MEMBERVARIABLEASSIGNER_GLUE(this, &quot;_buttonMenu&quot;, CCMenu *, _buttonMenu);
+     return false;
+ }</code></pre>
+<p>
+</p></li>
 </ol>
 <ul>
 <li><p>可定义简化宏：</p>
-<pre><code>#define CCB_MEMBER_VAR(__TYPE__, __VAR__) CCB_MEMBERVARIABLEASSIGNER_GLUE(this, #__VAR__, __TYPE__, __VAR__) </code></pre><p>  然后<code>onAssignCCBMemberVariable()</code>中可写</p>
-<pre><code>CCB_MEMBER_VAR(CCMenu *, _buttonMenu);</code></pre></li>
+<pre><code>  #define CCB_MEMBER_VAR(__TYPE__, __VAR__) CCB_MEMBERVARIABLEASSIGNER_GLUE(this, #__VAR__, __TYPE__, __VAR__) </code></pre>
+<p>然后<code>onAssignCCBMemberVariable()</code>中可写</p>
+<pre><code>  CCB_MEMBER_VAR(CCMenu *, _buttonMenu);</code></pre></li>
 </ul>
-<h4 id="Case-3：ccb中CCMenuItem调用代码GameLayer的buttonCallback"><a href="#Case-3：ccb中CCMenuItem调用代码GameLayer的buttonCallback" class="headerlink" title="Case 3：ccb中CCMenuItem调用代码GameLayer的buttonCallback"></a>Case 3：ccb中CCMenuItem调用代码GameLayer的buttonCallback</h4><ol>
-<li><p>ccb中的CCMenuItem设置：<em>selector<em>为</em>buttonCallback<em>，</em>Target<em>为</em>Document root</em></p>
-</li>
+<h4 id="case-3ccb中ccmenuitem调用代码gamelayer的buttoncallback">Case 3：ccb中CCMenuItem调用代码GameLayer的buttonCallback</h4>
+<ol type="1">
+<li><p>ccb中的CCMenuItem设置：<em>selector</em>为<em>buttonCallback</em>，<em>Target</em>为<em>Document root</em></p></li>
 <li><p>代码中<code>class GameLayer : public cocos2d::extension::CCBSelectorResolver</code>，并实现：</p>
-<pre><code>cocos2d::SEL_MenuHandler onResolveCCBCCMenuItemSelector(cocos2d::CCObject * pTarget, cocos2d::CCString * pSelectorName) {
-    CCB_SELECTORRESOLVER_CCMENUITEM_GLUE(this, &quot;buttonCallback&quot;, GameLayer::backButtonCallback);
-    return NULL;
-}
-cocos2d::extension::SEL_CCControlHandler onResolveCCBCCControlSelector(cocos2d::CCObject * pTarget, cocos2d::CCString * pSelectorName) {
-    return NULL;
-};</code></pre><p></p></li>
+<pre><code> cocos2d::SEL_MenuHandler onResolveCCBCCMenuItemSelector(cocos2d::CCObject * pTarget, cocos2d::CCString * pSelectorName) {
+     CCB_SELECTORRESOLVER_CCMENUITEM_GLUE(this, &quot;buttonCallback&quot;, GameLayer::backButtonCallback);
+     return NULL;
+ }
+ cocos2d::extension::SEL_CCControlHandler onResolveCCBCCControlSelector(cocos2d::CCObject * pTarget, cocos2d::CCString * pSelectorName) {
+     return NULL;
+ };</code></pre>
+<p>
+</p></li>
 </ol>
 <ul>
 <li><p>可定义简化宏：</p>
-<pre><code>#define CCB_CCMENUITEM_SELECTOR(__CLASS__, __FUNC__) CCB_SELECTORRESOLVER_CCMENUITEM_GLUE(this, #__FUNC__, __CLASS__::__FUNC__)
-#define CCB_CCCONTROL_SELECTOR(__CLASS__, __FUNC__) CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, #__FUNC__, __CLASS__::__FUNC__)  </code></pre><p>  然后<code>onResolveCCBCCMenuItemSelector()</code>中可写</p>
-<pre><code>CCB_CCMENUITEM_SELECTOR(GameLayer, backButtonCallback);</code></pre></li>
+<pre><code>  #define CCB_CCMENUITEM_SELECTOR(__CLASS__, __FUNC__) CCB_SELECTORRESOLVER_CCMENUITEM_GLUE(this, #__FUNC__, __CLASS__::__FUNC__)
+  #define CCB_CCCONTROL_SELECTOR(__CLASS__, __FUNC__) CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, #__FUNC__, __CLASS__::__FUNC__)  </code></pre>
+<p>然后<code>onResolveCCBCCMenuItemSelector()</code>中可写</p>
+<pre><code>  CCB_CCMENUITEM_SELECTOR(GameLayer, backButtonCallback);</code></pre></li>
 </ul>
-<h4 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h4><ul>
+<h4 id="参考">参考</h4>
+<ul>
 <li><a href="http://code.zynga.com/2012/10/creating-a-game-with-cocosbuilder/" target="_blank" rel="noopener">Creating a Game with CocosBuilder</a></li>
 <li><a href="http://www.plungeinteractive.com/blog/using-cocosbuilder-on-cocos2d-x-games/" target="_blank" rel="noopener">Using CocosBuilder on Cocos2D-X games</a></li>
 </ul>

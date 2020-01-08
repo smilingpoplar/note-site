@@ -41,12 +41,12 @@
   <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.1" />
 
 
-<meta name="description" content="共享common代码api端和client端要共享某些代码（如utils函数、数据库schema等），可以把这些代码打包成本地npm包：  在代码目录下定义package.json  123456&amp;#123;  &quot;name&quot;: &quot;foo&quot;,  &quot;version&quot;: &quot;1.0.0&quot;,  &quot;dependencies&quot;: &amp;#123; ... &amp;#125;,  &quot;devDependencies&quot;: &amp;#">
+<meta name="description" content="共享common代码 api端和client端要共享某些代码（如utils函数、数据库schema等），可以把这些代码打包成本地npm包：  在代码目录下定义package.json 123456&amp;#123;  &quot;name&quot;: &quot;foo&quot;,  &quot;version&quot;: &quot;1.0.0&quot;,  &quot;dependencies&quot;: &amp;#123; ... &amp;#125;,  &quot;devDependencies&quot;: &amp;#">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Node项目笔记">
 <meta property="og:url" content="http://note.49px.com/node-project/index.html">
 <meta property="og:site_name" content="Dev Note">
-<meta property="og:description" content="共享common代码api端和client端要共享某些代码（如utils函数、数据库schema等），可以把这些代码打包成本地npm包：  在代码目录下定义package.json  123456&amp;#123;  &quot;name&quot;: &quot;foo&quot;,  &quot;version&quot;: &quot;1.0.0&quot;,  &quot;dependencies&quot;: &amp;#123; ... &amp;#125;,  &quot;devDependencies&quot;: &amp;#">
+<meta property="og:description" content="共享common代码 api端和client端要共享某些代码（如utils函数、数据库schema等），可以把这些代码打包成本地npm包：  在代码目录下定义package.json 123456&amp;#123;  &quot;name&quot;: &quot;foo&quot;,  &quot;version&quot;: &quot;1.0.0&quot;,  &quot;dependencies&quot;: &amp;#123; ... &amp;#125;,  &quot;devDependencies&quot;: &amp;#">
 <meta property="article:published_time" content="2016-07-26T16:00:00.000Z">
 <meta property="article:modified_time" content="2016-08-08T03:02:50.000Z">
 <meta property="article:author" content="Yang Le">
@@ -195,18 +195,15 @@
       
 
       
-        <span itemprop="articleBody"><h4 id="共享common代码"><a href="#共享common代码" class="headerlink" title="共享common代码"></a>共享common代码</h4><p>api端和client端要共享某些代码（如utils函数、数据库schema等），可以把这些代码打包成本地npm包：</p>
-<ol>
-<li><p>在代码目录下定义<code>package.json</code> </p>
-<figure class="highlight clojure"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="string">"name"</span>: <span class="string">"foo"</span>,</span><br><span class="line">  <span class="string">"version"</span>: <span class="string">"1.0.0"</span>,</span><br><span class="line">  <span class="string">"dependencies"</span>: &#123; ... &#125;,</span><br><span class="line">  <span class="string">"devDependencies"</span>: &#123; ... &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
+        <span itemprop="articleBody"><h4 id="共享common代码">共享common代码</h4>
+<p>api端和client端要共享某些代码（如utils函数、数据库schema等），可以把这些代码打包成本地npm包：</p>
+<ol type="1">
+<li><p>在代码目录下定义<code>package.json</code></p>
+<figure class="highlight clojure"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="string">"name"</span>: <span class="string">"foo"</span>,</span><br><span class="line">  <span class="string">"version"</span>: <span class="string">"1.0.0"</span>,</span><br><span class="line">  <span class="string">"dependencies"</span>: &#123; ... &#125;,</span><br><span class="line">  <span class="string">"devDependencies"</span>: &#123; ... &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
 <li><p>用babel将es6编译成es5，拷贝<code>package.json</code>到生成的<code>lib/</code>目录，然后在<code>lib/</code>中打包</p>
-<figure class="highlight crystal"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/bin/sh </span></span><br><span class="line">rm -fr <span class="class"><span class="keyword">lib</span>/ &amp;&amp; <span class="title">babel</span> -<span class="title">d</span> <span class="title">lib</span>/ <span class="title">src</span>/</span></span><br><span class="line">cp package.json <span class="class"><span class="keyword">lib</span>/</span></span><br><span class="line">(cd <span class="class"><span class="keyword">lib</span>/ &amp;&amp; <span class="title">npm</span> <span class="title">pack</span>)</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>在<code>lib</code>目录下用<code>npm pack</code>将目录打包成<code>tgz</code>文件，比如你在<code>package.json</code>中设置包名为<code>foo</code>版本为<code>1.0.0</code>，则会生成<code>foo-1.0.0.tgz</code>。还可以通过<code>tar -tf foo-1.0.0.tgz</code>来查看包中内容。</p>
-</li>
-<li><p><code>npm install /path/to/foo-1.0.0.tgz</code></p>
-</li>
+<figure class="highlight crystal"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/bin/sh </span></span><br><span class="line">rm -fr <span class="class"><span class="keyword">lib</span>/ &amp;&amp; <span class="title">babel</span> -<span class="title">d</span> <span class="title">lib</span>/ <span class="title">src</span>/</span></span><br><span class="line">cp package.json <span class="class"><span class="keyword">lib</span>/</span></span><br><span class="line">(cd <span class="class"><span class="keyword">lib</span>/ &amp;&amp; <span class="title">npm</span> <span class="title">pack</span>)</span></span><br></pre></td></tr></table></figure></li>
+<li><p>在<code>lib</code>目录下用<code>npm pack</code>将目录打包成<code>tgz</code>文件，比如你在<code>package.json</code>中设置包名为<code>foo</code>版本为<code>1.0.0</code>，则会生成<code>foo-1.0.0.tgz</code>。还可以通过<code>tar -tf foo-1.0.0.tgz</code>来查看包中内容。</p></li>
+<li><p><code>npm install /path/to/foo-1.0.0.tgz</code></p></li>
 </ol>
 </span>
       

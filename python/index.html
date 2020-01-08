@@ -198,11 +198,11 @@
         <span itemprop="articleBody"><p>python中的<code>yield</code>将function变成generator（一种iterator），用于多次调用生成一系列值（一次调用生成系列值中的一个）。<code>yield</code>作用类似于<code>return</code>，但只是放弃（yield）执行权，函数内部状态（变量和执行情况）保持不变。</p>
 <p>参考：<a href="http://www.jeffknupp.com/blog/2013/04/07/improve-your-python-yield-and-generators-explained/" target="_blank" rel="noopener">‘yield’ and Generators Explained</a></p>
 <p>注：ruby中的<code>yield</code>类似拉环，拉出函数附带的block来执行。</p>
-<hr>
+<hr />
 <p>若在.sh文件里执行python脚本报<code>ImportError</code>错，而在shell里直接执行没问题，要设置在.sh里export PYTHONPATH，如：</p>
 <figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="builtin-name">export</span> <span class="attribute">PYTHONPATH</span>=/usr/local/lib/python2.7/site-packages:$PYTHONPATH</span><br></pre></td></tr></table></figure>
-
-<h2 id="Unicode"><a href="#Unicode" class="headerlink" title="Unicode"></a>Unicode</h2><p>用<code>type()</code>查看变量是’unicode‘还是’str’，<code>unicode(str, &#39;utf-8&#39;)</code>返回str的utf-8表示</p>
+<h2 id="unicode">Unicode</h2>
+<p>用<code>type()</code>查看变量是’unicode‘还是’str’，<code>unicode(str, 'utf-8')</code>返回str的utf-8表示</p>
 <p>注音字母的Unicode有两种<a href="http://en.wikipedia.org/wiki/Unicode_equivalence" target="_blank" rel="noopener">等价形式</a>：</p>
 <ul>
 <li>标着注音的字母（即composed形式）: 又分canonical的<code>NFC</code>和compatable的<code>NFKC</code></li>
@@ -210,18 +210,16 @@
 </ul>
 <p>用<code>unicodedata</code>库来normalize</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"><span class="keyword">import</span> unicodedata</span><br><span class="line"> </span><br><span class="line">data = <span class="string">u'naïve café'</span></span><br><span class="line">normal = unicodedata.normalize(<span class="string">'NFKD'</span>, data).encode(<span class="string">'ASCII'</span>, <span class="string">'ignore'</span>)</span><br><span class="line"><span class="keyword">print</span> normal</span><br><span class="line"> </span><br><span class="line"><span class="comment"># prints "naive cafe"</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="scrapy"><a href="#scrapy" class="headerlink" title="scrapy"></a>scrapy</h2><ul>
-<li><p><a href="http://philipcodings.com/post/recursively-crawling-a-website-with-python-and-scrapy" target="_blank" rel="noopener">recursively crawling a website with Python and Scrapy</a></p>
-</li>
-<li><p>页面解析用<a href="https://github.com/gawel/pyquery" target="_blank" rel="noopener">pyquery</a>（内部使用lxml）</p>
-</li>
+<h2 id="scrapy">scrapy</h2>
+<ul>
+<li><p><a href="http://philipcodings.com/post/recursively-crawling-a-website-with-python-and-scrapy" target="_blank" rel="noopener">recursively crawling a website with Python and Scrapy</a></p></li>
+<li><p>页面解析用<a href="https://github.com/gawel/pyquery" target="_blank" rel="noopener">pyquery</a>（内部使用lxml）</p></li>
 <li><p>解析js：</p>
-  <figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">from</span> <span class="keyword">selenium </span><span class="meta">import</span> webdriver</span><br><span class="line"><span class="keyword">browser </span>= webdriver.PhantomJS()</span><br><span class="line"><span class="keyword">browser.get(url)</span></span><br><span class="line"><span class="keyword">print </span><span class="keyword">browser.page_source</span></span><br><span class="line"><span class="keyword">browser.quit</span></span><br></pre></td></tr></table></figure></li>
-<li><p>downloader下载url，spider解析Item，pipeline对Item做后续处理</p>
-</li>
+<p><figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">from</span> <span class="keyword">selenium </span><span class="meta">import</span> webdriver</span><br><span class="line"><span class="keyword">browser </span>= webdriver.PhantomJS()</span><br><span class="line"><span class="keyword">browser.get(url)</span></span><br><span class="line"><span class="keyword">print </span><span class="keyword">browser.page_source</span></span><br><span class="line"><span class="keyword">browser.quit</span></span><br></pre></td></tr></table></figure></p></li>
+<li><p>downloader下载url，spider解析Item，pipeline对Item做后续处理</p></li>
 </ul>
-<h2 id="twisted"><a href="#twisted" class="headerlink" title="twisted"></a>twisted</h2><ul>
+<h2 id="twisted">twisted</h2>
+<ul>
 <li><a href="http://krondo.com/blog/?page_id=1327" target="_blank" rel="noopener">Dave的Twisted入门</a>（<a href="http://blog.sina.com.cn/s/blog_704b6af70100py9n.html" target="_blank" rel="noopener">中文翻译</a>）</li>
 </ul>
 </span>
@@ -362,7 +360,7 @@
           <div class="post-toc">
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Unicode"><span class="nav-number">1.</span> <span class="nav-text">Unicode</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#scrapy"><span class="nav-number">2.</span> <span class="nav-text">scrapy</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#twisted"><span class="nav-number">3.</span> <span class="nav-text">twisted</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#unicode"><span class="nav-number">1.</span> <span class="nav-text">Unicode</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#scrapy"><span class="nav-number">2.</span> <span class="nav-text">scrapy</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#twisted"><span class="nav-number">3.</span> <span class="nav-text">twisted</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>

@@ -41,12 +41,12 @@
   <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.1" />
 
 
-<meta name="description" content="sting interpolation: &quot;#{var_name}&quot;  双引号&quot;&quot;转义其中的内容，单引号‘’不转义   symbol是种不可变串，全局只创建一份，因此创建和比较等性能更高  :&quot;hello&quot;等同于:hello symbol和string互转使用：:hello.to_s和&quot;hello&quot;.intern">
+<meta name="description" content="sting interpolation: &quot;#{var_name}&quot;  双引号&quot;&quot;转义其中的内容，单引号‘’不转义  symbol是种不可变串，全局只创建一份，因此创建和比较等性能更高  :&quot;hello&quot;等同于:hello symbol和string互转使用：:hello.to_s和&quot;hello&quot;.intern  函数中的yield(...)会调用函数调用时提供的block，相当于把函数的一部分">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Ruby笔记">
 <meta property="og:url" content="http://note.49px.com/ruby/index.html">
 <meta property="og:site_name" content="Dev Note">
-<meta property="og:description" content="sting interpolation: &quot;#{var_name}&quot;  双引号&quot;&quot;转义其中的内容，单引号‘’不转义   symbol是种不可变串，全局只创建一份，因此创建和比较等性能更高  :&quot;hello&quot;等同于:hello symbol和string互转使用：:hello.to_s和&quot;hello&quot;.intern">
+<meta property="og:description" content="sting interpolation: &quot;#{var_name}&quot;  双引号&quot;&quot;转义其中的内容，单引号‘’不转义  symbol是种不可变串，全局只创建一份，因此创建和比较等性能更高  :&quot;hello&quot;等同于:hello symbol和string互转使用：:hello.to_s和&quot;hello&quot;.intern  函数中的yield(...)会调用函数调用时提供的block，相当于把函数的一部分">
 <meta property="article:published_time" content="2012-11-14T16:00:00.000Z">
 <meta property="article:modified_time" content="2015-09-12T12:12:00.000Z">
 <meta property="article:author" content="Yang Le">
@@ -196,32 +196,31 @@
 
       
         <span itemprop="articleBody"><ul>
-<li><p>sting interpolation: <code>&quot;#{var_name}&quot;</code></p>
+<li>sting interpolation: <code>"#{var_name}"</code>
 <ul>
-<li>双引号<code>&quot;&quot;</code>转义其中的内容，单引号<code>‘’</code>不转义</li>
-</ul>
-</li>
-<li><p>symbol是种不可变串，全局只创建一份，因此创建和比较等性能更高</p>
+<li>双引号<code>""</code>转义其中的内容，单引号<code>‘’</code>不转义</li>
+</ul></li>
+<li>symbol是种不可变串，全局只创建一份，因此创建和比较等性能更高
 <ul>
-<li><code>:&quot;hello&quot;</code>等同于<code>:hello</code></li>
-<li>symbol和string互转使用：<code>:hello.to_s</code>和<code>&quot;hello&quot;.intern</code></li>
-</ul>
-</li>
-<li><p>函数中的<code>yield(...)</code>会调用<em>函数调用时提供</em>的block，相当于把函数的一部分功能委派给这个未来的block，相当于函数多了一个叫yield的block参数</p>
+<li><code>:"hello"</code>等同于<code>:hello</code></li>
+<li>symbol和string互转使用：<code>:hello.to_s</code>和<code>"hello".intern</code></li>
+</ul></li>
+<li>函数中的<code>yield(...)</code>会调用<em>函数调用时提供</em>的block，相当于把函数的一部分功能委派给这个未来的block，相当于函数多了一个叫yield的block参数
 <ul>
 <li>如果这个block参数是可选的，函数中要用<code>yield(…) if block_given?</code></li>
+</ul></li>
+<li>将01串表示的二进制转成字节数组： <code>['1100110011'].pack('B*').unpack('C*')</code><br />
+参见：<a href="http://www.codeweblog.com/ruby-string-pack-unpack-detailed-usage/" target="_blank" rel="noopener">string的pack和unpack</a></li>
 </ul>
-</li>
-<li><p>将01串表示的二进制转成字节数组：<br><code>[&#39;1100110011&#39;].pack(&#39;B*&#39;).unpack(&#39;C*&#39;)</code><br>参见：<a href="http://www.codeweblog.com/ruby-string-pack-unpack-detailed-usage/" target="_blank" rel="noopener">string的pack和unpack</a></p>
-</li>
-</ul>
-<h2 id="nokogiri"><a href="#nokogiri" class="headerlink" title="nokogiri"></a>nokogiri</h2><ul>
-<li>取节点属性<code>node[&#39;attr-name&#39;]</code>，取某子节点内容<code>node.at_xpath(&#39;elem-name&#39;).text</code><ul>
+<h2 id="nokogiri">nokogiri</h2>
+<ul>
+<li>取节点属性<code>node['attr-name']</code>，取某子节点内容<code>node.at_xpath('elem-name').text</code>
+<ul>
 <li>方法<code>.at_xpath()</code>返回第一个节点，<code>.xpath()</code>返回节点数组</li>
+</ul></li>
 </ul>
-</li>
-</ul>
-<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><ul>
+<h3 id="参考">参考</h3>
+<ul>
 <li><a href="http://www.58bits.com/blog/2012/06/13/getting-started-nokogiri-xml-ruby/" target="_blank" rel="noopener">getting started with nokogori and xml in ruby</a></li>
 </ul>
 </span>

@@ -199,31 +199,35 @@
 <p>标准的css注释<code>/* comment */</code>编译后保留，单行注释<code>// comment</code>编译后忽略</p>
 <p>用<code>@import</code>引入外部文件</p>
 <p><code>%</code>开头的选择器是<code>placeholder selector</code>，编译后忽略</p>
-<p>mixin类似宏，是可重用的代码块，可以指定参数和默认值；用<code>@mixin</code>定义，用<code>@include</code>引用。用<code>@extend</code>继承css类，编译后会在父选择器声明处添上子选择器名。应该多用组合（@mixin）少用继承（@extend），只有当selector间确实存在继承关系时才用继承。</p>
-<h4 id="嵌套selectors"><a href="#嵌套selectors" class="headerlink" title="嵌套selectors"></a>嵌套selectors</h4><p>默认由空格拼接外内selector名</p>
+<p>mixin类似宏，是可重用的代码块，可以指定参数和默认值；用<code>@mixin</code>定义，用<code>@include</code>引用。用<code>@extend</code>继承css类，编译后会在父选择器声明处添上子选择器名。应该多用组合（<span class="citation" data-cites="mixin">@mixin</span>）少用继承（<span class="citation" data-cites="extend">@extend</span>），只有当selector间确实存在继承关系时才用继承。</p>
+<h4 id="嵌套selectors">嵌套selectors</h4>
+<p>默认由空格拼接外内selector名</p>
 <figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">.item</span> &#123;</span><br><span class="line">  &gt; <span class="string">.item-name</span> &#123; <span class="string">...</span> &#125;    =&gt;    <span class="string">.item</span> &gt; <span class="string">.item-name</span> &#123; <span class="string">...</span> &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
 <p>使用<code>&amp;</code>则直接引用该selector名</p>
 <figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">.item</span> &#123;</span><br><span class="line">  &amp;-name &#123; <span class="string">...</span> &#125;    =&gt;    <span class="string">.item-name</span> &#123; <span class="string">...</span> &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h4 id="编译bootstrap"><a href="#编译bootstrap" class="headerlink" title="编译bootstrap"></a>编译bootstrap</h4><h5 id="定制bootstrap"><a href="#定制bootstrap" class="headerlink" title="定制bootstrap"></a>定制bootstrap</h5><p>v3版用bootstrap-sass（<code>npm install bootstrap-sass</code>），先拷贝<code>assets/stylesheets/bootstrap/_variables.scss</code>成<code>_customVariables.scss</code>，再引用bootstrap，最后再引用其他自定义的样式</p>
+<h4 id="编译bootstrap">编译bootstrap</h4>
+<h5 id="定制bootstrap">定制bootstrap</h5>
+<p>v3版用bootstrap-sass（<code>npm install bootstrap-sass</code>），先拷贝<code>assets/stylesheets/bootstrap/_variables.scss</code>成<code>_customVariables.scss</code>，再引用bootstrap，最后再引用其他自定义的样式</p>
 <figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">@import</span> <span class="string">'customVariables'</span>;</span><br><span class="line"><span class="keyword">@import</span> <span class="string">'path-to-bootstrap-sass/assets/stylesheets/bootstrap'</span>;</span><br><span class="line"><span class="keyword">@import</span> <span class="string">'otherCustomStyles'</span>;</span><br></pre></td></tr></table></figure>
-
 <p>可使用<code>path-to-bootstrap-sass/assets/stylesheets/bootstrap/mixins/</code>中的<code>@mixin</code>，如<code>make-row()</code>、<code>make-*-column()</code>、<code>button-variant()</code>等</p>
-<h5 id="webpack打包"><a href="#webpack打包" class="headerlink" title="webpack打包"></a>webpack打包</h5><p><code>webpack</code>中使用<a href="https://github.com/shakacode/bootstrap-loader" target="_blank" rel="noopener">bootstrap-loader</a>打包bootstrap，配置jQuery时先<code>npm install jquery</code>，然后用说明中的<code>imports-loader</code>，或者用<code>new webpack.ProvidePlugin({ jQuery: &#39;jquery&#39; })</code></p>
-<h4 id="工具"><a href="#工具" class="headerlink" title="工具"></a>工具</h4><p>用<a href="https://incident57.com/codekit/" target="_blank" rel="noopener">CodeKit</a>来自动编译scss，并实时刷新页面</p>
-<h4 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h4><ul>
+<h5 id="webpack打包">webpack打包</h5>
+<p><code>webpack</code>中使用<a href="https://github.com/shakacode/bootstrap-loader" target="_blank" rel="noopener">bootstrap-loader</a>打包bootstrap，配置jQuery时先<code>npm install jquery</code>，然后用说明中的<code>imports-loader</code>，或者用<code>new webpack.ProvidePlugin({ jQuery: 'jquery' })</code></p>
+<h4 id="工具">工具</h4>
+<p>用<a href="https://incident57.com/codekit/" target="_blank" rel="noopener">CodeKit</a>来自动编译scss，并实时刷新页面</p>
+<h4 id="参考">参考</h4>
+<ul>
 <li><a href="http://www.ruanyifeng.com/blog/2012/06/sass.html" target="_blank" rel="noopener">SASS用法指南</a></li>
 <li><a href="https://www.psd2html.com/blog/customize-bootstrap-grid-with-sass.html" target="_blank" rel="noopener">How to Customize Bootstrap Grid with Sass</a></li>
 </ul>
-<hr>
-<h3 id="另：less语法"><a href="#另：less语法" class="headerlink" title="另：less语法"></a>另：less语法</h3><p>变量以<code>@</code>开头，如@var，定义和使用都是@var</p>
+<hr />
+<h3 id="另less语法">另：less语法</h3>
+<p>变量以<code>@</code>开头，如@var，定义和使用都是@var</p>
 <p>mixin定义时形如<code>.mixin-name(@param1: default1, ...)</code>，使用时形如<code>.minxin-name(...)</code></p>
 <p>嵌套selectors，与sass相同</p>
-<h4 id="参考-1"><a href="#参考-1" class="headerlink" title="参考"></a>参考</h4><ul>
+<h4 id="参考-1">参考</h4>
+<ul>
 <li><p><a href="http://www.bootcss.com/p/lesscss/" target="_blank" rel="noopener">LESS « 一种动态样式语言</a></p>
-<p>​</p>
-</li>
+<p>​</p></li>
 </ul>
 </span>
       
@@ -363,7 +367,7 @@
           <div class="post-toc">
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#嵌套selectors"><span class="nav-number">1.</span> <span class="nav-text">嵌套selectors</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#编译bootstrap"><span class="nav-number">2.</span> <span class="nav-text">编译bootstrap</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#定制bootstrap"><span class="nav-number">2.1.</span> <span class="nav-text">定制bootstrap</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#webpack打包"><span class="nav-number">2.2.</span> <span class="nav-text">webpack打包</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#工具"><span class="nav-number">3.</span> <span class="nav-text">工具</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#参考"><span class="nav-number">4.</span> <span class="nav-text">参考</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#另：less语法"><span class="nav-number"></span> <span class="nav-text">另：less语法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#参考-1"><span class="nav-number">1.</span> <span class="nav-text">参考</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#嵌套selectors"><span class="nav-number">1.</span> <span class="nav-text">嵌套selectors</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#编译bootstrap"><span class="nav-number">2.</span> <span class="nav-text">编译bootstrap</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#定制bootstrap"><span class="nav-number">2.1.</span> <span class="nav-text">定制bootstrap</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#webpack打包"><span class="nav-number">2.2.</span> <span class="nav-text">webpack打包</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#工具"><span class="nav-number">3.</span> <span class="nav-text">工具</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#参考"><span class="nav-number">4.</span> <span class="nav-text">参考</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#另less语法"><span class="nav-number"></span> <span class="nav-text">另：less语法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#参考-1"><span class="nav-number">1.</span> <span class="nav-text">参考</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>

@@ -41,12 +41,12 @@
   <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.1" />
 
 
-<meta name="description" content="计算二进制中1的个数   实质是求该二进制数与0的hamming距离，详见wiki。其分治解法 按位分片 统计1的个数： count 1s in each  2-bit piece count 1s in each  4-bit piece count 1s in each  8-bit piece count 1s in each 16-bit piece count 1s in each 3">
+<meta name="description" content="计算二进制中1的个数 实质是求该二进制数与0的hamming距离，详见wiki。其分治解法 按位分片 统计1的个数：   count 1s in each  2-bit piece   count 1s in each  4-bit piece   count 1s in each  8-bit piece   count 1s in each 16-bit piece   count 1s i">
 <meta property="og:type" content="article">
 <meta property="og:title" content="位操作">
 <meta property="og:url" content="http://note.49px.com/bit/index.html">
 <meta property="og:site_name" content="Dev Note">
-<meta property="og:description" content="计算二进制中1的个数   实质是求该二进制数与0的hamming距离，详见wiki。其分治解法 按位分片 统计1的个数： count 1s in each  2-bit piece count 1s in each  4-bit piece count 1s in each  8-bit piece count 1s in each 16-bit piece count 1s in each 3">
+<meta property="og:description" content="计算二进制中1的个数 实质是求该二进制数与0的hamming距离，详见wiki。其分治解法 按位分片 统计1的个数：   count 1s in each  2-bit piece   count 1s in each  4-bit piece   count 1s in each  8-bit piece   count 1s in each 16-bit piece   count 1s i">
 <meta property="article:published_time" content="2012-12-19T16:00:00.000Z">
 <meta property="article:modified_time" content="2015-09-12T12:07:28.000Z">
 <meta property="article:author" content="Yang Le">
@@ -197,89 +197,89 @@
       
         <span itemprop="articleBody"><ul>
 <li><p>计算二进制中1的个数</p>
-<p>  实质是求该二进制数与0的hamming距离，详见<a href="http://en.wikipedia.org/wiki/Hamming_weight" target="_blank" rel="noopener">wiki</a>。其分治解法 <strong>按位分片</strong> 统计1的个数：</p>
-<pre><code>count 1s in each  2-bit piece
-count 1s in each  4-bit piece
-count 1s in each  8-bit piece
-count 1s in each 16-bit piece
-count 1s in each 32-bit piece</code></pre><p>  The best solutions known are based on adding counts in a tree pattern.</p>
-<pre><code>/*
- * For example, to count the number of 1 bits in the 8-bit binary number A=01101100
- * | Expression            | Binary   | Decimal | Comment                          |
- * | A                     | 01101100 |         | the original number              |
- * | B = A &amp; 01010101      | 01000100 | 1,0,1,0 | every other bit from A           |
- * | C = (A&gt;&gt;1) &amp; 01010101 | 00010100 | 0,1,1,0 | remaining bits from A            |
- * | D = B + C             | 01011000 | 1,1,2,0 | # of 1s in each 2-bit piece of A | 
- * | E = D &amp; 00110011      | 00010000 | 1,0     | every other count from D         |
- * | F = (D&gt;&gt;2) &amp; 00110011 | 00010010 | 1,2     | remaining counts from D          |
- * | G = E + F             | 00100010 | 2,2     | # of 1s in each 4-bit piece of A |
- * | H = G &amp; 00001111      | 00000010 | 2       | every other count from G         |
- * | I = (G&gt;&gt;4) &amp; 00001111 | 00000010 | 2       | remaining counts from G          |
- * | J = H + I             | 00000100 | 4       | the final answer                 |
+<p>实质是求该二进制数与0的hamming距离，详见<a href="http://en.wikipedia.org/wiki/Hamming_weight" target="_blank" rel="noopener">wiki</a>。其分治解法 <strong>按位分片</strong> 统计1的个数：</p>
+<pre><code>  count 1s in each  2-bit piece
+  count 1s in each  4-bit piece
+  count 1s in each  8-bit piece
+  count 1s in each 16-bit piece
+  count 1s in each 32-bit piece</code></pre>
+<p>The best solutions known are based on adding counts in a tree pattern.</p>
+<pre><code>  /*
+   * For example, to count the number of 1 bits in the 8-bit binary number A=01101100
+   * | Expression            | Binary   | Decimal | Comment                          |
+   * | A                     | 01101100 |         | the original number              |
+   * | B = A &amp; 01010101      | 01000100 | 1,0,1,0 | every other bit from A           |
+   * | C = (A&gt;&gt;1) &amp; 01010101 | 00010100 | 0,1,1,0 | remaining bits from A            |
+   * | D = B + C             | 01011000 | 1,1,2,0 | # of 1s in each 2-bit piece of A | 
+   * | E = D &amp; 00110011      | 00010000 | 1,0     | every other count from D         |
+   * | F = (D&gt;&gt;2) &amp; 00110011 | 00010010 | 1,2     | remaining counts from D          |
+   * | G = E + F             | 00100010 | 2,2     | # of 1s in each 4-bit piece of A |
+   * | H = G &amp; 00001111      | 00000010 | 2       | every other count from G         |
+   * | I = (G&gt;&gt;4) &amp; 00001111 | 00000010 | 2       | remaining counts from G          |
+   * | J = H + I             | 00000100 | 4       | the final answer                 |
 
-typedef unsigned int uint32;
-const uint32 m1  = 0x55555555; //binary: 0101...
-const uint32 m2  = 0x33333333; //binary: 00110011..
-const uint32 m4  = 0x0f0f0f0f; //binary: 0000111100001111..
-const uint32 m8  = 0x00ff00ff; //binary: 00000000111111110000000011111111
-const uint32 m16 = 0x0000ffff; //binary: 00000000000000001111111111111111
+  typedef unsigned int uint32;
+  const uint32 m1  = 0x55555555; //binary: 0101...
+  const uint32 m2  = 0x33333333; //binary: 00110011..
+  const uint32 m4  = 0x0f0f0f0f; //binary: 0000111100001111..
+  const uint32 m8  = 0x00ff00ff; //binary: 00000000111111110000000011111111
+  const uint32 m16 = 0x0000ffff; //binary: 00000000000000001111111111111111
 
-int population_count(uint32 x) {
-    x = (x &amp; m1 ) + ((x &gt;&gt;  1) &amp; m1 ); //put count of each  2 bits into those  2 bits 
-    x = (x &amp; m2 ) + ((x &gt;&gt;  2) &amp; m2 ); //put count of each  4 bits into those  4 bits 
-    x = (x &amp; m4 ) + ((x &gt;&gt;  4) &amp; m4 ); //put count of each  8 bits into those  8 bits 
-    x = (x &amp; m8 ) + ((x &gt;&gt;  8) &amp; m8 ); //put count of each 16 bits into those 16 bits 
-    x = (x &amp; m16) + ((x &gt;&gt; 16) &amp; m16); //put count of each 32 bits into those 32 bits 
-    return x;
-}</code></pre><p>  平时常见的解法：</p>
-<p>  This better when most bits in x are 0.</p>
-<pre><code>int population_count(uint32 x) {
-    int count;
-    for (count = 0; x; count++) {
-       x &amp;= x-1; // zero out the least significant bit
-    }
-    return count;
-}</code></pre></li>
+  int population_count(uint32 x) {
+      x = (x &amp; m1 ) + ((x &gt;&gt;  1) &amp; m1 ); //put count of each  2 bits into those  2 bits 
+      x = (x &amp; m2 ) + ((x &gt;&gt;  2) &amp; m2 ); //put count of each  4 bits into those  4 bits 
+      x = (x &amp; m4 ) + ((x &gt;&gt;  4) &amp; m4 ); //put count of each  8 bits into those  8 bits 
+      x = (x &amp; m8 ) + ((x &gt;&gt;  8) &amp; m8 ); //put count of each 16 bits into those 16 bits 
+      x = (x &amp; m16) + ((x &gt;&gt; 16) &amp; m16); //put count of each 32 bits into those 32 bits 
+      return x;
+  }</code></pre>
+<p>平时常见的解法：</p>
+<p>This better when most bits in x are 0.</p>
+<pre><code>  int population_count(uint32 x) {
+      int count;
+      for (count = 0; x; count++) {
+         x &amp;= x-1; // zero out the least significant bit
+      }
+      return count;
+  }</code></pre></li>
 </ul>
-<h3 id="least-significant-bit"><a href="#least-significant-bit" class="headerlink" title="least significant bit"></a>least significant bit</h3><ul>
-<li><p><code>-x</code> # == ~x+1, <strong>末位1前头的</strong>按位取反</p>
-</li>
-<li><p><code>x&amp;-x</code> # 末位1</p>
-</li>
-<li><p><code>x-1</code> # <strong>末位1起</strong>按位取反</p>
-</li>
-<li><p><code>x&amp;(x-1)</code> # 去掉末位1</p>
-</li>
-<li><p><code>(x&amp;(x-1)) == 0</code> # 是2的幂</p>
-</li>
+<h3 id="least-significant-bit">least significant bit</h3>
+<ul>
+<li><p><code>-x</code> # == ~x+1, <strong>末位1前头的</strong>按位取反</p></li>
+<li><p><code>x&amp;-x</code> # 末位1</p></li>
+<li><p><code>x-1</code> # <strong>末位1起</strong>按位取反</p></li>
+<li><p><code>x&amp;(x-1)</code> # 去掉末位1</p></li>
+<li><p><code>(x&amp;(x-1)) == 0</code> # 是2的幂</p></li>
 </ul>
-<h3 id="most-significant-bit"><a href="#most-significant-bit" class="headerlink" title="most significant bit"></a>most significant bit</h3><ul>
+<h3 id="most-significant-bit">most significant bit</h3>
+<ul>
 <li><p><strong>首位1起</strong>全置1</p>
-<pre><code>inline uint32 set_bits_from_msb(uint32 x) {
-    x |= (x &gt;&gt; 1);
-    x |= (x &gt;&gt; 2);
-    x |= (x &gt;&gt; 4);
-    x |= (x &gt;&gt; 8);
-    x |= (x &gt;&gt; 16);
-    return x;
-}</code></pre></li>
+<pre><code>  inline uint32 set_bits_from_msb(uint32 x) {
+      x |= (x &gt;&gt; 1);
+      x |= (x &gt;&gt; 2);
+      x |= (x &gt;&gt; 4);
+      x |= (x &gt;&gt; 8);
+      x |= (x &gt;&gt; 16);
+      return x;
+  }</code></pre></li>
 <li><p>首位1</p>
-<pre><code>uint32 msb(uint32 x) {
-    x = set_bits_from_msb(x);
-    return x &amp; ~(x &gt;&gt; 1);
-}</code></pre></li>
+<pre><code>  uint32 msb(uint32 x) {
+      x = set_bits_from_msb(x);
+      return x &amp; ~(x &gt;&gt; 1);
+  }</code></pre></li>
 <li><p>下个最近2的幂</p>
-<pre><code>uint32 next_largest_power_of_2(uint32 x) {
-    x = set_bits_from_msb(x);
-    return x+1;
-}</code></pre></li>
+<pre><code>  uint32 next_largest_power_of_2(uint32 x) {
+      x = set_bits_from_msb(x);
+      return x+1;
+  }</code></pre></li>
 <li><p>log2的floor</p>
-<pre><code>uint32 floor_of_log2(uint32 x) {
-    x = set_bits_from_msb(x);
-    return population_count(x) - 1;
-}</code></pre></li>
+<pre><code>  uint32 floor_of_log2(uint32 x) {
+      x = set_bits_from_msb(x);
+      return population_count(x) - 1;
+  }</code></pre></li>
 </ul>
-<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
+<h2 id="reference">Reference</h2>
+<ul>
 <li><a href="http://en.wikipedia.org/wiki/Hamming_weight" target="_blank" rel="noopener">Hamming Weight</a></li>
 <li><a href="http://aggregate.org/MAGIC/" target="_blank" rel="noopener">The Aggregate Magic Algorithms</a></li>
 </ul>
@@ -421,7 +421,7 @@ int population_count(uint32 x) {
           <div class="post-toc">
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#least-significant-bit"><span class="nav-number">1.</span> <span class="nav-text">least significant bit</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#most-significant-bit"><span class="nav-number">2.</span> <span class="nav-text">most significant bit</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Reference"><span class="nav-number"></span> <span class="nav-text">Reference</span></a></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#least-significant-bit"><span class="nav-number">1.</span> <span class="nav-text">least significant bit</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#most-significant-bit"><span class="nav-number">2.</span> <span class="nav-text">most significant bit</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#reference"><span class="nav-number"></span> <span class="nav-text">Reference</span></a></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>
