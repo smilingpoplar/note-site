@@ -65,6 +65,10 @@ pagination_dir: page
 ## Themes: http://hexo.io/themes/
 theme: next
 
+pandoc:
+  extra:
+    - from: markdown+yaml_metadata_block
+
 # Deployment
 ## Docs: http://hexo.io/docs/deployment.html
 deploy:
@@ -72,12 +76,13 @@ deploy:
   repo: git@github.com:smilingpoplar/note-site.git
   branch: gh-pages
 
-sitemap:
-  path: sitemap.xml
-baidusitemap:
-  path: baidusitemap.xml
-
 feed:
   type: atom
   path: atom.xml
   limit: 20
+
+sitemap:
+  path: sitemap.xml
+baidusitemap:
+  path: baidusitemap.xml
+  
