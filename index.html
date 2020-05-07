@@ -1034,9 +1034,9 @@
 <h4 id="二元分类">二元分类</h4>
 <p>就是逻辑回归，用sigmoid函数将线性回归的值域变成(0,1)，值&gt;=0.5取y=1、值&lt;0.5取y=0，这样就成了二元分类。</p>
 <p>也就是说，逻辑回归模型的h函数是<span class="math inline">\(h_θ(x)=g(θ^Tx)\)</span>，其中<span class="math inline">\(g(z)=\frac{1}{1+e^{-z}}\)</span>叫sigmoid函数或logistic函数，h(x)表示y=1的概率。对二元分类，由sigmoid曲线知，<span class="math inline">\(θ^Tx&gt;=0\)</span>取y=1，<span class="math inline">\(θ^Tx&lt;0\)</span>取y=0，<span class="math inline">\(θ^Tx\)</span>就叫决策边界。 <img src="/media/ml-sigmoid-func.png" /> sigmoid性质：<span class="math inline">\(g&#39;(z)=\frac{d}{dz}g(z)=g(z)(1-g(z))\)</span></p>
-<p>逻辑回归的代价函数定义如下，可以保证为凸函数： <img src="/media/ml-cost-func-logistic-regression.jpg" /> 其中<span class="math inline">\(h_θ(x^{(i)})\)</span>为样本预测值，<span class="math inline">\(y^{(i)}\)</span>为样本实际值。合成一个： <img src="/media/ml-cost-func-logistic-regression-compact.jpg" /> 同样，需要得到使代价函数最小化的未知参数θ。可先算出一阶偏导数构成的梯度向量，然后用梯度下降法求解。</p>
+<p>逻辑回归的代价函数定义如下，可以保证为凸函数： <img src="/media/ml-cost-func-logistic-regression.jpg" /> 其中<span class="math inline">\(h_θ(x^{(i)})\)</span>为样本预测值，<span class="math inline">\(y^{(i)}\)</span>为样本实际值。合成一个，01分布的交叉熵： <img src="/media/ml-cost-func-logistic-regression-compact.jpg" /> 同样，需要得到使代价函数最小化的未知参数θ。可先算出一阶偏导数构成的梯度向量，然后用梯度下降法求解。</p>
 <h5 id="扩展到多元分类">扩展到多元分类</h5>
-<p>为每个类训练一个“属于该类而不属于其他类”的”一对余“二元分类器，训练集的标签向量y要先转变成值为0或1的向量参与训练。要预测新数据属于哪一类，先计算新数据属于各个类的概率，取概率最大的那个类。</p>
+<p>为每个类训练一个“属于该类而不属于其他类”的“一对余”二元分类器，训练集的标签向量y要先转变成one-hot向量参与训练。要预测新数据属于哪一类，先计算新数据属于各个类的概率，取概率最大的那个类。</p>
 <hr />
 <h4 id="正则化">正则化</h4>
 <p>当特征太多时，模型容易太复杂、容易过拟合。为了防止过拟合，可以人工去掉一些不重要的特征，可以保留所有特征但减小特征参数<span class="math inline">\(θ_j\)</span>（正则化）。</p>
@@ -1078,7 +1078,7 @@
 <p><img src="/media/ml-algo-pca.jpg" /> 在训练集计算协方差矩阵Sigma，将Sigma奇异值分解，取矩阵U的前k列。然后不管训练集验证集测试集，投射X到Z用<span class="math inline">\(Z=XU_k\)</span>，从Z倒推回X用<span class="math inline">\(X≈ZU_k^T\)</span>。</p>
 <p>怎么选择参数k？ <img src="/media/ml-pca-choose-k.jpg" /></p>
 <h4 id="异常检测">异常检测</h4>
-<p><img src="/media/ml-algo-anomaly-detection.jpg" /> 选出有助于异常检测的n个特征，每一维特征用训练集算出<span class="math inline">\(μ_j\)</span>和<span class="math inline">\(σ_j^2\)</span>，然后对新数据点累乘所有特征的正态分布概率，总概率太小就是异常点。 常识：正态分布有68.27%（稍大于2/3）的面积在μ±δ范围内。</p>
+<p><img src="/media/ml-algo-anomaly-detection.jpg" /> 选出有助于异常检测的n个特征，每一维特征用训练集算出<span class="math inline">\(μ_j\)</span>和<span class="math inline">\(σ_j^2\)</span>，然后对新数据点累乘所有特征的正态分布概率，总概率太小就是异常点。 常识：正态分布有68%（稍大于2/3）的面积在μ±δ范围内。</p>
 <p>为什么不用分类算法？因为训练数据中异常数据太少、异常类型太多，分类算法无法识别出异常特征。</p>
 <p>怎么选出有助于异常检测的特征？用直方图<span class="math inline">\(hist(x_i)\)</span>看特征<span class="math inline">\(x_i\)</span>的分布，若不接近正态分布，可尝试变换特征使<span class="math inline">\(f(x_i)\)</span>接近正态分布，<span class="math inline">\(f(xi)\)</span>变换可以是<span class="math inline">\(log(x_i+c)\)</span>、<span class="math inline">\(x_i^{\frac{1}{t}}\)</span>等。也可对某异常创建特征，使异常点特征值远离均值（特别大或特别小）。</p>
 <h4 id="推荐系统">推荐系统</h4>
@@ -1092,6 +1092,7 @@
 <h3 id="参考">参考</h3>
 <ul>
 <li><a href="https://www.coursera.org/learn/machine-learning/" target="_blank" rel="noopener">Machine Learning Course</a> by Andrew Ng, with <a href="https://github.com/smilingpoplar/machine-learning-course" target="_blank" rel="noopener">exercises</a></li>
+<li><a href="https://blog.csdn.net/tsyccnh/article/details/79163834" target="_blank" rel="noopener">理解交叉熵</a></li>
 </ul>
 </span>
         

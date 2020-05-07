@@ -2,65 +2,121 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>http://note.49px.com/ios/</loc>
+    <loc>http://note.49px.com/machine-learning/</loc>
     
-    <lastmod>2020-01-08T14:01:38.375Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://note.49px.com/nlp/</loc>
-    
-    <lastmod>2020-01-08T14:01:37.051Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://note.49px.com/shader/</loc>
-    
-    <lastmod>2020-01-08T14:01:35.801Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://note.49px.com/swift/</loc>
-    
-    <lastmod>2020-01-08T14:01:34.359Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://note.49px.com/touch/</loc>
-    
-    <lastmod>2020-01-08T14:01:33.206Z</lastmod>
+    <lastmod>2020-01-23T09:34:01.000Z</lastmod>
     
   </url>
   
   <url>
     <loc>http://note.49px.com/web/</loc>
     
-    <lastmod>2020-01-08T14:01:30.434Z</lastmod>
+    <lastmod>2020-01-08T14:15:50.339Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://note.49px.com/cnn/</loc>
+    <loc>http://note.49px.com/swift/</loc>
     
-    <lastmod>2020-01-08T14:01:28.984Z</lastmod>
+    <lastmod>2020-01-08T14:15:50.336Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://note.49px.com/es6/</loc>
+    <loc>http://note.49px.com/shader/</loc>
     
-    <lastmod>2020-01-08T14:01:27.864Z</lastmod>
+    <lastmod>2020-01-08T14:15:50.335Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://note.49px.com/objc-runtime/</loc>
+    
+    <lastmod>2020-01-08T14:15:50.333Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://note.49px.com/ios/</loc>
+    
+    <lastmod>2020-01-08T14:15:50.329Z</lastmod>
     
   </url>
   
   <url>
     <loc>http://note.49px.com/git/</loc>
     
-    <lastmod>2020-01-08T14:01:25.146Z</lastmod>
+    <lastmod>2020-01-08T14:15:50.327Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://note.49px.com/es6/</loc>
+    
+    <lastmod>2020-01-08T14:15:50.326Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://note.49px.com/cnn/</loc>
+    
+    <lastmod>2020-01-08T14:15:50.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://note.49px.com/cocos2d/</loc>
+    
+    <lastmod>2020-01-08T14:15:50.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://note.49px.com/cocos2dx/</loc>
+    
+    <lastmod>2020-01-08T14:15:50.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://note.49px.com/debug/</loc>
+    
+    <lastmod>2020-01-08T14:15:50.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://note.49px.com/nlp/</loc>
+    
+    <lastmod>2020-01-08T14:15:50.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://note.49px.com/python-data-analysis/</loc>
+    
+    <lastmod>2020-01-08T14:15:50.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://note.49px.com/touch/</loc>
+    
+    <lastmod>2020-01-08T14:15:50.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://note.49px.com/wwdc/</loc>
+    
+    <lastmod>2020-01-08T14:15:50.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://note.49px.com/deep-learning/</loc>
+    
+    <lastmod>2020-01-08T14:15:32.000Z</lastmod>
     
   </url>
   
@@ -68,62 +124,6 @@
     <loc>http://note.49px.com/xcode/</loc>
     
     <lastmod>2020-01-08T14:01:16.720Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://note.49px.com/wwdc/</loc>
-    
-    <lastmod>2020-01-08T13:58:25.215Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://note.49px.com/python-data-analysis/</loc>
-    
-    <lastmod>2020-01-08T13:55:01.278Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://note.49px.com/objc-runtime/</loc>
-    
-    <lastmod>2020-01-08T13:54:34.864Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://note.49px.com/cocos2d/</loc>
-    
-    <lastmod>2020-01-08T13:46:29.908Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://note.49px.com/cocos2dx/</loc>
-    
-    <lastmod>2020-01-08T13:46:25.151Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://note.49px.com/debug/</loc>
-    
-    <lastmod>2020-01-08T13:46:20.235Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://note.49px.com/machine-learning/</loc>
-    
-    <lastmod>2020-01-08T12:32:55.755Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://note.49px.com/deep-learning/</loc>
-    
-    <lastmod>2020-01-08T12:32:20.561Z</lastmod>
     
   </url>
   
