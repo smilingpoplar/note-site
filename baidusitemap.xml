@@ -4,27 +4,6 @@
     <loc>http://note.49px.com/machine-learning/</loc>
     <lastmod>2020-01-23</lastmod>
   </url>  <url>
-    <loc>http://note.49px.com/web/</loc>
-    <lastmod>2020-01-08</lastmod>
-  </url>  <url>
-    <loc>http://note.49px.com/swift/</loc>
-    <lastmod>2020-01-08</lastmod>
-  </url>  <url>
-    <loc>http://note.49px.com/shader/</loc>
-    <lastmod>2020-01-08</lastmod>
-  </url>  <url>
-    <loc>http://note.49px.com/objc-runtime/</loc>
-    <lastmod>2020-01-08</lastmod>
-  </url>  <url>
-    <loc>http://note.49px.com/ios/</loc>
-    <lastmod>2020-01-08</lastmod>
-  </url>  <url>
-    <loc>http://note.49px.com/git/</loc>
-    <lastmod>2020-01-08</lastmod>
-  </url>  <url>
-    <loc>http://note.49px.com/es6/</loc>
-    <lastmod>2020-01-08</lastmod>
-  </url>  <url>
     <loc>http://note.49px.com/cnn/</loc>
     <lastmod>2020-01-08</lastmod>
   </url>  <url>
@@ -37,13 +16,34 @@
     <loc>http://note.49px.com/debug/</loc>
     <lastmod>2020-01-08</lastmod>
   </url>  <url>
+    <loc>http://note.49px.com/es6/</loc>
+    <lastmod>2020-01-08</lastmod>
+  </url>  <url>
+    <loc>http://note.49px.com/git/</loc>
+    <lastmod>2020-01-08</lastmod>
+  </url>  <url>
+    <loc>http://note.49px.com/ios/</loc>
+    <lastmod>2020-01-08</lastmod>
+  </url>  <url>
     <loc>http://note.49px.com/nlp/</loc>
+    <lastmod>2020-01-08</lastmod>
+  </url>  <url>
+    <loc>http://note.49px.com/objc-runtime/</loc>
     <lastmod>2020-01-08</lastmod>
   </url>  <url>
     <loc>http://note.49px.com/python-data-analysis/</loc>
     <lastmod>2020-01-08</lastmod>
   </url>  <url>
+    <loc>http://note.49px.com/shader/</loc>
+    <lastmod>2020-01-08</lastmod>
+  </url>  <url>
+    <loc>http://note.49px.com/swift/</loc>
+    <lastmod>2020-01-08</lastmod>
+  </url>  <url>
     <loc>http://note.49px.com/touch/</loc>
+    <lastmod>2020-01-08</lastmod>
+  </url>  <url>
+    <loc>http://note.49px.com/web/</loc>
     <lastmod>2020-01-08</lastmod>
   </url>  <url>
     <loc>http://note.49px.com/wwdc/</loc>
@@ -55,22 +55,22 @@
     <loc>http://note.49px.com/xcode/</loc>
     <lastmod>2020-01-08</lastmod>
   </url>  <url>
+    <loc>http://note.49px.com/android/</loc>
+    <lastmod>2020-01-08</lastmod>
+  </url>  <url>
+    <loc>http://note.49px.com/autolayout/</loc>
+    <lastmod>2020-01-08</lastmod>
+  </url>  <url>
     <loc>http://note.49px.com/linear-algebra/</loc>
     <lastmod>2020-01-08</lastmod>
   </url>  <url>
     <loc>http://note.49px.com/mvvm/</loc>
     <lastmod>2020-01-08</lastmod>
   </url>  <url>
-    <loc>http://note.49px.com/ssl/</loc>
-    <lastmod>2020-01-08</lastmod>
-  </url>  <url>
-    <loc>http://note.49px.com/android/</loc>
-    <lastmod>2020-01-08</lastmod>
-  </url>  <url>
     <loc>http://note.49px.com/spark/</loc>
     <lastmod>2020-01-08</lastmod>
   </url>  <url>
-    <loc>http://note.49px.com/autolayout/</loc>
+    <loc>http://note.49px.com/ssl/</loc>
     <lastmod>2020-01-08</lastmod>
   </url>  <url>
     <loc>http://note.49px.com/nndl/</loc>
