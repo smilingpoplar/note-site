@@ -818,6 +818,52 @@
 <p>布尔索引：索引中的数组作比较运算，将得到一个布尔数组作为索引。多个布尔数组可以使用 与<code>&amp;</code>、或<code>|</code>、非<code>-</code> 运算。将创建数据的副本。</p>
 <p>花式索引：用整数数组或ndarray作索引。将创建数据的副本。</p>
 <p>使用<code>np.ix_</code>函数选取矩形区域，如<code>arr[np.ix_(rows, columns)]</code></p>
+<table style="width:6%;">
+<colgroup>
+<col style="width: 5%" />
+</colgroup>
+<tbody>
+<tr class="odd">
+<td><code>np.where(cond, xarr, yarr)</code>是<code>if cond then xarr else yarr</code>的向量化缩写</td>
+</tr>
+<tr class="even">
+<td><code>arr.sort()</code>就地排序，<code>np.sort(arr)</code>返回排序副本</td>
+</tr>
+<tr class="odd">
+<td>#### 线性代数 <code>mat.T</code>转置</td>
+</tr>
+<tr class="even">
+<td><code>matA.dot(matB)</code>矩阵相乘，奇怪的命名！</td>
+</tr>
+<tr class="odd">
+<td><code>solve</code>解Ax=b，其中A为方阵</td>
+</tr>
+<tr class="even">
+<td><code>lstsq</code>求Ax=b的最小二乘解</td>
+</tr>
+<tr class="odd">
+<td>### pandas入门 由字典构造DataFrame时，字典一项变为DataFrame一列</td>
+</tr>
+<tr class="even">
+<td>#### 索引 DateFrame相关参数中<code>columns</code>索引列，<code>index</code>索引行</td>
+</tr>
+<tr class="odd">
+<td><code>frame[]</code>式索引：</td>
+</tr>
+<tr class="even">
+<td>* 用标签是取列（标签切片是闭区间） * 用数字切片或布尔数组是取行 * 用布尔DataFrame是取元素</td>
+</tr>
+<tr class="odd">
+<td><code>frame.ix[]</code>选取行列：</td>
+</tr>
+<tr class="even">
+<td>* <code>frame.ix[rows, columns]</code>选取行和列，<code>ix</code>是<code>index</code>缩写 * <code>frame.ix[rows]</code>选取行 * <code>frame.ix[:, columns]</code>选取列</td>
+</tr>
+<tr class="odd">
+<td>由整数索引的pandas对象，根据整数选取数据的操作总是面向标签的，这也包括用ix进行切片</td>
+</tr>
+</tbody>
+</table>
 <p>默认<code>axis = 0</code>按行，一行行操作或所有行聚合；<code>axis = 1</code>按列，一列列操作或所有列聚合</p>
 <p><code>sort_index()</code>排序：</p>
 <ul>
@@ -833,6 +879,34 @@
 <p>将只分一些列名不断append的“长格式”，转换为以某列值为行索引的“宽格式”</p>
 <p><code>frame.pivot(作为行索引的列名, 作为列索引的列名, 作为单元格的列名)</code>； 如果忽略最后一个参数，<code>frame.pivot(作为行索引的列名，作为列索引的列名)</code>，其他列会分别作为外层列索引得到一个个DataFrame，这些DataFrame一个个横向拼接起来，得到带两层列索引的DataFrame</p>
 <p>其实，<code>pivot</code>只是一个快捷方式：用<code>set_index</code>创建<code>(行索引名, 列索引名)</code>的两层行索引，再用<code>unstack</code>将内层的<code>(列索引名)</code>转回成列索引</p>
+<table style="width:6%;">
+<colgroup>
+<col style="width: 5%" />
+</colgroup>
+<tbody>
+<tr class="odd">
+<td><code>groupby</code>是一个 拆分-应用-合并 的过程：将数据根据特定轴的一个或多个键<strong>拆分</strong>为多组，在分组上<strong>应用</strong>函数产生一个新值，将所有分组的结果<strong>合并</strong></td>
+</tr>
+<tr class="even">
+<td><code>pivot_table</code>按行列分组聚合，对比<code>pivot</code>是只分组不聚合</td>
+</tr>
+<tr class="odd">
+<td><code>crosstab</code>按行列分组计数，是特殊的<code>pivot_table</code></td>
+</tr>
+<tr class="even">
+<td>以时间戳（字符串或datetime对象）为索引的Series就是时间序列，有多种时间选择方式</td>
+</tr>
+<tr class="odd">
+<td>### 画图入门 matplotlib是基础</td>
+</tr>
+<tr class="even">
+<td>在Figure的subplot上绘图</td>
+</tr>
+<tr class="odd">
+<td>画线时，颜色（k黑r红 等，或#rgb值）、标记（o圆x叉 等）、线型（<code>--</code>虚线<code>.</code>点线 等）</td>
+</tr>
+</tbody>
+</table>
 <p>seaborn接口更高级</p>
 <h3 id="scikit-learn">scikit-learn</h3>
 <h4 id="模型验证">模型验证</h4>
